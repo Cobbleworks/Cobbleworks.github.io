@@ -1,0 +1,17 @@
+{
+  "name": "Cobbleworks",
+  "short_name": "Cobbleworks",
+  "description": "Open-source Minecraft server plugins for Paper and Spigot.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08090a",
+  "theme_color": "#090a0b",
+  "icons": [
+    {
+      "src": "/assets/brand-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

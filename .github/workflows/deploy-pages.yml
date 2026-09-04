@@ -1,0 +1,63 @@
+name: Deploy Cobbleworks website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Validate and deploy
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Validate required site files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+          test -f styles.css
+          test -f script.js
+          test -f robots.txt
+          test -f sitemap.xml
+          test -f assets/cobbleworks-hero.png
+          test "$(find assets/plugins -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 13
+          grep -q 'https://cobbleworks.github.io/' index.html
+          grep -q 'application/ld+json' index.html
+
+      - name: Prepare static site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp index.html 404.html styles.css script.js robots.txt sitemap.xml site.webmanifest _site/
+          cp -R assets _site/assets
+          touch _site/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
