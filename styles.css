@@ -32,9 +32,7 @@ body {
   margin: 0;
   min-width: 320px;
   color: var(--text);
-  background:
-    radial-gradient(circle at 90% 20%, rgba(211, 125, 7, 0.08), transparent 28rem),
-    var(--bg);
+  background: var(--bg);
   font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -238,7 +236,7 @@ a {
   inset: 0;
   z-index: -2;
   background:
-    linear-gradient(90deg, rgba(4, 5, 6, 0.98) 0%, rgba(4, 5, 6, 0.94) 24%, rgba(4, 5, 6, 0.57) 48%, rgba(4, 5, 6, 0.08) 72%),
+    linear-gradient(0deg, rgba(4, 5, 6, 0.98) 0%, rgba(4, 5, 6, 0.4) 24%, rgba(4, 5, 6, 0.57) 48%, rgba(4, 5, 6, 0.28) 73%),
     linear-gradient(180deg, rgba(4, 5, 6, 0.2), transparent 52%, rgba(4, 5, 6, 0.92));
 }
 
@@ -827,7 +825,7 @@ code {
   overflow: hidden;
   background:
     linear-gradient(105deg, rgba(8, 9, 10, 0.96), rgba(8, 9, 10, 0.6)),
-    url("/assets/cobbleworks-social-preview.png") center 64% / cover;
+    url("/assets/cobbleworks-cta.png") center 58% / cover;
   border: 1px solid var(--line-bright);
   border-radius: 22px;
   box-shadow: var(--shadow);
