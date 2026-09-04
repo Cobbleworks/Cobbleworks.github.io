@@ -385,9 +385,7 @@ h2 em {
 
 .plugins-section {
   padding: 110px 0 120px;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(244, 165, 32, 0.08), transparent 28rem),
-    #0b0c0d;
+  background: linear-gradient(to bottom, transparent, var(--bg));
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
