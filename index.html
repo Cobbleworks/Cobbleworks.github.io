@@ -6,12 +6,17 @@
     <title>Cobbleworks | Open-Source Minecraft Server Plugins</title>
     <meta name="description" content="Cobbleworks maintains 13 open-source Minecraft plugins for Paper and Spigot servers: automation, world tools, NPCs, events, transport, and quality-of-life features.">
     <meta name="author" content="Cobbleworks">
-    <meta name="theme-color" content="#090a0b">
+    <meta name="theme-color" content="#0b0a08">
     <meta name="color-scheme" content="dark">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://cobbleworks.github.io/">
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
     <link rel="preload" href="/assets/cobbleworks-hero-september-2026.png" as="image" type="image/png" fetchpriority="high">
     <link rel="stylesheet" href="/styles.css">
 
@@ -82,62 +87,96 @@
 
     <header class="site-header" data-header>
       <a class="brand" href="#top" aria-label="Cobbleworks home">
-        <img src="/assets/brand-mark.svg" width="42" height="42" alt="">
+        <img src="/assets/brand-mark.svg" width="32" height="32" alt="">
         <span>Cobbleworks</span>
       </a>
+
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-button>
         <span class="sr-only">Open navigation</span>
         <span></span><span></span><span></span>
       </button>
+
       <nav id="site-navigation" class="site-nav" aria-label="Primary navigation" data-navigation>
         <a href="#plugins">Plugins</a>
-        <a href="#getting-started">Install</a>
-        <a class="nav-github" href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <a href="#getting-started">Docs</a>
+        <a href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">Community</a>
+        <a href="#about">About</a>
       </nav>
+
+      <div class="header-actions">
+        <a class="header-github" href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer" aria-label="Cobbleworks on GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.64 22.4c.58.1.79-.25.79-.56v-2.23c-3.23.7-3.91-1.37-3.91-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.11-.75.41-1.27.74-1.56-2.58-.29-5.29-1.29-5.29-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.05 0 0 .97-.31 3.16 1.18a10.9 10.9 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.4-2.72 5.38-5.3 5.67.42.36.79 1.06.79 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/></svg>
+        </a>
+        <a class="button button-primary header-cta" href="#getting-started">Get started</a>
+      </div>
     </header>
 
     <main id="main-content">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <img class="hero-image" src="/assets/cobbleworks-hero-september-2026.png" width="1672" height="941" alt="A Minecraft settlement with players using a crafter, minecart, tools, redstone, and rail systems" fetchpriority="high">
+        <img class="hero-image" src="/assets/cobbleworks-hero-september-2026.png" width="1672" height="941" alt="A Minecraft settlement at sunset" fetchpriority="high">
         <div class="hero-shade" aria-hidden="true"></div>
+
         <div class="hero-content shell">
-          <p class="eyebrow"><span></span> Cobbleworks on GitHub</p>
-          <h1 id="hero-title">Open-source plugins<br>for <em>Minecraft servers</em></h1>
-          <p class="hero-copy">Thirteen independent plugins covering world tools, automation, transport, NPCs, server events, and smaller quality-of-life additions for Paper and Spigot.</p>
+          <p class="hero-tag"><span class="hero-tag-dot" aria-hidden="true"></span>13 open-source plugins, MIT licensed</p>
+          <h1 id="hero-title">Minecraft plugins<br>that do more.</h1>
+          <p class="hero-copy">Cobbleworks creates open-source plugins for Minecraft servers. From world tools and automation to NPCs and gameplay systems, each project is built around a specific server need.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#plugins">Browse plugins <span aria-hidden="true">↓</span></a>
+            <a class="button button-primary" href="#plugins">Browse plugins</a>
             <a class="button button-secondary" href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.64 22.4c.58.1.79-.25.79-.56v-2.23c-3.23.7-3.91-1.37-3.91-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.11-.75.41-1.27.74-1.56-2.58-.29-5.29-1.29-5.29-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.05 0 0 .97-.31 3.16 1.18a10.9 10.9 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.4-2.72 5.38-5.3 5.67.42.36.79 1.06.79 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/></svg>
               View on GitHub
             </a>
           </div>
         </div>
+
+        <div class="hero-features" aria-label="Cobbleworks project principles">
+          <div class="hero-feature">
+            <strong>Open source</strong>
+            <span>Code, issues, and releases stay public.</span>
+          </div>
+          <div class="hero-feature">
+            <strong>Actively maintained</strong>
+            <span>Updates and fixes are tracked on GitHub.</span>
+          </div>
+          <div class="hero-feature">
+            <strong>Independent projects</strong>
+            <span>Each plugin ships and versions separately.</span>
+          </div>
+          <div class="hero-feature">
+            <strong>Built for servers</strong>
+            <span>Practical tools for Paper and Spigot.</span>
+          </div>
+        </div>
       </section>
 
       <section class="plugins-section" id="plugins" aria-labelledby="plugins-title">
         <div class="shell">
-          <div class="section-heading plugin-heading">
-            <p class="eyebrow"><span></span> Current projects</p>
-            <h2 id="plugins-title">All Cobbleworks plugins.</h2>
-            <p class="section-lead">Each plugin is maintained and released separately. Open its repository for exact Minecraft, Java, server-platform, dependency, command, and permission details.</p>
-          </div>
-
-          <div class="plugin-toolbar" aria-label="Filter plugins">
-            <label class="search-control">
-              <span class="sr-only">Search plugins</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
-              <input type="search" placeholder="Search plugins" autocomplete="off" data-plugin-search>
-            </label>
-            <div class="filter-buttons" role="group" aria-label="Plugin categories">
-              <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
-              <button type="button" data-filter="gameplay" aria-pressed="false">Gameplay</button>
-              <button type="button" data-filter="world" aria-pressed="false">World tools</button>
-              <button type="button" data-filter="automation" aria-pressed="false">Automation</button>
-              <button type="button" data-filter="admin" aria-pressed="false">Administration</button>
+          <div class="plugins-intro">
+            <div class="section-heading section-heading-split">
+              <h2 id="plugins-title">All Cobbleworks plugins.</h2>
+              <p class="section-lead">Thirteen independent plugins covering world tools, automation, transport, NPCs, server events, and more. Each project is maintained separately with its own setup and release details.</p>
             </div>
           </div>
 
-          <p class="results-status" aria-live="polite" data-results-status>Showing all 13 plugins</p>
+          <div class="plugin-toolbar" aria-label="Browse plugins">
+            <div class="plugin-toolbar-row">
+              <label class="search-control">
+                <span class="sr-only">Search plugins</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+                <input type="search" placeholder="Search plugins…" autocomplete="off" data-plugin-search>
+              </label>
+              <span class="plugin-count" data-plugin-count>13 plugins</span>
+            </div>
+            <div class="filter-buttons" role="group" aria-label="Plugin categories">
+              <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-filter="world" aria-pressed="false">World tools</button>
+              <button type="button" data-filter="automation" aria-pressed="false">Automation</button>
+              <button type="button" data-filter="npc" aria-pressed="false">NPCs</button>
+              <button type="button" data-filter="gameplay" aria-pressed="false">Gameplay</button>
+              <button type="button" data-filter="admin" aria-pressed="false">Management</button>
+            </div>
+            <p class="results-status sr-only" aria-live="polite" data-results-status>Showing all 13 plugins</p>
+          </div>
 
           <div class="plugin-grid" data-plugin-grid>
             <article class="plugin-card" data-plugin data-category="world admin" data-search="map revealer filled map terrain color schemes depth locking item frame wall refresh labels markers">
@@ -164,7 +203,7 @@
               </div>
             </article>
 
-            <article class="plugin-card" data-plugin data-category="gameplay admin" data-search="blockfolk npc fake player ai openrouter routes behaviors conversations combat quests">
+            <article class="plugin-card" data-plugin data-category="npc gameplay admin" data-search="blockfolk npc fake player ai openrouter routes behaviors conversations combat quests">
               <a class="card-image" href="https://github.com/Cobbleworks/Blockfolk-NPC-Plugin" target="_blank" rel="noreferrer" aria-label="Open Blockfolk repository">
                 <img src="/assets/plugins/blockfolk.png" width="818" height="196" alt="Blockfolk NPC banner" loading="lazy">
               </a>
@@ -177,53 +216,123 @@
             </article>
 
             <article class="plugin-card" data-plugin data-category="gameplay admin" data-search="advanced achievements progress rewards tasks gui sqlite mysql vault">
-              <a class="card-image" href="https://github.com/Cobbleworks/Advanced-Achievements-Plugin" target="_blank" rel="noreferrer" aria-label="Open Advanced Achievements repository"><img src="/assets/plugins/advanced-achievements.png" width="818" height="196" alt="Advanced Achievements banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Progression</span><span>Java 17+</span></div><h3>Advanced Achievements</h3><p>Define milestones, persist player progress, and grant claimable item, experience, economy, command, or title rewards.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Advanced-Achievements-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Advanced-Achievements-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Advanced-Achievements-Plugin" target="_blank" rel="noreferrer" aria-label="Open Advanced Achievements repository">
+                <img src="/assets/plugins/advanced-achievements.png" width="818" height="196" alt="Advanced Achievements banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Progression</span><span>Java 17+</span></div>
+                <h3>Advanced Achievements</h3>
+                <p>Define milestones, persist player progress, and grant claimable item, experience, economy, command, or title rewards.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Advanced-Achievements-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Advanced-Achievements-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="world admin" data-search="area rewind backup restore protect snapshots worldedit schematic undo redo">
-              <a class="card-image" href="https://github.com/Cobbleworks/Area-Rewind-Plugin" target="_blank" rel="noreferrer" aria-label="Open Area Rewind repository"><img src="/assets/plugins/area-rewind.png" width="818" height="196" alt="Area Rewind banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>World management</span><span>Java 21+</span></div><h3>Area Rewind</h3><p>Protect named regions with snapshots, scheduled backups, comparisons, previews, undo, redo, and controlled restoration.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Area-Rewind-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Area-Rewind-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Area-Rewind-Plugin" target="_blank" rel="noreferrer" aria-label="Open Area Rewind repository">
+                <img src="/assets/plugins/area-rewind.png" width="818" height="196" alt="Area Rewind banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>World management</span><span>Java 21+</span></div>
+                <h3>Area Rewind</h3>
+                <p>Protect named regions with snapshots, scheduled backups, comparisons, previews, undo, redo, and controlled restoration.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Area-Rewind-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Area-Rewind-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="gameplay" data-search="blood moon event bosses npc citizens sentinel vampire witch ghost werewolf">
-              <a class="card-image" href="https://github.com/Cobbleworks/BloodMoon-Plugin" target="_blank" rel="noreferrer" aria-label="Open Blood Moon repository"><img src="/assets/plugins/blood-moon.png" width="818" height="196" alt="Blood Moon banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Server event</span><span>Java 17+</span></div><h3>Blood Moon</h3><p>Turn selected nights into configurable server events with seven specialized Citizens and Sentinel NPC encounters.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/BloodMoon-Plugin">Repository</a><a href="https://github.com/Cobbleworks/BloodMoon-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/BloodMoon-Plugin" target="_blank" rel="noreferrer" aria-label="Open Blood Moon repository">
+                <img src="/assets/plugins/blood-moon.png" width="818" height="196" alt="Blood Moon banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Server event</span><span>Java 17+</span></div>
+                <h3>Blood Moon</h3>
+                <p>Turn selected nights into configurable server events with seven specialized Citizens and Sentinel NPC encounters.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/BloodMoon-Plugin">Repository</a><a href="https://github.com/Cobbleworks/BloodMoon-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="gameplay automation" data-search="custom jukebox nbs music songs signs redstone noteblockapi playback discs records">
-              <a class="card-image" href="https://github.com/Cobbleworks/Custom-Jukebox-Plugin" target="_blank" rel="noreferrer" aria-label="Open Custom Jukebox repository"><img src="/assets/plugins/custom-jukebox.png" width="818" height="196" alt="Custom Jukebox banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Music</span><span>Paper · Java 25+</span></div><h3>Custom Jukebox</h3><p>Play NBS libraries through personal controls, persistent signs, redstone, or song-bound records inserted into vanilla jukeboxes.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Custom-Jukebox-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Custom-Jukebox-Plugin" target="_blank" rel="noreferrer" aria-label="Open Custom Jukebox repository">
+                <img src="/assets/plugins/custom-jukebox.png" width="818" height="196" alt="Custom Jukebox banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Music</span><span>Paper · Java 25+</span></div>
+                <h3>Custom Jukebox</h3>
+                <p>Play NBS libraries through personal controls, persistent signs, redstone, or song-bound records inserted into vanilla jukeboxes.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Custom-Jukebox-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="gameplay" data-search="hookshot grapple grappling hook fishing rod movement mobility pull mobs">
-              <a class="card-image" href="https://github.com/Cobbleworks/Hookshot-Plugin" target="_blank" rel="noreferrer" aria-label="Open Hookshot repository"><img src="/assets/plugins/hookshot.png" width="818" height="196" alt="Hookshot banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Movement</span><span>Java 17+</span></div><h3>Hookshot</h3><p>Turn fishing rods into configurable grappling hooks that pull players toward blocks or retrieve nearby living entities.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Hookshot-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Hookshot-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Hookshot-Plugin" target="_blank" rel="noreferrer" aria-label="Open Hookshot repository">
+                <img src="/assets/plugins/hookshot.png" width="818" height="196" alt="Hookshot banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Movement</span><span>Java 17+</span></div>
+                <h3>Hookshot</h3>
+                <p>Turn fishing rods into configurable grappling hooks that pull players toward blocks or retrieve nearby living entities.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Hookshot-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Hookshot-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="automation" data-search="piston crusher crush blocks drops multiplier farm processing">
-              <a class="card-image" href="https://github.com/Cobbleworks/Piston-Crusher-Plugin" target="_blank" rel="noreferrer" aria-label="Open Piston Crusher repository"><img src="/assets/plugins/piston-crusher.png" width="818" height="196" alt="Piston Crusher banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Automation</span><span>Java 17+</span></div><h3>Piston Crusher</h3><p>Turn piston lines into block processors with a configurable material whitelist, crusher target, and drop multiplier.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Piston-Crusher-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Piston-Crusher-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Piston-Crusher-Plugin" target="_blank" rel="noreferrer" aria-label="Open Piston Crusher repository">
+                <img src="/assets/plugins/piston-crusher.png" width="818" height="196" alt="Piston Crusher banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Automation</span><span>Java 17+</span></div>
+                <h3>Piston Crusher</h3>
+                <p>Turn piston lines into block processors with a configurable material whitelist, crusher target, and drop multiplier.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Piston-Crusher-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Piston-Crusher-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="gameplay world" data-search="power mining tools ore scanner dungeon monster room spawner locator magnet hopper escape rope cave compass smelter pickaxe goggles helmet">
-              <a class="card-image" href="https://github.com/Cobbleworks/Power-Mining-Plugin" target="_blank" rel="noreferrer" aria-label="Open Power Mining repository"><img src="/assets/plugins/power-mining.png" width="818" height="196" alt="Power Mining banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Mining tools</span><span>Java 21+</span></div><h3>Power Mining</h3><p>Add mounted excavation, ore and dungeon scanning, magnetic collection, navigation tools, night vision, and automatic smelting.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Power-Mining-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Power-Mining-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Power-Mining-Plugin" target="_blank" rel="noreferrer" aria-label="Open Power Mining repository">
+                <img src="/assets/plugins/power-mining.png" width="818" height="196" alt="Power Mining banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Mining tools</span><span>Java 21+</span></div>
+                <h3>Power Mining</h3>
+                <p>Add mounted excavation, ore and dungeon scanning, magnetic collection, navigation tools, night vision, and automatic smelting.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Power-Mining-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Power-Mining-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="automation gameplay" data-search="rail boost minecart speed storage pickup presets chunk loading train convoy">
-              <a class="card-image" href="https://github.com/Cobbleworks/Rail-Boost-Plugin" target="_blank" rel="noreferrer" aria-label="Open Rail Boost repository"><img src="/assets/plugins/rail-boost.png" width="818" height="196" alt="Rail Boost banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Transport</span><span>Java 17+</span></div><h3>Rail Boost</h3><p>Upgrade minecarts with speed presets, automatic pickup, shared storage, effects, chunk loading, and convoy behavior.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Rail-Boost-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Rail-Boost-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Rail-Boost-Plugin" target="_blank" rel="noreferrer" aria-label="Open Rail Boost repository">
+                <img src="/assets/plugins/rail-boost.png" width="818" height="196" alt="Rail Boost banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Transport</span><span>Java 17+</span></div>
+                <h3>Rail Boost</h3>
+                <p>Upgrade minecarts with speed presets, automatic pickup, shared storage, effects, chunk loading, and convoy behavior.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Rail-Boost-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Rail-Boost-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="gameplay admin" data-search="super enchantments custom enchant high level combat utility abilities">
-              <a class="card-image" href="https://github.com/Cobbleworks/Super-Enchantments-Plugin" target="_blank" rel="noreferrer" aria-label="Open Super Enchantments repository"><img src="/assets/plugins/super-enchantments.png" width="818" height="196" alt="Super Enchantments banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Equipment</span><span>Java 21+</span></div><h3>Super Enchantments</h3><p>Apply high-level vanilla enchantments and configurable custom combat or utility abilities to eligible equipment.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Super-Enchantments-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Super-Enchantments-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Super-Enchantments-Plugin" target="_blank" rel="noreferrer" aria-label="Open Super Enchantments repository">
+                <img src="/assets/plugins/super-enchantments.png" width="818" height="196" alt="Super Enchantments banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Equipment</span><span>Java 21+</span></div>
+                <h3>Super Enchantments</h3>
+                <p>Apply high-level vanilla enchantments and configurable custom combat or utility abilities to eligible equipment.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Super-Enchantments-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Super-Enchantments-Plugin/releases">Releases</a></div>
+              </div>
             </article>
 
             <article class="plugin-card" data-plugin data-category="automation admin" data-search="wireless redstone bulbs lamps chests containers inventory groups circuit tool">
-              <a class="card-image" href="https://github.com/Cobbleworks/Wireless-Redstone-Plugin" target="_blank" rel="noreferrer" aria-label="Open Wireless Redstone repository"><img src="/assets/plugins/wireless-redstone.png" width="818" height="196" alt="Wireless Redstone banner" loading="lazy"></a>
-              <div class="card-body"><div class="card-topline"><span>Redstone</span><span>Paper · Java 21+</span></div><h3>Wireless Redstone</h3><p>Synchronize linked lights and supported container inventories across distance through named groups and circuit tools.</p><div class="card-actions"><a href="https://github.com/Cobbleworks/Wireless-Redstone-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Wireless-Redstone-Plugin/releases">Releases</a></div></div>
+              <a class="card-image" href="https://github.com/Cobbleworks/Wireless-Redstone-Plugin" target="_blank" rel="noreferrer" aria-label="Open Wireless Redstone repository">
+                <img src="/assets/plugins/wireless-redstone.png" width="818" height="196" alt="Wireless Redstone banner" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="card-topline"><span>Redstone</span><span>Paper · Java 21+</span></div>
+                <h3>Wireless Redstone</h3>
+                <p>Synchronize linked lights and supported container inventories across distance through named groups and circuit tools.</p>
+                <div class="card-actions"><a href="https://github.com/Cobbleworks/Wireless-Redstone-Plugin">Repository</a><a href="https://github.com/Cobbleworks/Wireless-Redstone-Plugin/releases">Releases</a></div>
+              </div>
             </article>
           </div>
           <div class="empty-state" hidden data-empty-state>
@@ -235,13 +344,13 @@
 
       <section class="start-section shell" id="getting-started" aria-labelledby="start-title">
         <div class="section-heading section-heading-split">
-          <div><p class="eyebrow"><span></span> Installing a plugin</p><h2 id="start-title">A few things to check first.</h2></div>
-          <p>There is no shared Cobbleworks installer. Every repository documents its own supported versions, dependencies, commands, permissions, and configuration.</p>
+          <h2 id="start-title">A few things to check first.</h2>
+          <p class="section-lead">There is no shared Cobbleworks installer. Every repository documents its own supported versions, dependencies, commands, permissions, and configuration.</p>
         </div>
         <div class="installation-guide">
           <ul class="install-checklist">
             <li><strong>Use the release jar.</strong><span>Download the packaged <code>.jar</code> from GitHub Releases—not the automatically generated source archive.</span></li>
-            <li><strong>Check compatibility.</strong><span>Confirm the Minecraft, Java, Paper or Spigot, and dependency versions listed in that plugin’s README.</span></li>
+            <li><strong>Check compatibility.</strong><span>Confirm the Minecraft, Java, Paper or Spigot, and dependency versions listed in that plugin's README.</span></li>
             <li><strong>Install with the server stopped.</strong><span>Place the plugin and required dependencies in <code>plugins/</code>, start once, then review the generated configuration.</span></li>
             <li><strong>Test before updating production.</strong><span>Keep backups and verify an update on a copy of the server when the plugin affects worlds, inventories, or player data.</span></li>
           </ul>
@@ -251,27 +360,52 @@
           </aside>
         </div>
         <nav class="reference-links" aria-label="Project documentation">
-          <a href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">GitHub organization <span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/Cobbleworks/.github/blob/main/CONTRIBUTING.md" target="_blank" rel="noreferrer">Contribution guide <span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/Cobbleworks/.github/blob/main/SECURITY.md" target="_blank" rel="noreferrer">Security policy <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">GitHub organization</a>
+          <a href="https://github.com/Cobbleworks/.github/blob/main/CONTRIBUTING.md" target="_blank" rel="noreferrer">Contribution guide</a>
+          <a href="https://github.com/Cobbleworks/.github/blob/main/SECURITY.md" target="_blank" rel="noreferrer">Security policy</a>
         </nav>
       </section>
 
-      <section class="cta-section shell" aria-labelledby="cta-title">
+      <section class="cta-section shell" id="about" aria-labelledby="cta-title">
         <div class="cta-panel">
-          <div><p class="eyebrow"><span></span> Source, issues, and releases</p><h2 id="cta-title">Everything is on GitHub.</h2><p class="cta-copy">Read the code, follow a project, report a problem, or download the latest release.</p></div>
-          <a class="button button-primary" href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">Open the organization <span aria-hidden="true">↗</span></a>
+          <img class="cta-mark" src="/assets/brand-mark.svg" alt="" aria-hidden="true">
+          <div class="cta-copy-block">
+            <h2 id="cta-title">Everything is on GitHub.</h2>
+            <p class="cta-copy">Read the code, follow a project, report a problem, or download the latest release. Every plugin is independent, MIT-licensed, and documented in its own repository.</p>
+            <div class="cta-stats">
+              <div><strong>13</strong><span>Plugins</span></div>
+              <div><strong>MIT</strong><span>License</span></div>
+              <div><strong>Java 17–25</strong><span>Supported</span></div>
+            </div>
+          </div>
+          <a class="button button-primary" href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">Open the organization</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="shell footer-inner">
-        <a class="brand" href="#top"><img src="/assets/brand-mark.svg" width="36" height="36" alt=""><span>Cobbleworks</span></a>
+        <a class="brand" href="#top"><img src="/assets/brand-mark.svg" width="32" height="32" alt=""><span>Cobbleworks</span></a>
         <p>Open-source Minecraft server plugins released under the MIT License.</p>
         <nav aria-label="Footer navigation"><a href="#plugins">Plugins</a><a href="#getting-started">Install</a><a href="https://github.com/Cobbleworks">GitHub</a></nav>
       </div>
     </footer>
     <script src="/script.js" defer></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const cards = [...document.querySelectorAll("[data-plugin]")];
+        const count = document.querySelector("[data-plugin-count]");
+        const search = document.querySelector("[data-plugin-search]");
+        const filters = [...document.querySelectorAll("[data-filter]")];
+        const updateCount = () => {
+          if (!count) return;
+          const visible = cards.filter(card => !card.hidden).length;
+          count.textContent = `${visible} ${visible === 1 ? "plugin" : "plugins"}`;
+        };
+        search?.addEventListener("input", () => requestAnimationFrame(updateCount));
+        filters.forEach(button => button.addEventListener("click", () => requestAnimationFrame(updateCount)));
+        updateCount();
+      });
+    </script>
   </body>
 </html>
