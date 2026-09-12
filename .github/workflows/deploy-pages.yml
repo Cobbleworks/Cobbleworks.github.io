@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -46,8 +46,7 @@ jobs:
           set -euo pipefail
           python scripts/generate_site.py
           mkdir -p _site
-          cp -R . _site
-          rm -rf _site/.git _site/.github _site/_site
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' ./ _site/
           touch _site/.nojekyll
 
       - name: Configure GitHub Pages
