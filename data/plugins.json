@@ -20,11 +20,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin/issues",
-      "icon": "/assets/plugins/advanced-achievements/banner.png",
-      "screenshots": [
-        "/assets/plugins/advanced-achievements/banner.png",
-        "/assets/plugins/advanced-achievements/screenshot-achievement-list.png"
-      ],
+      "icon": "/assets/plugins/advanced-achievements.png",
+      "screenshots": ["/assets/plugins/advanced-achievements.png"],
       "featured": true
     },
     {
@@ -47,11 +44,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Area-Rewind-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Area-Rewind-Plugin/issues",
-      "icon": "/assets/plugins/area-rewind/banner.png",
-      "screenshots": [
-        "/assets/plugins/area-rewind/banner.png",
-        "/assets/plugins/area-rewind/screenshot-mansion-diff.png"
-      ],
+      "icon": "/assets/plugins/area-rewind.png",
+      "screenshots": ["/assets/plugins/area-rewind.png"],
       "featured": true
     },
     {
@@ -74,11 +68,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/issues",
-      "icon": "/assets/plugins/blockfolk/banner.png",
-      "screenshots": [
-        "/assets/plugins/blockfolk/banner.png",
-        "/assets/plugins/blockfolk/screenshot-npc-editor.png"
-      ],
+      "icon": "/assets/plugins/blockfolk.png",
+      "screenshots": ["/assets/plugins/blockfolk.png"],
       "featured": true
     },
     {
@@ -101,11 +92,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/BloodMoon-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/BloodMoon-Plugin/issues",
-      "icon": "/assets/plugins/blood-moon/banner.png",
-      "screenshots": [
-        "/assets/plugins/blood-moon/banner.png",
-        "/assets/plugins/blood-moon/screenshot-vampire-hemoplague.png"
-      ],
+      "icon": "/assets/plugins/blood-moon.png",
+      "screenshots": ["/assets/plugins/blood-moon.png"],
       "featured": true
     },
     {
@@ -128,11 +116,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/issues",
-      "icon": "/assets/plugins/custom-jukebox/banner.png",
-      "screenshots": [
-        "/assets/plugins/custom-jukebox/banner.png",
-        "/assets/plugins/custom-jukebox/screenshot-management-gui.png"
-      ],
+      "icon": "/assets/plugins/custom-jukebox.png",
+      "screenshots": ["/assets/plugins/custom-jukebox.png"],
       "featured": true
     },
     {
@@ -155,11 +140,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Hookshot-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Hookshot-Plugin/issues",
-      "icon": "/assets/plugins/hookshot/banner.png",
-      "screenshots": [
-        "/assets/plugins/hookshot/banner.png",
-        "/assets/plugins/hookshot/screenshot-lava-dungeon.png"
-      ],
+      "icon": "/assets/plugins/hookshot.png",
+      "screenshots": ["/assets/plugins/hookshot.png"],
       "featured": false
     },
     {
@@ -182,11 +164,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Map-Revealer-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Map-Revealer-Plugin/issues",
-      "icon": "/assets/plugins/map-revealer/banner.png",
-      "screenshots": [
-        "/assets/plugins/map-revealer/banner.png",
-        "/assets/plugins/map-revealer/screenshot-desert-reveal.png"
-      ],
+      "icon": "/assets/plugins/map-revealer.png",
+      "screenshots": ["/assets/plugins/map-revealer.png"],
       "featured": false
     },
     {
@@ -209,11 +188,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/NPC-PickUp-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/NPC-PickUp-Plugin/issues",
-      "icon": "/assets/plugins/npc-pickup/banner.png",
-      "screenshots": [
-        "/assets/plugins/npc-pickup/banner.png",
-        "/assets/plugins/npc-pickup/screenshot-npc-eating.png"
-      ],
+      "icon": "/assets/cobbleworks-cta.png",
+      "screenshots": ["/assets/cobbleworks-cta.png"],
       "featured": false
     },
     {
@@ -236,11 +212,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Piston-Crusher-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Piston-Crusher-Plugin/issues",
-      "icon": "/assets/plugins/piston-crusher/banner.png",
-      "screenshots": [
-        "/assets/plugins/piston-crusher/banner.png",
-        "/assets/plugins/piston-crusher/screenshot-emerald-crushing.png"
-      ],
+      "icon": "/assets/plugins/piston-crusher.png",
+      "screenshots": ["/assets/plugins/piston-crusher.png"],
       "featured": false
     },
     {
@@ -263,11 +236,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Power-Mining-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Power-Mining-Plugin/issues",
-      "icon": "/assets/plugins/power-mining/banner.png",
-      "screenshots": [
-        "/assets/plugins/power-mining/banner.png",
-        "/assets/plugins/power-mining/screenshot-ore-scanner-bell.png"
-      ],
+      "icon": "/assets/plugins/power-mining.png",
+      "screenshots": ["/assets/plugins/power-mining.png"],
       "featured": false
     },
     {
@@ -290,11 +260,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Rail-Boost-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Rail-Boost-Plugin/issues",
-      "icon": "/assets/plugins/rail-boost/banner.png",
-      "screenshots": [
-        "/assets/plugins/rail-boost/banner.png",
-        "/assets/plugins/rail-boost/screenshot-speedometer.png"
-      ],
+      "icon": "/assets/plugins/rail-boost.png",
+      "screenshots": ["/assets/plugins/rail-boost.png"],
       "featured": false
     },
     {
@@ -317,11 +284,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Super-Enchantments-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Super-Enchantments-Plugin/issues",
-      "icon": "/assets/plugins/super-enchantments/banner.png",
-      "screenshots": [
-        "/assets/plugins/super-enchantments/banner.png",
-        "/assets/plugins/super-enchantments/screenshot-enchantment-255.png"
-      ],
+      "icon": "/assets/plugins/super-enchantments.png",
+      "screenshots": ["/assets/plugins/super-enchantments.png"],
       "featured": true
     },
     {
@@ -344,11 +308,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin/issues",
-      "icon": "/assets/plugins/useful-autocrafter/banner.png",
-      "screenshots": [
-        "/assets/plugins/useful-autocrafter/banner.png",
-        "/assets/plugins/useful-autocrafter/screenshot-reserved-ingredients.png"
-      ],
+      "icon": "/assets/plugins/useful-autocrafter.png",
+      "screenshots": ["/assets/plugins/useful-autocrafter.png"],
       "featured": true
     },
     {
@@ -371,11 +332,8 @@
       ],
       "releaseUrl": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin/releases",
       "issuesUrl": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin/issues",
-      "icon": "/assets/plugins/wireless-redstone/banner.png",
-      "screenshots": [
-        "/assets/plugins/wireless-redstone/banner.png",
-        "/assets/plugins/wireless-redstone/screenshot-room-machines.png"
-      ],
+      "icon": "/assets/plugins/wireless-redstone.png",
+      "screenshots": ["/assets/plugins/wireless-redstone.png"],
       "featured": true
     }
   ]
