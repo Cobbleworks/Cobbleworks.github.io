@@ -740,41 +740,6 @@ code {
   border-radius: var(--radius-md);
 }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.info-card {
-  display: flex;
-  flex-direction: column;
-  min-height: 190px;
-  padding: 22px;
-  background: var(--ink-1);
-  border: 1px solid var(--hair);
-  border-radius: var(--radius-md);
-}
-
-.info-card h3 {
-  margin-bottom: 10px;
-  font-size: 1.05rem;
-}
-
-.info-card p {
-  margin-bottom: 18px;
-  color: var(--stone);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
-.info-card a {
-  margin-top: auto;
-  color: var(--ember-bright);
-  font-size: 0.84rem;
-  font-weight: 600;
-}
-
 .empty-state h3 {
   margin-bottom: 6px;
   font-size: 1.1rem;
@@ -979,10 +944,6 @@ code {
     grid-template-columns: 1fr;
     align-items: start;
     gap: 20px;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
   }
 
   .installation-guide {

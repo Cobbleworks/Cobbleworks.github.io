@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -31,22 +31,23 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m json.tool data/plugins.json >/dev/null
           test -f index.html
           test -f styles.css
           test -f script.js
           test -f robots.txt
           test -f sitemap.xml
           test -f assets/cobbleworks-hero-september-2026.png
+          test "$(find assets/plugins -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 13
           grep -q 'https://cobbleworks.github.io/' index.html
+          grep -q 'application/ld+json' index.html
 
       - name: Prepare static site
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/generate_site.py
           mkdir -p _site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' ./ _site/
+          cp index.html 404.html styles.css script.js robots.txt sitemap.xml site.webmanifest _site/
+          cp -R assets _site/assets
           touch _site/.nojekyll
 
       - name: Configure GitHub Pages
