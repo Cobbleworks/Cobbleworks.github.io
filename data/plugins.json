@@ -1,0 +1,382 @@
+{
+  "plugins": [
+    {
+      "slug": "advanced-achievements",
+      "name": "Advanced Achievements",
+      "repository": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin",
+      "tagline": "Create configurable milestones for building, exploration, combat, crafting, and more.",
+      "description": "Advanced Achievements helps server owners reward player progress with configurable milestones, persistent stats, and flexible reward actions.",
+      "category": "Progression",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.20+"],
+      "javaVersion": "Java 17+",
+      "dependencies": ["None"],
+      "features": [
+        "Configurable achievement milestones for building, exploration, combat, and crafting.",
+        "Persistent player progress backed by the plugin’s own data storage.",
+        "Reward actions for items, commands, titles, experience, and economy-style outputs.",
+        "Flexible command-based management for adding, resetting, and checking progress.",
+        "A plugin-wide profile designed for server-owned progression systems."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin/issues",
+      "icon": "/assets/plugins/advanced-achievements/banner.png",
+      "screenshots": [
+        "/assets/plugins/advanced-achievements/banner.png",
+        "/assets/plugins/advanced-achievements/screenshot-achievement-list.png"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "area-rewind",
+      "name": "Area Rewind",
+      "repository": "https://github.com/Cobbleworks/Area-Rewind-Plugin",
+      "tagline": "Protect important builds with named areas and versioned block-state snapshots.",
+      "description": "Area Rewind gives server admins a focused area-protection and restoration workflow for preserving builds, comparing states, and rolling back by region.",
+      "category": "World Protection",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.21.8+"],
+      "javaVersion": "Java 21+",
+      "dependencies": ["None"],
+      "features": [
+        "Named regions with snapshot-based rollback for individual builds and structures.",
+        "Versioned restore workflows for comparing and selecting prior state snapshots.",
+        "Aid for protection, rollback, and large-world recovery tasks.",
+        "A practical admin workflow for preserving builds before big changes.",
+        "Useful for server events, map customizations, and base recovery work."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Area-Rewind-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Area-Rewind-Plugin/issues",
+      "icon": "/assets/plugins/area-rewind/banner.png",
+      "screenshots": [
+        "/assets/plugins/area-rewind/banner.png",
+        "/assets/plugins/area-rewind/screenshot-mansion-diff.png"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "blockfolk",
+      "name": "Blockfolk",
+      "repository": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin",
+      "tagline": "Create persistent fake-player NPCs without editing data files by hand.",
+      "description": "Blockfolk is a persistent NPC framework for creating interactive fake-player characters with routes, behavior, inventory, chat, and item interactions.",
+      "category": "NPCs",
+      "platforms": ["Paper"],
+      "minecraftVersions": ["1.20+"],
+      "javaVersion": "Java 25+",
+      "dependencies": ["None"],
+      "features": [
+        "Persistent fake-player NPCs that can retain their configuration across restarts.",
+        "Built-in behavior systems for routes, idle actions, and item interactions.",
+        "Inventory and container workflows that make NPCs feel active in a server economy.",
+        "Editor-style creation flows for setting up an NPC’s personality and actions.",
+        "A flexible tool for roleplay, world-building, and custom server content."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/issues",
+      "icon": "/assets/plugins/blockfolk/banner.png",
+      "screenshots": [
+        "/assets/plugins/blockfolk/banner.png",
+        "/assets/plugins/blockfolk/screenshot-npc-editor.png"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "blood-moon",
+      "name": "Blood Moon",
+      "repository": "https://github.com/Cobbleworks/BloodMoon-Plugin",
+      "tagline": "Turn selected nights into high-pressure server events with seven distinct NPC encounters.",
+      "description": "Blood Moon creates tense, themed nighttime events with custom encounters, hostile spawns, and gameplay pressure built around special event nights.",
+      "category": "Events",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.20+"],
+      "javaVersion": "Java 17+",
+      "dependencies": ["None"],
+      "features": [
+        "Special event nights that can be scheduled or triggered on demand.",
+        "Multiple encounter archetypes with distinct effects and pressure patterns.",
+        "NPC and mob-based event design to keep server nights unpredictable.",
+        "Configurable event timing and behavior for server owners.",
+        "Fits PvE, survival, or antagonist-themed progression setups."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/BloodMoon-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/BloodMoon-Plugin/issues",
+      "icon": "/assets/plugins/blood-moon/banner.png",
+      "screenshots": [
+        "/assets/plugins/blood-moon/banner.png",
+        "/assets/plugins/blood-moon/screenshot-vampire-hemoplague.png"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "custom-jukebox",
+      "name": "Custom Jukebox",
+      "repository": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin",
+      "tagline": "Play Note Block Studio songs through signs, redstone, or a personal music browser.",
+      "description": "Custom Jukebox adds a music-focused extension for playing NBS songs via signs, redstone triggers, and in-server music controls.",
+      "category": "Music",
+      "platforms": ["Paper"],
+      "minecraftVersions": ["1.21+"],
+      "javaVersion": "Java 25+",
+      "dependencies": ["None"],
+      "features": [
+        "Music playback from Note Block Studio files using plugin-managed jukebox behavior.",
+        "Sign-based controls and redstone-triggered playback options.",
+        "A browser-like interface for selecting and managing tunes.",
+        "Persistent song records and simple configuration for arena or town setups.",
+        "Helpful for decorative server music and themed gameplay spaces."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/issues",
+      "icon": "/assets/plugins/custom-jukebox/banner.png",
+      "screenshots": [
+        "/assets/plugins/custom-jukebox/banner.png",
+        "/assets/plugins/custom-jukebox/screenshot-management-gui.png"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "hookshot",
+      "name": "Hookshot",
+      "repository": "https://github.com/Cobbleworks/Hookshot-Plugin",
+      "tagline": "Turn ordinary fishing rods into configurable grappling hooks for exploration and mobility.",
+      "description": "Hookshot transforms fishing rods into flexible grappling tools, offering a configurable mobility system for parkour, builds, faster travel, and custom movement settings.",
+      "category": "Movement",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.19+"],
+      "javaVersion": "Java 17+",
+      "dependencies": ["None"],
+      "features": [
+        "Configurable grappling behavior for fishing rods and movement tools.",
+        "Support for exploration, travel, parkour, and custom movement builds.",
+        "Targeted hooking for blocks or nearby entities depending on configuration.",
+        "A set of technical movement options for server-specific gameplay styles.",
+        "Designed around practical parkour and traversal additions."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Hookshot-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Hookshot-Plugin/issues",
+      "icon": "/assets/plugins/hookshot/banner.png",
+      "screenshots": [
+        "/assets/plugins/hookshot/banner.png",
+        "/assets/plugins/hookshot/screenshot-lava-dungeon.png"
+      ],
+      "featured": false
+    },
+    {
+      "slug": "map-revealer",
+      "name": "Map Revealer",
+      "repository": "https://github.com/Cobbleworks/Map-Revealer-Plugin",
+      "tagline": "Fill held maps from terrain or keep complete item-frame map walls synchronized automatically.",
+      "description": "Map Revealer lets players reveal map data from a world or keep item-frame arrays updated with a consistent theme and passable map refresh workflow.",
+      "category": "World Tools",
+      "platforms": ["Paper"],
+      "minecraftVersions": ["1.20+"],
+      "javaVersion": "Java 17+",
+      "dependencies": ["None"],
+      "features": [
+        "Reveal map data from the surrounding world in a held map.",
+        "Keep item-frame map walls refreshed and synchronized without constant manual updates.",
+        "Theme support and map formatting options for custom world displays.",
+        "A practical tool for map-based build showcases and custom exploration features.",
+        "Works well for display maps, base features, and map-driven server systems."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Map-Revealer-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Map-Revealer-Plugin/issues",
+      "icon": "/assets/plugins/map-revealer/banner.png",
+      "screenshots": [
+        "/assets/plugins/map-revealer/banner.png",
+        "/assets/plugins/map-revealer/screenshot-desert-reveal.png"
+      ],
+      "featured": false
+    },
+    {
+      "slug": "npc-pickup",
+      "name": "NPC PickUp",
+      "repository": "https://github.com/Cobbleworks/NPC-PickUp-Plugin",
+      "tagline": "Bring Citizens NPCs to life with intelligent item pickup and thief mechanics.",
+      "description": "NPC PickUp adds NPC-based item collection and theft behavior, helping servers create more believable citizen and world-interaction systems.",
+      "category": "NPCs",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.20+"],
+      "javaVersion": "Java 17+",
+      "dependencies": ["Citizens"],
+      "features": [
+        "NPC item pickup behaviors for citizens-based roleplay or world simulation.",
+        "Theft-style or stealth interactions for more dynamic NPC scenes.",
+        "A focus on interactive world behavior without heavy infrastructure requirements.",
+        "Useful for city, town, and simulation-themed servers.",
+        "A lightweight addition to the Citizens ecosystem."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/NPC-PickUp-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/NPC-PickUp-Plugin/issues",
+      "icon": "/assets/plugins/npc-pickup/banner.png",
+      "screenshots": [
+        "/assets/plugins/npc-pickup/banner.png",
+        "/assets/plugins/npc-pickup/screenshot-npc-eating.png"
+      ],
+      "featured": false
+    },
+    {
+      "slug": "piston-crusher",
+      "name": "Piston Crusher",
+      "repository": "https://github.com/Cobbleworks/Piston-Crusher-Plugin",
+      "tagline": "Turn a simple piston line into a configurable block crusher for farms and processing builds.",
+      "description": "Piston Crusher adds configurable block-crushing automation that turns a piston-based setup into a compact resource processor for farms and setups that need more output from a small footprint.",
+      "category": "Automation",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.20+"],
+      "javaVersion": "Java 17+",
+      "dependencies": ["None"],
+      "features": [
+        "Configurable crusher targets and processing rules for piston-based setups.",
+        "A compact solution for block-farming and resource processing.",
+        "Material filtering and adjustable output behaviors for custom farms.",
+        "Practical for compact processing lines and pack-focused automation.",
+        "Works well in survival or custom-minigame server designs."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Piston-Crusher-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Piston-Crusher-Plugin/issues",
+      "icon": "/assets/plugins/piston-crusher/banner.png",
+      "screenshots": [
+        "/assets/plugins/piston-crusher/banner.png",
+        "/assets/plugins/piston-crusher/screenshot-emerald-crushing.png"
+      ],
+      "featured": false
+    },
+    {
+      "slug": "power-mining",
+      "name": "Power Mining",
+      "repository": "https://github.com/Cobbleworks/Power-Mining-Plugin",
+      "tagline": "Expand survival mining with mounted excavation and a focused collection of utility equipment.",
+      "description": "Power Mining adds mining utilities such as ore-scanning behavior, mining gear, magnets, extraction tools, and equipment-based travel helpers for faster, more structured mining.",
+      "category": "Mining",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.21+"],
+      "javaVersion": "Java 21+",
+      "dependencies": ["None"],
+      "features": [
+        "Mining-oriented tools for ore scanning, traversal, and utility support.",
+        "Equipment-based functionality for a more active mining workflow.",
+        "Flexible utility behavior that supplements survival mining and exploration.",
+        "Systems designed around faster ore discovery and safer extraction routes.",
+        "A broad utility plugin for dedicated mining-focused systems."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Power-Mining-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Power-Mining-Plugin/issues",
+      "icon": "/assets/plugins/power-mining/banner.png",
+      "screenshots": [
+        "/assets/plugins/power-mining/banner.png",
+        "/assets/plugins/power-mining/screenshot-ore-scanner-bell.png"
+      ],
+      "featured": false
+    },
+    {
+      "slug": "rail-boost",
+      "name": "Rail Boost",
+      "repository": "https://github.com/Cobbleworks/Rail-Boost-Plugin",
+      "tagline": "Make minecart travel faster, steadier, and more useful for passengers and item transport.",
+      "description": "Rail Boost upgrades minecart travel with speed presets, shared storage, magnetism options, and smoother rail-based transport behavior for players and items.",
+      "category": "Transport",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.16+"],
+      "javaVersion": "Java 17+",
+      "dependencies": ["None"],
+      "features": [
+        "Minecart speed presets and tuned rail travel behavior.",
+        "Transport enhancements that improve comfort and control for regular players.",
+        "Optional features such as magnetic carts, pickup, and feedback systems.",
+        "Useful for quick movement, logistics, and rail-based automation builds.",
+        "An adaptable rail utility for transport-heavy servers."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Rail-Boost-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Rail-Boost-Plugin/issues",
+      "icon": "/assets/plugins/rail-boost/banner.png",
+      "screenshots": [
+        "/assets/plugins/rail-boost/banner.png",
+        "/assets/plugins/rail-boost/screenshot-speedometer.png"
+      ],
+      "featured": false
+    },
+    {
+      "slug": "super-enchantments",
+      "name": "Super Enchantments",
+      "repository": "https://github.com/Cobbleworks/Super-Enchantments-Plugin",
+      "tagline": "Apply vanilla enchantments beyond their normal limits and add new combat and utility abilities.",
+      "description": "Super Enchantments extends the vanilla enchantment system with raised caps, custom enchantments, and configurable combat or utility abilities for advanced gear setups.",
+      "category": "Equipment",
+      "platforms": ["Spigot", "Paper", "Purpur"],
+      "minecraftVersions": ["1.20.4+"],
+      "javaVersion": "Java 21+",
+      "dependencies": ["None"],
+      "features": [
+        "Apply vanilla enchantments beyond normal caps using expanded-level controls.",
+        "Custom enchantments for combat, mobility, utility, and effects.",
+        "Context-aware enchantment selection and configuration for players and server owners.",
+        "Configurable cooldowns, effects, and item compatibility behavior.",
+        "A powerful utility for high-tier gear progression and PvP or PvE balance."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Super-Enchantments-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Super-Enchantments-Plugin/issues",
+      "icon": "/assets/plugins/super-enchantments/banner.png",
+      "screenshots": [
+        "/assets/plugins/super-enchantments/banner.png",
+        "/assets/plugins/super-enchantments/screenshot-enchantment-255.png"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "useful-autocrafter",
+      "name": "Useful Autocrafter",
+      "repository": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin",
+      "tagline": "Keep automated recipes primed by reserving the final ingredient in every active Crafter slot.",
+      "description": "Useful Autocrafter is a Paper-focused automation helper that prevents recipe stalls by preserving the last ingredient in active crafter slots.",
+      "category": "Automation",
+      "platforms": ["Paper"],
+      "minecraftVersions": ["1.21+"],
+      "javaVersion": "Java 21+",
+      "dependencies": ["None"],
+      "features": [
+        "Keeps a one-item reserve in active crafter recipe slots.",
+        "Prevents hoppers and automation from stripping crafting ingredients away.",
+        "Works with recipe-based automation while keeping crafted output flowing.",
+        "A focused Paper-only inventory automation utility.",
+        "Helpful for compact redstone and production line designs."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin/issues",
+      "icon": "/assets/plugins/useful-autocrafter/banner.png",
+      "screenshots": [
+        "/assets/plugins/useful-autocrafter/banner.png",
+        "/assets/plugins/useful-autocrafter/screenshot-reserved-ingredients.png"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "wireless-redstone",
+      "name": "Wireless Redstone",
+      "repository": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin",
+      "tagline": "Link copper bulbs, redstone lamps, and supported containers without physical redstone wiring.",
+      "description": "Wireless Redstone links block states and container inventory workflows through named groups, making it easier to manage distance-based redstone and storage logistics.",
+      "category": "Redstone",
+      "platforms": ["Paper"],
+      "minecraftVersions": ["1.21+"],
+      "javaVersion": "Java 21+",
+      "dependencies": ["None"],
+      "features": [
+        "Wireless connections between bulbs, lamps, and compatible blocks.",
+        "Named group-based linking for redstone and shared inventory behavior.",
+        "Distance-friendly logic for compact or large-scale builds.",
+        "Practical for industrial builds, logic rooms, and server infrastructure.",
+        "A strong fit for redstone-heavy server setups and map creators."
+      ],
+      "releaseUrl": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin/releases",
+      "issuesUrl": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin/issues",
+      "icon": "/assets/plugins/wireless-redstone/banner.png",
+      "screenshots": [
+        "/assets/plugins/wireless-redstone/banner.png",
+        "/assets/plugins/wireless-redstone/screenshot-room-machines.png"
+      ],
+      "featured": true
+    }
+  ]
+}

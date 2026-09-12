@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plugin directory | Cobbleworks</title>
+    <meta name="description" content="Browse all Cobbleworks Minecraft plugins and compare supported platforms, versions, and use cases.">
+    <link rel="canonical" href="https://cobbleworks.github.io/plugins/">
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Cobbleworks plugin directory">
+    <meta property="og:description" content="Browse all Cobbleworks plugins for Paper, Spigot, and Purpur.">
+    <meta property="og:url" content="https://cobbleworks.github.io/plugins/">
+  </head>
+  <body data-page="directory">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" data-header>
+      <a class="brand" href="/" aria-label="Cobbleworks home">
+        <img src="/assets/brand-mark.svg" width="32" height="32" alt="">
+        <span>Cobbleworks</span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-button>
+        <span class="sr-only">Open navigation</span>
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-navigation" class="site-nav" aria-label="Primary navigation" data-navigation>
+        <a href="/plugins/" aria-current="page">Plugins</a>
+        <a href="/docs/">Documentation</a>
+        <a href="/releases/">Releases</a>
+        <a href="/about/">About</a>
+      </nav>
+      <div class="header-actions">
+        <a class="header-github" href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer" aria-label="Cobbleworks on GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.64 22.4c.58.1.79-.25.79-.56v-2.23c-3.23.7-3.91-1.37-3.91-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.11-.75.41-1.27.74-1.56-2.58-.29-5.29-1.29-5.29-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.05 0 0 .97-.31 3.16 1.18a10.9 10.9 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.4-2.72 5.38-5.3 5.67.42.36.79 1.06.79 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/></svg>
+        </a>
+        <a class="button button-primary header-cta" href="https://github.com/Cobbleworks" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </header>
+    <main id="main-content" class="page-shell">
+      <section class="section-stack">
+        <div class="section-heading section-heading-split">
+          <div>
+            <p class="eyebrow"><span></span> Cobbleworks catalog</p>
+            <h1>Plugin directory</h1>
+          </div>
+          <p class="section-lead">Browse the full plugin library and compare supported platforms, Java versions, and core use cases.</p>
+        </div>
+        <div class="plugin-toolbar" aria-label="Plugin search and filter">
+          <div class="plugin-toolbar-row">
+            <label class="search-control">
+              <span class="sr-only">Search plugins</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+              <input type="search" placeholder="Search plugin names and features…" data-plugin-search>
+            </label>
+            <span class="plugin-count" data-plugin-count></span>
+          </div>
+          <div class="filter-buttons" role="group" aria-label="Plugin categories">
+            <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" data-filter="automation" aria-pressed="false">Automation</button>
+            <button type="button" data-filter="npcs" aria-pressed="false">NPCs</button>
+            <button type="button" data-filter="world" aria-pressed="false">World tools</button>
+            <button type="button" data-filter="redstone" aria-pressed="false">Redstone</button>
+            <button type="button" data-filter="progression" aria-pressed="false">Progression</button>
+          </div>
+        </div>
+        <div id="directory-grid" class="plugin-grid"></div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <a class="brand" href="/"><img src="/assets/brand-mark.svg" width="32" height="32" alt=""><span>Cobbleworks</span></a>
+        <p>Open-source Minecraft server plugins.</p>
+        <nav aria-label="Footer navigation"><a href="/plugins/">Plugins</a><a href="/docs/">Documentation</a><a href="https://github.com/Cobbleworks">GitHub</a></nav>
+      </div>
+    </footer>
+    <script src="/script.js" defer></script>
+  </body>
+</html>
