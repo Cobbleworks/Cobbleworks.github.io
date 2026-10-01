@@ -30,7 +30,7 @@ if (menuButton && navigation) {
     if (!event.target.closest(".site-header")) closeMenu();
   });
   window
-    .matchMedia("(min-width: 801px)")
+    .matchMedia("(min-width: 861px)")
     .addEventListener("change", (event) => {
       if (event.matches) closeMenu();
     });
@@ -133,7 +133,7 @@ if (compatForm) {
   const platform = compatForm.querySelector("[data-compat-platform]");
   const java = compatForm.querySelector("[data-compat-java]");
   const target = compatForm.querySelector("[data-compat-target]");
-  compatForm.addEventListener("change", () => {
+  const update = () => {
     let count = 0;
     document.querySelectorAll("[data-compat-row]").forEach((row) => {
       const matches =
@@ -148,19 +148,22 @@ if (compatForm) {
     document.querySelector("[data-compat-count]").textContent =
       `${count} ${count === 1 ? "plugin" : "plugins"}`;
     document.querySelector("[data-compat-empty]").hidden = count !== 0;
-  });
+  };
+  compatForm.addEventListener("change", update);
+  update();
 }
 if (navigator.clipboard && window.isSecureContext) {
   document.querySelectorAll("[data-copy]").forEach((button) => {
     button.hidden = false;
+    const label = button.querySelector("span");
     button.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(button.dataset.copy);
-        button.textContent = "Copied";
+        label.textContent = "Copied";
         button.setAttribute("aria-label", "Command copied");
         setTimeout(() => {
-          button.textContent = "Copy";
-          button.setAttribute("aria-label", "Copy first command");
+          label.textContent = "Copy";
+          button.setAttribute("aria-label", "Copy command");
         }, 2000);
       } catch {
         const range = document.createRange();
@@ -168,33 +171,33 @@ if (navigator.clipboard && window.isSecureContext) {
         const selection = window.getSelection();
         selection.removeAllRanges();
         selection.addRange(range);
-        button.textContent = "Text selected";
+        label.textContent = "Selected";
       }
     });
   });
 }
-const sectionLinks = [
-  ...document.querySelectorAll(
-    '.product-sections a, .contents-rail a[href^="#"]',
-  ),
-];
+const sectionLinks = [...document.querySelectorAll('.tabs a[href^="#"]')];
 if (sectionLinks.length && "IntersectionObserver" in window) {
+  const sections = [...document.querySelectorAll(".doc-section[id]")];
+  const visible = new Set();
   const observer = new IntersectionObserver(
     (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-      if (!visible.length) return;
-      const id = visible[0].target.id;
+      for (const entry of entries) {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
+      }
+      const current = sections.find((section) => visible.has(section));
+      if (!current) return;
       sectionLinks.forEach((link) => {
-        if (link.hash === `#${id}`)
+        if (link.hash === `#${current.id}`) {
           link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
+          const strip = link.parentElement;
+          if (link.offsetLeft < strip.scrollLeft || link.offsetLeft + link.offsetWidth > strip.scrollLeft + strip.clientWidth)
+            strip.scrollLeft = link.offsetLeft - 16;
+        } else link.removeAttribute("aria-current");
       });
     },
-    { rootMargin: "-100px 0px -55% 0px" },
+    { rootMargin: "-140px 0px -60% 0px" },
   );
-  document
-    .querySelectorAll(".content-section[id]")
-    .forEach((section) => observer.observe(section));
+  sections.forEach((section) => observer.observe(section));
 }

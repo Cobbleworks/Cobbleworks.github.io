@@ -2958,7 +2958,7 @@
       "optional": [],
       "first_command": "/superwarp",
       "first_copy": "Open the native warp dialog. Operators create a destination with /superwarp set <name>.",
-      "notes": "This repository has no published release. It currently documents a source build for Paper 26.2 and Java 25. No licence file is present, so the website does not assign an MIT licence to it.",
+      "notes": "This repository has no published release. It currently documents a source build for Paper 26.2 and Java 25. No licence file has been published yet.",
       "status": "development",
       "license": null,
       "features": [

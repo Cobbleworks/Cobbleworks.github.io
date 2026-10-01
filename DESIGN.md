@@ -1,15 +1,30 @@
 # Cobbleworks design direction
 
-The redesign follows the supplied dark design studio concept: blue charcoal surfaces, warm copper actions, Space Grotesk headings, Inter body text, and practical product information. The supplied evening fortress is the homepage's single header image. The moonlit castle is a viable alternative; its competing character/castle focal points make mobile art direction more demanding.
+The site follows the supplied dark design studio concept: blue-charcoal surfaces (`#080D12`, `#0F1720`, `#14202A`), warm copper for actions (`#E8903A`), cyan only for focus rings, Space Grotesk headings, and Inter body text. Layout rhythm on the homepage also borrows from the second reference (hero facts, image band with figures, principle tiles, FAQ).
 
-The homepage introduces the organisation and features four complementary projects. The complete searchable collection has its own page. Every plugin receives a static page with its own content, requirements, downloads, installation, command/permission reference, and original release/documentation links. Real gameplay captures explain product behaviour. Compact SVG symbols provide consistent identity at small sizes; existing repository artwork remains available at its historical URLs.
+## Homepage
 
-The catalogue distinguishes thirteen projects with current published releases, Superwarp without a release, and the archived NPC PickUp extension. Requirements are version-specific. Blood Moon 2.0.1 uses Blockfolk 1.4.0+, Paper 26.2, and Java 25; Citizens/Sentinel belong to older releases. Superwarp has no specified repository licence and is not labelled MIT. Power Mining's platform discrepancy between its tagged README and release notes is explained rather than hidden.
+1. **Evening fortress header.** Text sits on a local left-side shade so the castle stays visible. Four factual hero facts follow.
+2. **Featured plugins.** Four cards with plugin artwork, the pixel icon overlapping the image edge, and requirement chips.
+3. **Latest releases.** Generated from release dates in the catalogue.
+4. **Whole collection.** All fifteen projects grouped by purpose.
+5. **Moonlit castle band.** "Open source. Built for real servers." with true figures only.
+6. **How Cobbleworks works and FAQ.** Real questions about platforms, Java, licence, dependencies, upgrades, and bug reports.
 
-Minecraft build targets and documented support ranges are separate facts. The compatibility table does not fabricate a tested matrix. Exact JAR links and original release notes remain visible. No popularity numbers, ratings, testimonials, or maintenance promises were invented.
+## Plugin pages
 
-Desktop puts text to the left of the castle with a local dark overlay. Mobile separates copy and artwork so both remain readable. Pages use available-width grid tracks and mobile table layouts to prevent the original hero clipping. Focus, reduced motion, menu Escape/focus return, and no-JavaScript navigation are supported.
+Each plugin page has a cinematic header from its own artwork: breadcrumb, icon, name, headline, requirement chips, and Download / Documentation / GitHub actions. A sticky section bar then links to Overview, Features, Installation, Commands, Permissions, Configuration, and Release notes, showing only the sections that exist. The overview pairs "What it does" with a compatibility card and the real gameplay gallery. Long permission and configuration tables collapse behind a disclosure. Each page ends with a support panel and three related plugins.
 
-Palette: background `#080D12`, surface `#101922`, primary text `#F2F4F3`, secondary text `#99A8B3`, copper `#E8903A`. Primary/secondary text contrast on solid surfaces exceeds 7:1. Essential form controls use stronger boundaries than decorative card borders. Fonts and responsive artwork are hosted locally.
+Header variants depend on available artwork: full-bleed artwork, a native-size banner over a blurred backdrop, or the large pixel icon on a grid for projects without artwork (Superwarp, NPC PickUp).
 
-The redesign changes neither repository names nor plugin implementations. Historical releases and the separate Blockfolk documentation deployment retain their roles.
+## Icons
+
+One hand-made 16 × 16 pixel-art family (`scripts/icons.py`): a shared 30-colour palette, one warm outline colour, light from the top left, and three tones per material. Each icon shows a concrete subject (trophy, rewind block, villager head, blood moon, music disc, grappling hook, revealed map, piston, pickaxe, minecart, enchanted sword, crafter grid, redstone torch, portal, lifted NPC). They are displayed in a consistent dark tile and rendered with `image-rendering: pixelated`.
+
+## Deliberately left out
+
+Some reference elements were not adopted because they would be untrue for Cobbleworks: prices, carts, "bestseller" badges, customer counts, ratings, testimonials, "regular updates" promises, and invented version histories. The compatibility table distinguishes build target from documented range and shows no fabricated tested matrix. A theme switch was omitted because the identity is dark-only.
+
+## Content boundaries
+
+Thirteen released plugins, Superwarp in development (no release, no licence), and the archived NPC PickUp. Blood Moon 2.0.1 needs Blockfolk 1.4.0+, Paper 26.2, and Java 25. Power Mining's platform discrepancy is explained on the compatibility page. Repository names, plugin implementations, and historical releases are unchanged.
