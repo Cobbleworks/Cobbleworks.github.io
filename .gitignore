@@ -1,2 +1,4 @@
 _site/
 site-*.png
+__pycache__/
+*.pyc

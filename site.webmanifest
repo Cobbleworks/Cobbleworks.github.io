@@ -4,8 +4,8 @@
   "description": "Open-source Minecraft server plugins for Paper and Spigot.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#08090a",
-  "theme_color": "#090a0b",
+  "background_color": "#080d12",
+  "theme_color": "#080d12",
   "icons": [
     {
       "src": "/assets/brand-mark.svg",

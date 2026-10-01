@@ -1,0 +1,3104 @@
+{
+  "verified": "2026-10-01",
+  "plugins": [
+    {
+      "slug": "advanced-achievements",
+      "name": "Advanced Achievements",
+      "repository": "Advanced-Achievements-Plugin",
+      "category": "Gameplay",
+      "categories": ["gameplay", "admin"],
+      "headline": "Give player progress a purpose.",
+      "description": "Create milestones with claimable rewards, linked prerequisites, and persistent player progress.",
+      "java": 17,
+      "platform": "Spigot / Paper",
+      "target": "1.20.4",
+      "documented_range": "1.20+",
+      "required": [],
+      "optional": ["Vault and an economy provider for money rewards"],
+      "first_command": "/ach gui",
+      "first_copy": "Open the achievement browser to inspect progress and claim unlocked rewards.",
+      "notes": "Achievements, messages, and rewards are defined in YAML. SQLite is available for a single server; MySQL can support shared tracking. Economy rewards need Vault and an economy provider.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "30 Predefined Achievements",
+          "copy": "Includes a full starter progression set with combat, utility, exploration, economy, and endgame milestone achievements"
+        },
+        {
+          "title": "19 Task Types",
+          "copy": "Tracks block break/place, item pickup/crafting/smelting, mob and player kills, damage dealt/taken, fishing, eating, enchanting, trading, mining, breeding, taming, death, walk distance, and play time with ANY and specific targets"
+        },
+        {
+          "title": "Reward System",
+          "copy": "Five reward types supported per achievement - items, XP, economy money (via Vault), server commands with {player} and {uuid} placeholders, and title messages - all defined directly in achievements.yml"
+        },
+        {
+          "title": "Achievement Prerequisites",
+          "copy": "Achievements can require other achievements to be unlocked first, enabling multi-step progression chains"
+        },
+        {
+          "title": "Hidden Achievements",
+          "copy": "Achievements can be flagged as hidden so they do not appear in the list or GUI until the player has already unlocked them"
+        },
+        {
+          "title": "Interactive GUI",
+          "copy": "An inventory-based achievement browser with paginated display, real-time progress bars, colour-coded states (locked/unlocked/claimed), and click-to-claim reward functionality"
+        },
+        {
+          "title": "Chat Creation Wizard",
+          "copy": "Administrators can create new achievements interactively through a guided step-by-step chat flow without editing any YAML manually"
+        },
+        {
+          "title": "Database Integration",
+          "copy": "Supports both SQLite (single-server) and MySQL (multi-server/network) with fully asynchronous load and save operations"
+        },
+        {
+          "title": "Broadcast Notifications",
+          "copy": "On unlock, players receive a title and chat notification; an optional server-wide broadcast message is configurable"
+        },
+        {
+          "title": "Sound and Firework Effects",
+          "copy": "Unlock events trigger a configurable sound and an optional firework display at the player's location"
+        },
+        {
+          "title": "Progress Bar Display",
+          "copy": "Optional ActionBar or BossBar progress display, configurable refresh interval and display trigger"
+        },
+        {
+          "title": "Fully Customisable Messages",
+          "copy": "All chat output, prefixes, GUI labels, and notification text are editable in messages.yml"
+        },
+        {
+          "title": "Developer API",
+          "copy": "A full Java API (AchievementAPI) is exposed for other plugins to create achievements, query progress, grant unlocks, and add progress programmatically"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/advanced-achievements-1.webp",
+          "full": "/assets/screenshots/advanced-achievements-1-large.webp",
+          "caption": "Reward GUI"
+        },
+        {
+          "src": "/assets/screenshots/advanced-achievements-2.webp",
+          "full": "/assets/screenshots/advanced-achievements-2-large.webp",
+          "caption": "Achievement Progress"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/ach", "Open the paginated achievement list (same as /ach list)"],
+            ["/ach list", "Show all visible achievements (5 per page)"],
+            ["/ach list <page>", "Jump to a specific page number"],
+            ["/ach list <", "Go to the previous list page"],
+            ["/ach list >", "Go to the next list page"],
+            [
+              "/ach info <id>",
+              "Show full details for the given achievement including task, rewards, and prerequisites"
+            ],
+            [
+              "/ach progress <id>",
+              "Show your current progress and completion percentage for a specific achievement"
+            ],
+            [
+              "/ach stats",
+              "Show your overall unlock count, total achievements, and completion percentage"
+            ],
+            [
+              "/ach gui",
+              "Open the interactive inventory-based achievement browser"
+            ],
+            ["/ach help", "Display all available player and admin commands"]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            [
+              "advancedachievements.use",
+              "Access to basic player commands (list, info, progress, stats, help)",
+              "true"
+            ],
+            ["advancedachievements.gui", "Access to /ach gui", "true"],
+            [
+              "advancedachievements.claim",
+              "Ability to claim rewards from the GUI",
+              "true"
+            ],
+            [
+              "advancedachievements.admin",
+              "Access to all administrative commands",
+              "op"
+            ],
+            [
+              "advancedachievements.create",
+              "Create new achievements via /ach create",
+              "op"
+            ],
+            [
+              "advancedachievements.edit",
+              "Edit existing achievements via /ach edit",
+              "op"
+            ],
+            [
+              "advancedachievements.delete",
+              "Delete achievements via /ach delete",
+              "op"
+            ],
+            [
+              "advancedachievements.give",
+              "Give achievements to players via /ach give",
+              "op"
+            ],
+            [
+              "advancedachievements.reset",
+              "Reset player progress via /ach reset",
+              "op"
+            ],
+            [
+              "advancedachievements.setprogress",
+              "Set player achievement progress",
+              "op"
+            ],
+            [
+              "advancedachievements.resetall",
+              "Reset all achievements for a player",
+              "op"
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Key", "Default", "Description"],
+          "rows": [
+            ["database.type", "SQLite", "Database backend: SQLite or MySQL"],
+            [
+              "database.sqlite.file",
+              "achievements.db",
+              "SQLite file name relative to the plugin folder"
+            ],
+            [
+              "database.mysql.*",
+              "-",
+              "MySQL host, port, database, username, password"
+            ],
+            ["progress-bar.enabled", "false", "Show a progress bar to players"],
+            [
+              "progress-bar.type",
+              "ACTIONBAR",
+              "Display type: ACTIONBAR or BOSSBAR"
+            ],
+            [
+              "progress-bar.boss-bar.color",
+              "GREEN",
+              "BossBar colour (used when type is BOSSBAR)"
+            ],
+            [
+              "progress-bar.boss-bar.style",
+              "SOLID",
+              "BossBar style (e.g., SOLID, SEGMENTED_6)"
+            ],
+            [
+              "progress-bar.update-interval",
+              "20",
+              "Update interval in ticks (20 ticks = 1 second)"
+            ],
+            [
+              "progress-bar.show-on-progress",
+              "false",
+              "Only show bar when progress increases"
+            ],
+            [
+              "notifications.sound.enabled",
+              "true",
+              "Play sound on achievement unlock"
+            ],
+            [
+              "notifications.sound.sound",
+              "ENTITY_PLAYER_LEVELUP",
+              "Bukkit sound name"
+            ],
+            ["notifications.sound.volume", "1.0", "Sound volume"],
+            ["notifications.sound.pitch", "1.0", "Sound pitch"],
+            [
+              "notifications.title.enabled",
+              "true",
+              "Show title/subtitle on achievement unlock"
+            ],
+            [
+              "notifications.title.fade-in",
+              "10",
+              "Title fade-in duration in ticks"
+            ],
+            ["notifications.title.stay", "70", "Title stay duration in ticks"],
+            [
+              "notifications.title.fade-out",
+              "20",
+              "Title fade-out duration in ticks"
+            ],
+            [
+              "notifications.chat.enabled",
+              "true",
+              "Send chat message on unlock"
+            ],
+            [
+              "notifications.chat.broadcast",
+              "false",
+              "Broadcast unlock to all online players"
+            ],
+            [
+              "notifications.firework.enabled",
+              "true",
+              "Spawn a firework on achievement unlock"
+            ],
+            ["gui.rows", "6", "Number of inventory rows in the GUI (max 6)"],
+            ["gui.items-per-page", "45", "Achievements shown per GUI page"],
+            [
+              "gui.auto-refresh",
+              "true",
+              "Automatically refresh the GUI for open players"
+            ],
+            [
+              "gui.refresh-interval",
+              "60",
+              "GUI auto-refresh interval in seconds"
+            ],
+            [
+              "defaults.icon",
+              "PAPER",
+              "Default icon material for new achievements"
+            ]
+          ]
+        },
+        {
+          "headers": ["Task Type ID", "Tracks", "Valid target Values"],
+          "rows": [
+            [
+              "block_break",
+              "Breaking blocks",
+              "ANY, or any block material (e.g., OAK_LOG, STONE)"
+            ],
+            ["block_place", "Placing blocks", "ANY, or any block material"],
+            [
+              "item_pickup",
+              "Picking up items",
+              "ANY, LOG (all log/wood types), or any item material name"
+            ],
+            [
+              "mob_kill",
+              "Killing entities",
+              "ANY, HOSTILE (any monster), or any entity type (e.g., ZOMBIE)"
+            ],
+            ["player_kill", "Killing players", "ANY, or specific player name"],
+            [
+              "item_craft",
+              "Crafting items",
+              "ANY, or any craftable material name"
+            ],
+            [
+              "item_smelt",
+              "Smelting output collection",
+              "ANY, or smelted output item material (e.g., IRON_INGOT)"
+            ],
+            [
+              "fishing",
+              "Catching fish or items",
+              "ANY, or any caught item material name"
+            ],
+            ["eating", "Consuming food", "ANY, or any food material name"],
+            [
+              "enchanting",
+              "Enchanting items",
+              "ANY (individual item target not tracked)"
+            ],
+            [
+              "trading",
+              "Completing villager trades",
+              "ANY (individual item target not tracked)"
+            ],
+            [
+              "mining",
+              "Mining ores",
+              "ANY, or any ore material name containing _ORE"
+            ],
+            [
+              "damage_dealt",
+              "Dealing combat damage",
+              "ANY, or entity type name"
+            ],
+            [
+              "damage_taken",
+              "Taking incoming damage",
+              "ANY, or damage cause (e.g., FALL, LAVA, ENTITY_ATTACK)"
+            ],
+            [
+              "walk_distance",
+              "Travel distance",
+              "ANY, or world name (stored as centi-blocks)"
+            ],
+            [
+              "play_time",
+              "Online play time",
+              "ANY, or world name (stored in seconds)"
+            ],
+            [
+              "breeding",
+              "Breeding animals",
+              "ANY, or any breedable entity type (e.g., COW)"
+            ],
+            [
+              "taming",
+              "Taming animals",
+              "ANY, or any tameable entity type (e.g., WOLF)"
+            ],
+            [
+              "death",
+              "Dying",
+              "ANY, or a specific player name to track per-player deaths"
+            ]
+          ]
+        },
+        {
+          "headers": ["Format", "Description", "Example"],
+          "rows": [
+            [
+              "ITEM:<material>:<amount>",
+              "Give the player an item",
+              "ITEM:DIAMOND:5"
+            ],
+            ["XP:<amount>", "Give XP experience points", "XP:500"],
+            ["EXPERIENCE:<amount>", "Alias for XP", "EXPERIENCE:100"],
+            ["MONEY:<amount>", "Give economy money via Vault", "MONEY:1000"],
+            [
+              "COMMAND:<command>",
+              "Execute a console command",
+              "COMMAND:give {player} golden_apple 1"
+            ],
+            [
+              "TITLE:<text>",
+              "Send a title message to the player",
+              "TITLE:Master Crafter"
+            ],
+            ["<material>:<amount>", "Shorthand item reward", "BREAD:5"]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.0.3",
+        "published": "2026-09-01T21:01:23Z",
+        "url": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin/releases/tag/v1.0.3",
+        "asset": {
+          "name": "Advanced-Achievements-1.0.3.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin/releases/download/v1.0.3/Advanced-Achievements-1.0.3.jar",
+          "size": 104047
+        },
+        "summary": "Advanced Achievements v1.0.3 updates achievement and progress handling for current Paper APIs."
+      },
+      "docs": "https://github.com/Cobbleworks/Advanced-Achievements-Plugin/blob/v1.0.3/README.md"
+    },
+    {
+      "slug": "area-rewind",
+      "name": "Area Rewind",
+      "repository": "Area-Rewind-Plugin",
+      "category": "World management",
+      "categories": ["world", "admin"],
+      "headline": "A way back for important builds.",
+      "description": "Save named regions, compare snapshots, and restore earlier versions of your world.",
+      "java": 21,
+      "platform": "Spigot / Paper",
+      "target": "1.21.8",
+      "documented_range": "1.21.8+",
+      "required": [],
+      "optional": ["WorldEdit for selections and schematic export"],
+      "first_command": "/rewind tool",
+      "first_copy": "Select two corners with the wooden hoe, then use /rewind save home and /rewind backup home.",
+      "notes": "Owners and trusted players control area access. Restores can be previewed and run across server ticks. WorldEdit is optional for selections and schematic exports.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Built-in two-point selection with a wooden hoe or look-target commands",
+          "copy": ""
+        },
+        {
+          "title": "Optional WorldEdit selection support and .schem export",
+          "copy": ""
+        },
+        {
+          "title": "Manual and scheduled backups with configurable retention",
+          "copy": ""
+        },
+        {
+          "title": "Restore by backup ID, latest, oldest, or a relative time",
+          "copy": ""
+        },
+        {
+          "title": "Undo, redo, current-state scans, and backup-to-backup comparisons",
+          "copy": ""
+        },
+        {
+          "title": "Owner/trusted-player access model with Bukkit permission nodes",
+          "copy": ""
+        },
+        {
+          "title": "Particle boundaries and restore previews",
+          "copy": ""
+        },
+        {
+          "title": "Per-area icons, restore speeds, and automatic backup intervals",
+          "copy": ""
+        },
+        {
+          "title": "Persistence for areas, backups, inventories, signs, and banner data",
+          "copy": ""
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/area-rewind-1.webp",
+          "full": "/assets/screenshots/area-rewind-1-large.webp",
+          "caption": "Lighthouse restore"
+        },
+        {
+          "src": "/assets/screenshots/area-rewind-2.webp",
+          "full": "/assets/screenshots/area-rewind-2-large.webp",
+          "caption": "Mansion backup comparison"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/rewind tool", "Receive the wooden hoe selection tool."],
+            [
+              "/rewind pos1, /rewind pos2",
+              "Set a corner to the block being viewed."
+            ],
+            [
+              "/rewind save <name>",
+              "Create an area from the active selection."
+            ],
+            ["/rewind list [all", "owned", "trusted]", "List visible areas."],
+            [
+              "/rewind info <area>",
+              "Show ownership, bounds, trust, and backup information."
+            ],
+            ["/rewind teleport <area>", "Teleport to an area. Alias: tp."],
+            ["/rewind rename <old> <new>", "Rename an area."],
+            [
+              "/rewind expand <area> <direction> <amount>",
+              "Extend an area boundary."
+            ],
+            [
+              "/rewind contract <area> <direction> <amount>",
+              "Reduce an area boundary."
+            ],
+            ["/rewind delete <area>", "Delete an area and its backups."]
+          ]
+        },
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/rewind backup <area>", "Create a snapshot immediately."],
+            [
+              "/rewind history <area> [page]",
+              "List snapshot IDs and timestamps."
+            ],
+            [
+              "/rewind restore <area> <id",
+              "latest",
+              "oldest>",
+              "Restore a stored snapshot."
+            ],
+            [
+              "/rewind rollback <area> <time>",
+              "Restore the snapshot nearest a relative time such as 30m, 2h, or 1d."
+            ],
+            [
+              "/rewind undo <area>, /rewind redo <area>",
+              "Move backward or forward around the most recent restore."
+            ],
+            [
+              "/rewind scan <area>",
+              "Compare the current blocks with the newest backup."
+            ],
+            [
+              "/rewind diff <area> <id",
+              "current> <id",
+              "current>",
+              "Compare two backups or one backup with the current world. Alias: compare."
+            ],
+            [
+              "/rewind preview <area> [id] [particle]",
+              "Highlight blocks that differ from a backup."
+            ],
+            [
+              "/rewind cleanup <area> [days]",
+              "Remove backups older than the requested age."
+            ]
+          ]
+        },
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            [
+              "/rewind interval set <area> <minutes> [backup_id]",
+              "Schedule recurring backups."
+            ],
+            [
+              "/rewind interval check <area>",
+              "Show an area's current schedule."
+            ],
+            ["/rewind interval remove <area>", "Remove the schedule."],
+            [
+              "/rewind speed <area> <1-10000",
+              "dynamic>",
+              "Override or restore the dynamic blocks-per-tick speed."
+            ],
+            ["/rewind trust <area> <player>", "Add a trusted player."],
+            ["/rewind untrust <area> <player>", "Remove a trusted player."],
+            [
+              "/rewind permission <add",
+              "remove",
+              "list> <area> [player]",
+              "Manage stored area access. Aliases: perm, permissions."
+            ],
+            [
+              "/rewind seticon <area> <material",
+              "hand>",
+              "Set the GUI icon for an area."
+            ],
+            [
+              "/rewind seticon backup <area> <id> <material",
+              "hand>",
+              "Set a backup's GUI icon."
+            ]
+          ]
+        },
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/rewind show <area>", "Display an area's particle boundary."],
+            ["/rewind hide [area]", "Hide one or all displayed boundaries."],
+            [
+              "/rewind export <area> [backup_id]",
+              "Write a WorldEdit .schem file. Requires WorldEdit."
+            ],
+            ["/rewind status", "Show area, backup, and scheduler statistics."],
+            [
+              "/rewind reload",
+              "Reload the server configuration. Requires administrator access."
+            ],
+            ["/rewind help", "Show the command list available to the player."]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Default", "Purpose"],
+          "rows": [
+            [
+              "arearewind.use",
+              "Everyone",
+              "Use the root command and basic information features."
+            ],
+            ["arearewind.create", "Everyone", "Create areas."],
+            ["arearewind.delete", "Everyone", "Delete an owned area."],
+            [
+              "arearewind.backup",
+              "Everyone",
+              "Back up an owned or trusted area."
+            ],
+            [
+              "arearewind.restore",
+              "Everyone",
+              "Restore an owned or trusted area."
+            ],
+            ["arearewind.trust", "Everyone", "Manage trust on an owned area."],
+            [
+              "arearewind.visualize",
+              "Everyone",
+              "Display owned or trusted areas and previews."
+            ],
+            ["arearewind.gui", "Everyone", "Use the inventory GUI."],
+            [
+              "arearewind.export",
+              "Everyone",
+              "Export an accessible area through WorldEdit."
+            ],
+            ["arearewind.import", "Everyone", "Reserved import permission."],
+            [
+              "arearewind.admin",
+              "Operators",
+              "Bypass area ownership checks and access administration."
+            ],
+            [
+              "arearewind.*",
+              "Operators",
+              "Parent node for every Area Rewind permission."
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Key", "Default", "Purpose"],
+          "rows": [
+            [
+              "backup.max-backups-per-area",
+              "50",
+              "Maximum snapshots retained for one area before old entries are pruned."
+            ],
+            [
+              "performance.max-area-size",
+              "1000000",
+              "Maximum number of blocks allowed in an area."
+            ],
+            [
+              "performance.rate-limit-cooldown",
+              "1000",
+              "Backup/restore cooldown in milliseconds."
+            ],
+            [
+              "performance.restore.max-batch-size",
+              "400",
+              "Upper dynamic restore speed in blocks per tick."
+            ],
+            [
+              "performance.restore.min-batch-size",
+              "100",
+              "Lower dynamic restore speed in blocks per tick."
+            ],
+            [
+              "visualization.particle-distance",
+              "50",
+              "Maximum particle viewing distance in blocks."
+            ],
+            [
+              "selection.wooden-hoe.force-enabled",
+              "false",
+              "Always use the built-in wooden hoe selection mode."
+            ],
+            [
+              "selection.wooden-hoe.auto-fallback",
+              "true",
+              "Fall back to the wooden hoe if WorldEdit is unavailable."
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.0.4",
+        "published": "2026-09-01T22:51:59Z",
+        "url": "https://github.com/Cobbleworks/Area-Rewind-Plugin/releases/tag/v1.0.4",
+        "asset": {
+          "name": "Area-Rewind-1.0.4.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Area-Rewind-Plugin/releases/download/v1.0.4/Area-Rewind-1.0.4.jar",
+          "size": 289539
+        },
+        "summary": "Area Rewind v1.0.4 fixes validation of disabled per-player settings."
+      },
+      "docs": "https://github.com/Cobbleworks/Area-Rewind-Plugin/blob/v1.0.4/README.md"
+    },
+    {
+      "slug": "blockfolk",
+      "name": "Blockfolk",
+      "repository": "Blockfolk-NPC-Plugin",
+      "category": "NPC system",
+      "categories": ["npc", "gameplay", "admin"],
+      "headline": "Bring your world to life.",
+      "description": "Create persistent NPCs with routes, behaviours, conversations, combat, and world interaction.",
+      "java": 25,
+      "platform": "Paper",
+      "target": "26.2",
+      "documented_range": "26.2",
+      "required": [],
+      "optional": [
+        "BeautyQuests for quests",
+        "OpenRouter for optional AI behaviour"
+      ],
+      "first_command": "/bf create",
+      "first_copy": "Create a reusable NPC preset in the dialog, configure it in the editor, and spawn a persistent instance.",
+      "notes": "Presets and spawned instances are separate. Configure routes, equipment, interactions, and combat from inventory menus. OpenRouter is optional and only uses administrator-enabled actions.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Persistent NPC presets",
+          "copy": "Reuse one definition across multiple independently stored instances"
+        },
+        {
+          "title": "In-game administration",
+          "copy": "Configure skins, equipment, names, dialog, inventories, routes, and behavior without hand-editing YAML"
+        },
+        {
+          "title": "Saved NPC poses",
+          "copy": "Choose standing, crouching, sleeping, sitting, swimming/crawling, or fall flying under NPC Properties → Pose; use Sitting in behavior, waypoint, and question animations"
+        },
+        {
+          "title": "Behavior sequences",
+          "copy": "React to interaction, proximity, combat, time, waypoints, custom events, and other supported triggers"
+        },
+        {
+          "title": "Routes and locations",
+          "copy": "Build NPC-owned walking routes in the world and reuse named destinations across NPCs"
+        },
+        {
+          "title": "Configurable combat",
+          "copy": "Define attacks, targets, alliances, loot, experience, respawn timing, and nearby boss bars"
+        },
+        {
+          "title": "World interaction",
+          "copy": "Mine configured resources, harvest crops, and transfer items to or from containers"
+        },
+        {
+          "title": "Optional AI behavior",
+          "copy": "Use OpenRouter for contextual conversation and validated, administrator-approved actions"
+        },
+        {
+          "title": "Quest integration",
+          "copy": "Expose persistent Blockfolk NPCs directly to BeautyQuests"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/blockfolk-1.webp",
+          "full": "/assets/screenshots/blockfolk-1-large.webp",
+          "caption": "Blockfolk NPC editor"
+        },
+        {
+          "src": "/assets/screenshots/blockfolk-2.webp",
+          "full": "/assets/screenshots/blockfolk-2-large.webp",
+          "caption": "Configuring an NPC idle walking action"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/bf or /blockfolk", "Open the NPC preset browser"],
+            [
+              "/bf create",
+              "Open the NPC creation dialog for name, HP, respawn time, and basic properties"
+            ],
+            [
+              "/bf create <name>",
+              "Open the creation dialog with the name prefilled"
+            ],
+            ["/bf npc <name>", "Open a preset editor; names are tab-completed"],
+            ["/bf npc <name> edit", "Open the same preset editor explicitly"],
+            ["/bf npc <name> spawn", "Spawn a persistent instance of a preset"],
+            [
+              "/bf npc <name> duplicate",
+              "Duplicate a preset with  (copy) appended to its name"
+            ],
+            ["/bf routes", "Open the route manager"],
+            ["/bf locations", "Open the global-location manager"]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            [
+              "blockfolk.admin",
+              "Create, edit, spawn, and manage Blockfolk NPCs",
+              "op"
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Setting", "Purpose"],
+          "rows": [
+            [
+              "chat-input-timeout-seconds",
+              "Time allowed for administrator text input"
+            ],
+            [
+              "question-timeout-seconds",
+              "Time allowed for a player to answer an NPC question"
+            ],
+            [
+              "proximity-transition-cooldown-seconds",
+              "Debounces rapid approach and leave transitions"
+            ],
+            [
+              "mineskin-api-key",
+              "Optional key for higher MineSkin request limits"
+            ],
+            [
+              "openrouter.*",
+              "Endpoint, key, model, timeout, and response limit for optional AI behavior"
+            ],
+            [
+              "ai-control.*",
+              "AI cooldown, memory, perception, mining, and inventory safeguards"
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.4.0",
+        "published": "2026-10-01T12:17:42Z",
+        "url": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases/tag/v1.4.0",
+        "asset": {
+          "name": "Blockfolk-1.4.0.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases/download/v1.4.0/Blockfolk-1.4.0.jar",
+          "size": 591266
+        },
+        "summary": "Blockfolk 1.4.0 adds saved NPC poses and repairs encounter movement used by Blood Moon."
+      },
+      "docs": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/blob/v1.4.0/README.md"
+    },
+    {
+      "slug": "blood-moon",
+      "name": "Blood Moon",
+      "repository": "BloodMoon-Plugin",
+      "category": "Server event",
+      "categories": ["gameplay"],
+      "headline": "Some nights change everything.",
+      "description": "Run configurable night events with seven specialised encounters, live difficulty profiles, and themed abilities.",
+      "java": 25,
+      "platform": "Paper",
+      "target": "26.2",
+      "documented_range": "26.2",
+      "required": [
+        {
+          "name": "Blockfolk 1.4.0+",
+          "url": "/plugins/blockfolk/"
+        }
+      ],
+      "optional": [],
+      "first_command": "/bloodmoon status",
+      "first_copy": "Inspect event settings, then use /bloodmoon start in a test world to experience the encounters.",
+      "notes": "The current release uses Blockfolk for encounters and requires Paper 26.2 and Java 25. Install Blockfolk 1.4.0 or newer first. Citizens and Sentinel are no longer required. Older releases remain available for older servers.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Seven special NPCs",
+          "copy": "Vampire, Clown, Zombie, Witch, Scarecrow, Ghost, and Werewolf"
+        },
+        {
+          "title": "Per-player spawning with separate health, radius, and population limits for each NPC type",
+          "copy": ""
+        },
+        {
+          "title": "Multi-phase encounters with telegraphed abilities, visual effects, and themed rewards",
+          "copy": ""
+        },
+        {
+          "title": "Four live difficulty profiles that alter health, rewards, experience, and ability cadence",
+          "copy": ""
+        },
+        {
+          "title": "Configurable world list, event chance, bleed behavior, NPC skins, and messages",
+          "copy": ""
+        },
+        {
+          "title": "Admin controls for starting, stopping, testing, clearing, and reloading events",
+          "copy": ""
+        },
+        {
+          "title": "Segmented overhead health bars and automatic cleanup of supporting entities",
+          "copy": ""
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/blood-moon-1.webp",
+          "full": "/assets/screenshots/blood-moon-1-large.webp",
+          "caption": "Witch Cage Magic"
+        },
+        {
+          "src": "/assets/screenshots/blood-moon-2.webp",
+          "full": "/assets/screenshots/blood-moon-2-large.webp",
+          "caption": "Vampire Hemoplague"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            [
+              "/bloodmoon start [world]",
+              "Set the world to night and force-start an event. A player may omit the world."
+            ],
+            [
+              "/bloodmoon stop [world]",
+              "Stop one world's event, or all active events when no world is supplied."
+            ],
+            [
+              "/bloodmoon status",
+              "Show active worlds, chance, difficulty, NPC counts, and the next roll window."
+            ],
+            [
+              "/bloodmoon spawn <type> [player]",
+              "Spawn an NPC at the block a player is looking at, or near the named player. Console must supply a player."
+            ],
+            [
+              "/bloodmoon clear [world]",
+              "Remove BloodMoon NPCs in one world or across all worlds."
+            ],
+            [
+              "/bloodmoon reload",
+              "Reload the configuration and refresh active Vampire combat settings."
+            ],
+            [
+              "/bloodmoon enable <world>",
+              "Add a loaded world to the natural-event list and save the change."
+            ],
+            [
+              "/bloodmoon disable <world>",
+              "Remove a world from the list, save the change, and stop its active event."
+            ],
+            [
+              "/bloodmoon chance <1-100>",
+              "Set a temporary one-in-N chance override for the current session."
+            ],
+            [
+              "/bloodmoon difficulty <profile>",
+              "Select easy, medium, hard, or nightmare for the current session."
+            ],
+            [
+              "/bloodmoon messages",
+              "Toggle boss phase messages for the player running the command."
+            ],
+            [
+              "/bloodmoon healthbar",
+              "Show health-bar information to the player running the command."
+            ]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Default", "Description"],
+          "rows": [
+            [
+              "bloodmoon.admin",
+              "Operators",
+              "Access to event administration and manual NPC spawning."
+            ],
+            [
+              "bloodmoon.healthbar",
+              "Everyone",
+              "Access to /bloodmoon healthbar."
+            ],
+            [
+              "bloodmoon.notify",
+              "Everyone",
+              "Receive Blood Moon notifications."
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Key", "Default", "Purpose"],
+          "rows": [
+            [
+              "bloodmoon.chance",
+              "24",
+              "One-in-N chance evaluated when a configured world reaches night."
+            ],
+            [
+              "bloodmoon.worlds",
+              "[world]",
+              "Worlds eligible for natural Blood Moons."
+            ],
+            [
+              "bloodmoon.special-mob-replace-chance",
+              "0.08",
+              "Chance used by special-mob replacement behavior. Values are clamped from 0 to 1."
+            ],
+            [
+              "messages.event-start",
+              "§4- THE BLOOD MOON RISES -",
+              "Event start announcement."
+            ],
+            [
+              "messages.event-end",
+              "§6The Blood Moon fades... for now.",
+              "Event end announcement."
+            ]
+          ]
+        },
+        {
+          "headers": ["Section", "Extra Controls"],
+          "rows": [
+            ["vampire", "Minimum and maximum stalking duration"],
+            [
+              "clown",
+              "Manic threshold and cadence, balloon cap, teleport hops, and snap radius"
+            ],
+            [
+              "zombie",
+              "Infection timing and damage, infection jump radius, horde radius, phase threshold, and plague radius"
+            ]
+          ]
+        },
+        {
+          "headers": ["Key", "Default", "Purpose"],
+          "rows": [
+            [
+              "bleed.chance",
+              "0.4",
+              "Chance for a qualifying hit to apply bleed."
+            ],
+            [
+              "bleed.damage-per-tick",
+              "1.0",
+              "Damage dealt by each bleed tick."
+            ],
+            ["bleed.interval-ticks", "40", "Time between bleed ticks."],
+            [
+              "bleed.max-stacks",
+              "2",
+              "Maximum simultaneous stacks on one target."
+            ]
+          ]
+        },
+        {
+          "headers": [
+            "Profile",
+            "Non-Vampire Health",
+            "Rewards",
+            "Experience",
+            "Ability Interval"
+          ],
+          "rows": [
+            ["easy", "0.85x", "0.90x", "0.90x", "1.12x"],
+            ["medium", "1.00x", "1.00x", "1.00x", "1.00x"],
+            ["hard", "1.20x", "1.25x", "1.25x", "0.85x"],
+            ["nightmare", "1.38x", "1.55x", "1.60x", "0.72x"]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v2.0.1",
+        "published": "2026-10-01T12:19:27Z",
+        "url": "https://github.com/Cobbleworks/BloodMoon-Plugin/releases/tag/v2.0.1",
+        "asset": {
+          "name": "Blood-Moon-2.0.1.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/BloodMoon-Plugin/releases/download/v2.0.1/Blood-Moon-2.0.1.jar",
+          "size": 481488
+        },
+        "summary": "Blood Moon 2.0.1 fixes floating encounter NPCs, excessive navigation work, and Clown flight behavior."
+      },
+      "docs": "https://github.com/Cobbleworks/BloodMoon-Plugin/blob/v2.0.1/README.md"
+    },
+    {
+      "slug": "custom-jukebox",
+      "name": "Custom Jukebox",
+      "repository": "Custom-Jukebox-Plugin",
+      "category": "Music",
+      "categories": ["gameplay", "automation"],
+      "headline": "Give your server its soundtrack.",
+      "description": "Play NBS music through personal controls, persistent signs, and custom records in vanilla jukeboxes.",
+      "java": 25,
+      "platform": "Paper",
+      "target": "26.2",
+      "documented_range": "26.2",
+      "required": [
+        {
+          "name": "NoteBlockAPI 1.7.0+",
+          "url": "https://github.com/koca2000/NoteBlockAPI"
+        }
+      ],
+      "optional": [],
+      "first_command": "/jukebox play",
+      "first_copy": "Add your NBS songs to the configured song library and open the folder-aware browser.",
+      "notes": "NoteBlockAPI must be installed separately. Signs can toggle, pulse, or ignore redstone. Custom song-bound records preserve their identity through persistent item data.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Folder-aware song browser",
+          "copy": "Subdirectories become navigable folders in the in-game GUI"
+        },
+        {
+          "title": "Personal playback",
+          "copy": "Play or stop a song without creating a world jukebox"
+        },
+        {
+          "title": "Jukebox signs",
+          "copy": "Store the selected song, volume, looping, and redstone mode directly on a sign"
+        },
+        {
+          "title": "Three redstone modes",
+          "copy": "Toggle, pulse, or ignore external redstone power"
+        },
+        {
+          "title": "Registered-sign index",
+          "copy": "List configured signs and their locations with an admin command"
+        },
+        {
+          "title": "Lazy song loading",
+          "copy": "Scan metadata without keeping every complete song in memory"
+        },
+        {
+          "title": "Action-bar status",
+          "copy": "Show the active personal song while it is playing"
+        },
+        {
+          "title": "Live reload",
+          "copy": "Rescan the song library without restarting the server"
+        },
+        {
+          "title": "Persistent custom records",
+          "copy": "Create a physical record for any indexed song and play it in a vanilla jukebox"
+        },
+        {
+          "title": "Random intact disc artwork",
+          "copy": "Each created record uses a randomly selected full music-disc icon; the cracked 11 disc and disc fragments are excluded"
+        },
+        {
+          "title": "Block lifecycle support",
+          "copy": "Custom record playback resumes after a restart or chunk reload and follows player or hopper insertion and removal"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/custom-jukebox-1.webp",
+          "full": "/assets/screenshots/custom-jukebox-1-large.webp",
+          "caption": "Custom Jukebox management GUI"
+        },
+        {
+          "src": "/assets/screenshots/custom-jukebox-2.webp",
+          "full": "/assets/screenshots/custom-jukebox-2-large.webp",
+          "caption": "A jukebox sign connected to a redstone lever"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            [
+              "/jukebox play",
+              "Open the personal song browser and playback controls"
+            ],
+            ["/jukebox play <path or title>", "Start a song directly"],
+            ["/jukebox stop", "Stop personal playback"],
+            [
+              "/jukebox disc <player> <path or title>",
+              "Create a persistent physical record for an indexed song"
+            ],
+            ["/jukebox reload", "Rescan the song library"],
+            [
+              "/jukebox list-signs",
+              "List registered jukebox signs and their locations"
+            ]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            ["customjukebox.play", "Use personal playback", "true"],
+            [
+              "customjukebox.sign.place",
+              "Create and configure jukebox signs",
+              "op"
+            ],
+            [
+              "customjukebox.disc.create",
+              "Create song-bound custom records",
+              "op"
+            ],
+            [
+              "customjukebox.disc.use",
+              "Insert and play custom records in jukebox blocks",
+              "true"
+            ],
+            [
+              "customjukebox.admin",
+              "Reload songs and list registered signs",
+              "op"
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Setting", "Description", "Default"],
+          "rows": [
+            ["volume.min", "Lowest value accepted by signs and the GUI", "0"],
+            ["volume.max", "Highest value accepted by signs and the GUI", "10"],
+            ["volume.default", "Initial volume for a new jukebox sign", "3"],
+            [
+              "personal-default-volume",
+              "Initial personal playback volume",
+              "3"
+            ],
+            [
+              "max-active-sources",
+              "Combined limit for sign, record, and personal playback sources",
+              "20"
+            ],
+            [
+              "log-invalid-songs",
+              "Log malformed or unreadable .nbs files during scans",
+              "true"
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.1.0",
+        "published": "2026-09-04T16:35:20Z",
+        "url": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases/tag/v1.1.0",
+        "asset": {
+          "name": "Custom-Jukebox-1.1.0.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases/download/v1.1.0/Custom-Jukebox-1.1.0.jar",
+          "size": 64897
+        },
+        "summary": "Custom Jukebox v1.1.0 adds custom song-bound records and physical jukebox playback."
+      },
+      "docs": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/blob/v1.1.0/README.md"
+    },
+    {
+      "slug": "hookshot",
+      "name": "Hookshot",
+      "repository": "Hookshot-Plugin",
+      "category": "Movement",
+      "categories": ["gameplay"],
+      "headline": "Find a new way across.",
+      "description": "Turn a fishing rod into a grappling hook with per-player range, pull speed, and effects.",
+      "java": 17,
+      "platform": "Spigot / Paper",
+      "target": "1.20.1",
+      "documented_range": "1.19+",
+      "required": [],
+      "optional": [],
+      "first_command": "/hookshot",
+      "first_copy": "Enable grappling mode, hold a fishing rod, and cast toward a block within your configured range.",
+      "notes": "Block grappling pulls the player to the hook. Catching a non-player living entity pulls it toward the player. Range, speed, boost, sound, and particles can be adjusted per player.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Toggle Mode",
+          "copy": "Each player independently enables or disables grappling hook mode - casting while disabled behaves as a normal fishing rod with no side effects"
+        },
+        {
+          "title": "Block Grappling",
+          "copy": "When the hook lands on a block within range, the player is pulled toward that position immediately with velocity proportional to their configured pull speed and vertical boost"
+        },
+        {
+          "title": "Entity Grappling",
+          "copy": "When the hook catches a non-player living entity (mob, animal, etc.), the entity is pulled toward the player - useful for mob retrieval and custom gameplay scenarios"
+        },
+        {
+          "title": "Configurable Hook Velocity",
+          "copy": "Adjustable throw multiplier (1.0-5.0) controls how fast and far the hook travels through the air before landing"
+        },
+        {
+          "title": "Configurable Pull Speed",
+          "copy": "Adjustable pull speed (0.5-5.0) controls how quickly the player is moved toward the hook landing point"
+        },
+        {
+          "title": "Vertical Boost",
+          "copy": "Optional upward momentum (0.0-1.5) added to the pull direction, helping players clear ledges and obstacles naturally"
+        },
+        {
+          "title": "Range Limit",
+          "copy": "Each player has a maximum hook range (10-100 blocks set by the server); pulls beyond that range are cancelled with an informational message"
+        },
+        {
+          "title": "Pull Cooldown",
+          "copy": "A 250 ms gap is enforced between consecutive pulls to prevent rubber-banding or velocity stacking"
+        },
+        {
+          "title": "Sound Feedback",
+          "copy": "Optional pull sound (ENTITY_ENDER_DRAGON_FLAP) played at the player's location, toggleable per player"
+        },
+        {
+          "title": "Particle Trail",
+          "copy": "Optional CLOUD particle burst spawned at the player's location on pull, toggleable per player"
+        },
+        {
+          "title": "Persistent Settings",
+          "copy": "All per-player data is written to plugins/Hookshot/playerdata.yml on every change and on server shutdown, and reloaded on every player join"
+        },
+        {
+          "title": "Reset Command",
+          "copy": "Restores all personal settings to the server-configured defaults in a single command"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/hookshot-1.webp",
+          "full": "/assets/screenshots/hookshot-1-large.webp",
+          "caption": "Jungle House Climbing"
+        },
+        {
+          "src": "/assets/screenshots/hookshot-2.webp",
+          "full": "/assets/screenshots/hookshot-2-large.webp",
+          "caption": "Range Configuration"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Permission", "Description"],
+          "rows": [
+            [
+              "/hookshot",
+              "hookshot.use",
+              "Toggle grappling hook mode on or off (shorthand for toggle)"
+            ],
+            [
+              "/hookshot toggle",
+              "hookshot.use",
+              "Toggle grappling hook mode on or off"
+            ],
+            [
+              "/hookshot range <value>",
+              "hookshot.settings",
+              "Set your hook range in blocks - must be within server min/max"
+            ],
+            [
+              "/hookshot speed <value>",
+              "hookshot.settings",
+              "Set your pull speed - controls how fast you are pulled to the hook"
+            ],
+            [
+              "/hookshot boost <value>",
+              "hookshot.settings",
+              "Set your vertical boost - upward momentum applied on every pull"
+            ],
+            [
+              "/hookshot velocity <value>",
+              "hookshot.settings",
+              "Set your hook throw velocity - controls how far the hook is launched"
+            ],
+            [
+              "/hookshot sound",
+              "hookshot.settings",
+              "Toggle your personal sound effects on or off"
+            ],
+            [
+              "/hookshot particles",
+              "hookshot.settings",
+              "Toggle your personal particle effects on or off"
+            ],
+            [
+              "/hookshot reset",
+              "hookshot.use",
+              "Reset all your settings to the current server default values"
+            ],
+            [
+              "/hookshot info",
+              "hookshot.use",
+              "Display all of your current hookshot settings in chat"
+            ]
+          ]
+        },
+        {
+          "headers": ["Subcommand", "Suggested values"],
+          "rows": [
+            ["range", "10, 20, 30, 50, 100"],
+            ["speed", "1.0, 1.5, 2.0, 2.5, 3.0"],
+            ["boost", "0.0, 0.3, 0.5, 0.8, 1.0"],
+            ["velocity", "1.0, 1.5, 2.0, 3.0, 4.0"]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            [
+              "hookshot.use",
+              "Use the grappling hook and run /hookshot toggle, /hookshot reset, /hookshot info",
+              "true"
+            ],
+            [
+              "hookshot.settings",
+              "Adjust personal settings with /hookshot range, speed, boost, velocity, sound, particles",
+              "true"
+            ],
+            [
+              "hookshot.admin",
+              "Administrative access to hookshot features",
+              "op"
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Key", "Default", "Description"],
+          "rows": [
+            [
+              "default-range",
+              "30.0",
+              "Starting hook range in blocks for new players"
+            ],
+            ["pull-speed", "2.0", "Default pull speed multiplier"],
+            [
+              "vertical-boost",
+              "0.3",
+              "Default upward momentum added to the pull vector"
+            ],
+            [
+              "hook-velocity-multiplier",
+              "2.0",
+              "Default hook throw speed multiplier"
+            ],
+            ["play-sound", "true", "Whether sound is enabled by default"],
+            [
+              "show-particles",
+              "true",
+              "Whether particles are enabled by default"
+            ]
+          ]
+        },
+        {
+          "headers": ["Key", "Default", "Description"],
+          "rows": [
+            ["min-range", "10.0", "Minimum range a player may set (blocks)"],
+            ["max-range", "100.0", "Maximum range a player may set (blocks)"],
+            ["min-pull-speed", "0.5", "Minimum pull speed a player may set"],
+            ["max-pull-speed", "5.0", "Maximum pull speed a player may set"],
+            [
+              "min-vertical-boost",
+              "0.0",
+              "Minimum vertical boost (0 = no upward assist)"
+            ],
+            [
+              "max-vertical-boost",
+              "1.5",
+              "Maximum vertical boost a player may set"
+            ],
+            [
+              "min-hook-velocity",
+              "1.0",
+              "Minimum hook throw velocity a player may set"
+            ],
+            [
+              "max-hook-velocity",
+              "5.0",
+              "Maximum hook throw velocity a player may set"
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.0.1",
+        "published": "2026-09-01T21:02:22Z",
+        "url": "https://github.com/Cobbleworks/Hookshot-Plugin/releases/tag/v1.0.1",
+        "asset": {
+          "name": "Hookshot-1.0.1.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Hookshot-Plugin/releases/download/v1.0.1/Hookshot-1.0.1.jar",
+          "size": 17485
+        },
+        "summary": "Hookshot v1.0.1 corrects release metadata and standardizes Java packaging."
+      },
+      "docs": "https://github.com/Cobbleworks/Hookshot-Plugin/blob/v1.0.1/README.md"
+    },
+    {
+      "slug": "map-revealer",
+      "name": "Map Revealer",
+      "repository": "Map-Revealer-Plugin",
+      "category": "World tool",
+      "categories": ["world", "admin"],
+      "headline": "Put your world on the map.",
+      "description": "Reveal terrain, create item-frame map walls, and keep them refreshed with labels and player markers.",
+      "java": 17,
+      "platform": "Paper",
+      "target": "1.20.4",
+      "documented_range": "1.20+",
+      "required": [],
+      "optional": [],
+      "first_command": "/revealmap",
+      "first_copy": "Hold a filled map in your main hand and run the command to render the terrain it covers.",
+      "notes": "Use themed palettes, fixed Y-level slices, and automatically refreshed map walls. Terrain renders progressively. Missing terrain stays transparent by default: explore or pregenerate it, then refresh. Use scale 0 or 1 for a local wall; a 10×10 scale-4 wall spans 20,480×20,480 blocks. Tune lookup and capture budgets for your server.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Renders all 128 × 128 pixels of the map held in the player's main hand",
+          "copy": ""
+        },
+        {
+          "title": "Supports all five Minecraft map scales (0–4), surface rendering, and fixed Y-level slices",
+          "copy": ""
+        },
+        {
+          "title": "Renders Overworld terrain, End islands with transparent void, and Nether slices below the bedrock roof",
+          "copy": ""
+        },
+        {
+          "title": "Includes normal colors and nine themed palettes",
+          "copy": ""
+        },
+        {
+          "title": "Preserves terrain shading while applying themed colors",
+          "copy": ""
+        },
+        {
+          "title": "Automatically locks maps rendered with a themed scheme",
+          "copy": ""
+        },
+        {
+          "title": "Provides a separate command for locking any filled map",
+          "copy": ""
+        },
+        {
+          "title": "Creates complete map grids in connected empty item frames and glow item frames",
+          "copy": ""
+        },
+        {
+          "title": "Adopts correctly aligned maps already sitting in frames without replacing their map IDs",
+          "copy": ""
+        },
+        {
+          "title": "Refreshes managed walls automatically and writes only map pixels whose colors changed",
+          "copy": ""
+        },
+        {
+          "title": "Supports per-wall intervals, locked or unlocked maps, player markers, region labels, and optional expansion",
+          "copy": ""
+        },
+        {
+          "title": "Captures chunks safely, processes immutable terrain snapshots asynchronously, and applies map changes on the server thread",
+          "copy": ""
+        },
+        {
+          "title": "Refuses irregular layouts, non-map frame contents, mismatched existing maps, and ownership conflicts",
+          "copy": ""
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/map-revealer-1.webp",
+          "full": "/assets/screenshots/map-revealer-1-large.webp",
+          "caption": "Sepia map displayed in an item frame"
+        },
+        {
+          "src": "/assets/screenshots/map-revealer-2.webp",
+          "full": "/assets/screenshots/map-revealer-2-large.webp",
+          "caption": "Nether map theme"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            [
+              "/revealmap reveal [depth] [theme]",
+              "Render the held map with explicit command structure. The shorter forms below remain supported."
+            ],
+            [
+              "/revealmap",
+              "Render the held map at surface level with normal colors."
+            ],
+            [
+              "/revealmap <depth>",
+              "Render from a specific Y-level within the current world's height bounds."
+            ],
+            [
+              "/revealmap <scheme>",
+              "Render the surface with one of the listed schemes."
+            ],
+            [
+              "/revealmap <depth> <scheme>",
+              "Combine a Y-level with a color scheme. The two arguments may be supplied in either order."
+            ],
+            [
+              "/revealmap lock",
+              "Lock the held map against normal exploration updates."
+            ],
+            [
+              "/revealmap schemes",
+              "List all schemes in chat. /revealmap colors does the same."
+            ],
+            ["/revealmap help", "Show the in-game command summary."],
+            [
+              "/revealmap wall create <name> [scale]",
+              "Create or safely adopt the connected rectangular frame wall being viewed."
+            ],
+            [
+              "/revealmap wall expand <name>",
+              "Add connected empty frames around the managed frame being viewed."
+            ],
+            [
+              "/revealmap wall refresh <name|all>",
+              "Force an immediate terrain refresh."
+            ],
+            [
+              "/revealmap wall set <name> theme <theme>",
+              "Apply and save a wall theme, then refresh it."
+            ],
+            [
+              "/revealmap wall set <name> depth <Y|auto>",
+              "Choose a slice or the dimension default, then refresh it."
+            ],
+            [
+              "/revealmap wall set <name> interval <minutes>",
+              "Change the automatic refresh interval."
+            ],
+            [
+              "/revealmap wall set <name> <locked|markers|auto-expand> <on|off>",
+              "Change a boolean wall option."
+            ],
+            [
+              "/revealmap wall set <name> label <text|off>",
+              "Add or remove the origin-map region label."
+            ],
+            ["/revealmap wall list", "Show stored wall sizes and settings."],
+            [
+              "/revealmap wall remove <name>",
+              "Stop managing a wall without deleting its frames or maps."
+            ]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Default", "Description"],
+          "rows": [
+            [
+              "maprevealer.reveal",
+              "Operators",
+              "Reveal or lock a filled map held in the main hand."
+            ],
+            [
+              "maprevealer.wall.manage",
+              "Operators",
+              "Create, configure, expand, refresh, and remove managed map walls."
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Setting", "Default", "Description"],
+          "rows": [
+            [
+              "rendering.generate-missing-chunks",
+              "false",
+              "Allow a reveal to generate terrain that does not exist yet"
+            ],
+            [
+              "rendering.max-chunks-per-map",
+              "16384",
+              "Refuse a single map render above this terrain-chunk count"
+            ],
+            [
+              "rendering.capture-chunks-per-tick",
+              "16",
+              "Maximum chunk captures requested per batch"
+            ],
+            [
+              "rendering.lookup-chunks-per-tick",
+              "256",
+              "Maximum asynchronous chunk lookups per server tick; snapshots still obey the capture limit"
+            ],
+            [
+              "rendering.nether-depth",
+              "64",
+              "Default downward slice in Nether worlds; avoids the roof"
+            ],
+            [
+              "rendering.max-pending-maps",
+              "256",
+              "Maximum queued wall or held-map renders"
+            ],
+            ["map-walls.max-frames", "256", "Maximum maps managed by one wall"],
+            [
+              "map-walls.max-scale",
+              "4",
+              "Largest scale accepted when creating or adopting a wall"
+            ],
+            [
+              "map-walls.discovery-span",
+              "24",
+              "Maximum frame discovery distance from the selected frame"
+            ],
+            [
+              "map-walls.minimum-refresh-minutes",
+              "5",
+              "Lowest per-wall interval accepted by commands"
+            ],
+            [
+              "map-walls.defaults.refresh-minutes",
+              "30",
+              "Initial automatic refresh interval"
+            ],
+            [
+              "map-walls.defaults.locked",
+              "true",
+              "Lock newly generated wall maps by default"
+            ],
+            [
+              "map-walls.defaults.player-markers",
+              "false",
+              "Show online players on new walls"
+            ],
+            [
+              "map-walls.defaults.auto-expand",
+              "false",
+              "Automatically claim a newly placed adjacent empty frame"
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.2.1",
+        "published": "2026-10-01T12:17:51Z",
+        "url": "https://github.com/Cobbleworks/Map-Revealer-Plugin/releases/tag/v1.2.1",
+        "asset": {
+          "name": "Map-Revealer-1.2.1.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Map-Revealer-Plugin/releases/download/v1.2.1/Map-Revealer-1.2.1.jar",
+          "size": 96269
+        },
+        "summary": "Map Revealer 1.2.1 fixes server stalls and unclear blank-map behavior when rendering large, high-scale walls."
+      },
+      "docs": "https://github.com/Cobbleworks/Map-Revealer-Plugin/blob/v1.2.1/README.md"
+    },
+    {
+      "slug": "piston-crusher",
+      "name": "Piston Crusher",
+      "repository": "Piston-Crusher-Plugin",
+      "category": "Automation",
+      "categories": ["automation"],
+      "headline": "Make every piston work harder.",
+      "description": "Crush whitelisted blocks with pistons, a configurable target block, and adjustable drops.",
+      "java": 17,
+      "platform": "Spigot / Paper",
+      "target": "1.20.4",
+      "documented_range": "1.20+",
+      "required": [],
+      "optional": [],
+      "first_command": "/pistoncrusher",
+      "first_copy": "Inspect the whitelist and crusher target, then build a piston line with an eligible block against that target.",
+      "notes": "Only whitelisted materials are crushed. Configure the target material and drop multiplier with live commands; other blocks in the piston line keep normal pushing behaviour.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Whitelist-Driven Crushing",
+          "copy": "Only materials on the plugin whitelist are eligible for crushing"
+        },
+        {
+          "title": "Multiplier Control",
+          "copy": "Set a global drop multiplier (minimum 1.0) via command"
+        },
+        {
+          "title": "Custom Crusher Block",
+          "copy": "Choose the block that acts as the crusher target in the piston line"
+        },
+        {
+          "title": "Runtime Administration",
+          "copy": "Manage whitelist, multiplier, and crusher block without restart"
+        },
+        {
+          "title": "Persistent Settings",
+          "copy": "Whitelist and crusher block are saved in plugin data files"
+        },
+        {
+          "title": "Tab Completion",
+          "copy": "Subcommands and material names are suggested automatically"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/piston-crusher-1.webp",
+          "full": "/assets/screenshots/piston-crusher-1-large.webp",
+          "caption": "Block arrangement example"
+        },
+        {
+          "src": "/assets/screenshots/piston-crusher-2.webp",
+          "full": "/assets/screenshots/piston-crusher-2-large.webp",
+          "caption": "Automatic cobblestone farm with crusher"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/pistoncrusher", "Show command usage"],
+            [
+              "/pistoncrusher whitelist add <material>",
+              "Add a material to the crush whitelist"
+            ],
+            [
+              "/pistoncrusher whitelist remove <material>",
+              "Remove a material from the crush whitelist"
+            ],
+            [
+              "/pistoncrusher whitelist list",
+              "Display all currently whitelisted materials"
+            ],
+            [
+              "/pistoncrusher multiplier <value>",
+              "Set the drop multiplier (values below 1 are clamped to 1)"
+            ],
+            [
+              "/pistoncrusher multiplier",
+              "Display the current output multiplier"
+            ],
+            [
+              "/pistoncrusher crusherblock <material>",
+              "Set the designated crusher block type"
+            ],
+            [
+              "/pistoncrusher crusherblock",
+              "Display the current crusher block material"
+            ]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            [
+              "pistoncrusher.admin",
+              "Access to all /pistoncrusher commands",
+              "op"
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["File", "Key", "Default", "Description"],
+          "rows": [
+            [
+              "plugins/PistonCrusher/whitelist.yml",
+              "whitelist",
+              "[COBBLESTONE]",
+              "Materials eligible for crushing"
+            ],
+            [
+              "plugins/PistonCrusher/crusherblock.yml",
+              "crusherblock",
+              "WAXED_CHISELED_COPPER",
+              "Block material that acts as crusher target"
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.0.2",
+        "published": "2026-09-01T21:02:45Z",
+        "url": "https://github.com/Cobbleworks/Piston-Crusher-Plugin/releases/tag/v1.0.2",
+        "asset": {
+          "name": "Piston-Crusher-1.0.2.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Piston-Crusher-Plugin/releases/download/v1.0.2/Piston-Crusher-1.0.2.jar",
+          "size": 12364
+        },
+        "summary": "Piston Crusher v1.0.2 corrects packaged version metadata and standardizes the build."
+      },
+      "docs": "https://github.com/Cobbleworks/Piston-Crusher-Plugin/blob/v1.0.2/README.md"
+    },
+    {
+      "slug": "power-mining",
+      "name": "Power Mining",
+      "repository": "Power-Mining-Plugin",
+      "category": "Mining tools",
+      "categories": ["gameplay", "automation"],
+      "headline": "More tools for the underground.",
+      "description": "Add mounted excavation, ore scanning, magnetic hoppers, return ropes, and useful mining equipment.",
+      "java": 21,
+      "platform": "Paper",
+      "target": "1.21.4",
+      "documented_range": "1.21+",
+      "required": [],
+      "optional": [],
+      "first_command": "/pm help",
+      "first_copy": "Browse the tool commands. Operators can use /pm orebell to receive an Ore Scanner Bell.",
+      "notes": "The Dungeon Locator scans spawners in already loaded terrain; it does not generate new chunks. The release notes specify Paper, while the tagged README also lists Spigot. This site follows the narrower release platform description.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Mounted Mining Drill",
+          "copy": "While riding an AbstractHorse and holding a pickaxe, mines a configurable cuboid ahead of the mount at a configurable interval"
+        },
+        {
+          "title": "Magnet Hopper",
+          "copy": "Custom hopper item pulls nearby dropped items toward itself on a repeating task"
+        },
+        {
+          "title": "Ore Scanner Bell",
+          "copy": "Placeable custom bell scans an area for ores and highlights found blocks for a configurable duration with a configurable cooldown"
+        },
+        {
+          "title": "Miner's Helmet",
+          "copy": "Custom golden helmet grants recurring night vision while worn"
+        },
+        {
+          "title": "Escape Rope",
+          "copy": "Custom lead sets a return point on block click and teleports back on air right-click, consuming one rope"
+        },
+        {
+          "title": "Cave Compass",
+          "copy": "Custom compass cycles structure targets and updates lodestone target to located structures"
+        },
+        {
+          "title": "Smelter's Pickaxe",
+          "copy": "Custom golden pickaxe replaces ore/block drops with smelted outputs and supports fortune-style bonus logic"
+        },
+        {
+          "title": "Miner's Goggles",
+          "copy": "Custom leather helmet highlights nearby ores with optional filter and radius metadata"
+        },
+        {
+          "title": "Dungeon Locator",
+          "copy": "Recovery compass scans loaded terrain for the nearest mob spawner, points to it, and shows the player a temporary through-wall marker"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/power-mining-1.webp",
+          "full": "/assets/screenshots/power-mining-1-large.webp",
+          "caption": "Ore Scanner Bell"
+        },
+        {
+          "src": "/assets/screenshots/power-mining-2.webp",
+          "full": "/assets/screenshots/power-mining-2-large.webp",
+          "caption": "Donkey Auto Mining"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/pm help", "Show command overview"],
+            ["/pm drill", "Show mounted mining usage info"],
+            [
+              "/pm magnethopper [player] [radius]",
+              "Give a Magnet Hopper (radius must be within 1..max-radius)"
+            ],
+            [
+              "/pm orebell [player] [radius] [--filter ORE] [--duration TICKS]",
+              "Give an Ore Scanner Bell with optional ore filter and highlight duration"
+            ],
+            ["/pm helmet [player]", "Give a Miner's Helmet"],
+            ["/pm escaperope [player]", "Give an Escape Rope"],
+            ["/pm cavecompass [player]", "Give a Cave Compass"],
+            ["/pm smelterpick [player]", "Give a Smelter's Pickaxe"],
+            [
+              "/pm goggles [player] [radius] [--filter ORE]",
+              "Give Miner's Goggles with optional radius and filter"
+            ],
+            [
+              "/pm dungeonlocator [player] [radius]",
+              "Give a Dungeon Locator that marks the nearest loaded mob spawner"
+            ]
+          ]
+        },
+        {
+          "headers": ["Primary", "Aliases"],
+          "rows": [
+            ["magnethopper", "mh"],
+            ["orebell", "ob"],
+            ["helmet", "minershelmet"],
+            ["escaperope", "rope, er"],
+            ["cavecompass", "compass, cc"],
+            ["smelterpick", "smelter, sp"],
+            ["goggles", "minersgoggles, mg"],
+            ["dungeonlocator", "dungeon, dl"]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            ["powermining.*", "Full access umbrella", "op"],
+            ["powermining.use.*", "All use permissions", "true"],
+            ["powermining.give.*", "All give permissions", "op"],
+            ["powermining.use.mountedmining", "Use mounted mining", "true"],
+            ["powermining.use.magnethopper", "Use magnet hoppers", "true"],
+            ["powermining.use.orescannerbell", "Use ore scanner bells", "true"],
+            ["powermining.use.minershelmet", "Use miner's helmet", "true"],
+            ["powermining.use.escaperope", "Use escape rope", "true"],
+            ["powermining.use.cavecompass", "Use cave compass", "true"],
+            [
+              "powermining.use.autosmelterpickaxe",
+              "Use smelter pickaxe",
+              "true"
+            ],
+            ["powermining.use.minersgoggles", "Use miner's goggles", "true"],
+            [
+              "powermining.use.dungeonlocator",
+              "Scan for and mark nearby mob spawners",
+              "true"
+            ],
+            ["powermining.give.magnethopper", "Give magnet hopper", "op"],
+            ["powermining.give.orescannerbell", "Give ore scanner bell", "op"],
+            ["powermining.give.minershelmet", "Give miner's helmet", "op"],
+            ["powermining.give.escaperope", "Give escape rope", "op"],
+            ["powermining.give.cavecompass", "Give cave compass", "op"],
+            ["powermining.give.smelterpickaxe", "Give smelter pickaxe", "op"],
+            ["powermining.give.minersgoggles", "Give miner's goggles", "op"],
+            ["powermining.give.dungeonlocator", "Give dungeon locators", "op"]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Key", "Default", "Description"],
+          "rows": [
+            ["mounted-mining.enabled", "true", "Enable mounted mining system"],
+            ["mounted-mining.radius-x", "1", "Mining radius on X-axis"],
+            ["mounted-mining.radius-y", "1", "Mining radius on Y-axis"],
+            ["mounted-mining.radius-z", "1", "Mining radius on Z-axis"],
+            ["mounted-mining.mining-interval", "5", "Mining interval in ticks"],
+            [
+              "mounted-mining.y-offset",
+              "1",
+              "Y offset for mining center relative to mount"
+            ],
+            ["magnet-hopper.enabled", "true", "Enable magnet hopper system"],
+            [
+              "magnet-hopper.default-radius",
+              "8",
+              "Default attraction radius for given item"
+            ],
+            ["magnet-hopper.max-radius", "32", "Maximum allowed radius"],
+            [
+              "magnet-hopper.attraction-interval",
+              "5",
+              "Item attraction tick interval"
+            ],
+            [
+              "magnet-hopper.attraction-speed",
+              "0.5",
+              "Velocity multiplier toward hopper"
+            ],
+            [
+              "magnet-hopper.particles.enabled",
+              "true",
+              "Enable hopper particles"
+            ],
+            [
+              "magnet-hopper.particles.type",
+              "SOUL_FIRE_FLAME",
+              "Particle type for active hoppers"
+            ],
+            [
+              "magnet-hopper.particles.count",
+              "3",
+              "Particle count per emission"
+            ],
+            [
+              "magnet-hopper.particles.interval",
+              "10",
+              "Particle emission interval"
+            ],
+            [
+              "ore-scanner-bell.enabled",
+              "true",
+              "Enable ore scanner bell system"
+            ],
+            ["ore-scanner-bell.default-radius", "16", "Default scanner radius"],
+            ["ore-scanner-bell.max-radius", "64", "Maximum scanner radius"],
+            [
+              "ore-scanner-bell.default-duration",
+              "60",
+              "Default highlight duration in ticks"
+            ],
+            [
+              "ore-scanner-bell.cooldown",
+              "30",
+              "Cooldown in seconds per placed bell"
+            ],
+            [
+              "ore-scanner-bell.ore-types",
+              "list",
+              "Materials considered ores during scan"
+            ],
+            [
+              "miners-helmet.enabled",
+              "true",
+              "Enable miner's helmet functionality"
+            ],
+            ["escape-rope.enabled", "true", "Enable escape rope functionality"],
+            [
+              "cave-compass.enabled",
+              "true",
+              "Enable cave compass functionality"
+            ],
+            ["cave-compass.search-radius", "5000", "Structure search radius"],
+            [
+              "dungeon-locator.enabled",
+              "true",
+              "Enable the mob-spawner locator"
+            ],
+            [
+              "dungeon-locator.default-radius",
+              "32",
+              "Default spherical search radius"
+            ],
+            [
+              "dungeon-locator.max-radius",
+              "48",
+              "Maximum radius accepted by the give command"
+            ],
+            [
+              "dungeon-locator.cooldown-seconds",
+              "15",
+              "Per-player delay between scans"
+            ],
+            [
+              "dungeon-locator.marker-duration-ticks",
+              "200",
+              "Duration of the player-only glowing spawner marker"
+            ],
+            [
+              "auto-smelter-pickaxe.enabled",
+              "true",
+              "Enable smelter pickaxe functionality"
+            ],
+            [
+              "miners-goggles.enabled",
+              "true",
+              "Enable miner's goggles functionality"
+            ],
+            ["miners-goggles.default-radius", "10", "Default goggles radius"],
+            [
+              "miners-goggles.min-radius",
+              "5",
+              "Minimum allowed goggles radius"
+            ],
+            [
+              "miners-goggles.max-radius",
+              "20",
+              "Maximum allowed goggles radius"
+            ],
+            [
+              "miners-goggles.highlight-interval",
+              "20",
+              "Highlight refresh interval in ticks"
+            ],
+            ["miners-goggles.highlight-color", "GOLD", "Highlight color"],
+            [
+              "miners-goggles.ore-types",
+              "list",
+              "Ore type list for goggles highlight"
+            ],
+            ["messages.*", "strings", "MiniMessage-formatted output templates"]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.1.0",
+        "published": "2026-09-04T16:35:37Z",
+        "url": "https://github.com/Cobbleworks/Power-Mining-Plugin/releases/tag/v1.1.0",
+        "asset": {
+          "name": "Power-Mining-1.1.0.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Power-Mining-Plugin/releases/download/v1.1.0/Power-Mining-1.1.0.jar",
+          "size": 85284
+        },
+        "summary": "Power Mining v1.1.0 adds a Dungeon Locator compass for finding mob spawners in loaded terrain."
+      },
+      "docs": "https://github.com/Cobbleworks/Power-Mining-Plugin/blob/v1.1.0/README.md"
+    },
+    {
+      "slug": "rail-boost",
+      "name": "Rail Boost",
+      "repository": "Rail-Boost-Plugin",
+      "category": "Transport",
+      "categories": ["gameplay", "automation"],
+      "headline": "Build a better rail network.",
+      "description": "Configure minecart speed, collection, shared preset storage, and transport effects.",
+      "java": 17,
+      "platform": "Spigot / Paper",
+      "target": "1.19.4",
+      "documented_range": "1.16+",
+      "required": [],
+      "optional": [],
+      "first_command": "/railboost list",
+      "first_copy": "Browse the installed presets and obtain a preset stick with /railboost preset <name>. Right-click a minecart to apply it.",
+      "notes": "Six speed levels, collection filters, shared storage, and optional chunk loading are configurable through named presets. Presets and per-cart data persist across restarts.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Speed Control",
+          "copy": "Six configurable speed levels (0.25x to 4.0x) with intelligent physics handling for curves, uphill sections, and speed transitions"
+        },
+        {
+          "title": "Auto-Pickup System",
+          "copy": "Automatic item collection within a configurable radius (1-5 blocks) with per-cart blacklist filtering for precise control"
+        },
+        {
+          "title": "Preset-Linked Shared Storage",
+          "copy": "Minecarts with presets use shared preset storage inventories (54 slots) that can be opened and managed via commands"
+        },
+        {
+          "title": "Preset System",
+          "copy": "Create, save, and share named minecart configurations using sticks - apply saved presets to any cart via right-click"
+        },
+        {
+          "title": "Predefined Presets",
+          "copy": "Three built-in standard presets for common use cases - Speed, Collector, and Magnet configurations"
+        },
+        {
+          "title": "Advanced Physics",
+          "copy": "Enhanced curve navigation, uphill momentum preservation, multi-block position checking, and anti-stuck mechanisms for smooth travel"
+        },
+        {
+          "title": "Magnetism System",
+          "copy": "Optional minecart-to-minecart attraction for forming train convoys with intelligent collision prevention"
+        },
+        {
+          "title": "Visual Effects",
+          "copy": "Customizable particle trails with intensity scaling based on speed and multiple particle type options"
+        },
+        {
+          "title": "Real-Time Speedometer",
+          "copy": "BossBar display showing current velocity in km/h with color-coded speed indicators"
+        },
+        {
+          "title": "Chunk Loading",
+          "copy": "Automatic chunk force-loading with timed unloading to ensure smooth travel across unloaded areas"
+        },
+        {
+          "title": "F-Key Access",
+          "copy": "Open storage and hopper inventories while seated in a minecart using the F key"
+        },
+        {
+          "title": "Persistent Configuration",
+          "copy": "All per-cart settings and preset data are saved to YAML and persist across server restarts"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/rail-boost-1.webp",
+          "full": "/assets/screenshots/rail-boost-1-large.webp",
+          "caption": "Speedometer on rail path"
+        },
+        {
+          "src": "/assets/screenshots/rail-boost-2.webp",
+          "full": "/assets/screenshots/rail-boost-2-large.webp",
+          "caption": "Rail Boost preset storage"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/railboost help", "Show command help"],
+            [
+              "/railboost preset <name>",
+              "Give yourself a preset stick for an existing preset"
+            ],
+            [
+              "/railboost give <player> <preset>",
+              "Give another player a preset stick"
+            ],
+            [
+              "/railboost create <name>",
+              "Create a new preset with default settings"
+            ],
+            [
+              "/railboost edit <preset> <setting> <value>",
+              "Edit one setting on a preset"
+            ],
+            [
+              "/railboost edit <preset> storage",
+              "Open shared storage inventory for a preset"
+            ],
+            [
+              "/railboost list",
+              "List all available presets with summary settings"
+            ],
+            ["/railboost delete <preset>", "Delete a preset"]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            ["railboost.use", "Allows use of RailBoost features", "true"],
+            ["railboost.admin", "Administrative access to RailBoost", "op"]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Setting", "Value", "Description"],
+          "rows": [
+            ["speed", "1..6", "Speed level (1 = Slow, 6 = Ultra Fast)"],
+            ["autopickup", "true/false", "Toggle item auto-pickup"],
+            ["radius", "1..5", "Auto-pickup radius in blocks"],
+            ["speedometer", "true/false", "Toggle BossBar speedometer display"],
+            [
+              "chunkload",
+              "true/false",
+              "Toggle temporary force-loading of traversed chunks"
+            ],
+            ["magnet", "true/false", "Toggle minecart magnetism behavior"],
+            ["effects", "true/false", "Toggle particle trail effects"],
+            [
+              "effecttype",
+              "Bukkit particle name",
+              "Set particle type (e.g. FLAME, END_ROD)"
+            ],
+            [
+              "blacklist",
+              "add/remove <material>",
+              "Add or remove a material from the auto-pickup blacklist"
+            ],
+            ["storage", "*(none)*", "Open shared storage GUI for this preset"]
+          ]
+        },
+        {
+          "headers": ["Key", "Type", "Description"],
+          "rows": [
+            ["name", "string", "Display name of the preset"],
+            ["speed", "int", "Speed level 1..6"],
+            ["autopickup", "boolean", "Auto-pickup enabled flag"],
+            ["pickupRadius", "int", "Pickup radius 1..5"],
+            ["speedometer", "boolean", "BossBar speed display flag"],
+            ["chunkload", "boolean", "Chunk loading flag"],
+            ["magnet", "boolean", "Magnet mode flag"],
+            ["effects", "boolean", "Particle effects flag"],
+            ["effectType", "string", "Bukkit particle type name"],
+            ["blacklist", "list", "Material names blocked from auto-pickup"]
+          ]
+        },
+        {
+          "headers": ["Preset", "Defaults"],
+          "rows": [
+            ["speed", "speed=4, speedometer=true"],
+            ["collector", "autopickup=true, pickupRadius=4, speed=2"],
+            ["magnet", "magnet=true, speed=3, effects=true"]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.0.5",
+        "published": "2026-09-01T21:02:45Z",
+        "url": "https://github.com/Cobbleworks/Rail-Boost-Plugin/releases/tag/v1.0.5",
+        "asset": {
+          "name": "Rail-Boost-1.0.5.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Rail-Boost-Plugin/releases/download/v1.0.5/Rail-Boost-1.0.5.jar",
+          "size": 33707
+        },
+        "summary": "Rail Boost v1.0.5 updates particle handling for renamed villager particle constants."
+      },
+      "docs": "https://github.com/Cobbleworks/Rail-Boost-Plugin/blob/v1.0.5/README.md"
+    },
+    {
+      "slug": "super-enchantments",
+      "name": "Super Enchantments",
+      "repository": "Super-Enchantments-Plugin",
+      "category": "Equipment",
+      "categories": ["gameplay"],
+      "headline": "Take enchantments further.",
+      "description": "Apply higher vanilla levels and custom combat or utility enchantments with configurable cooldowns.",
+      "java": 21,
+      "platform": "Spigot / Paper",
+      "target": "1.20.4",
+      "documented_range": "1.20.4+",
+      "required": [],
+      "optional": [],
+      "first_command": "/enchantlist",
+      "first_copy": "Hold the item you want to enchant and list the enchantments that apply to it.",
+      "notes": "Vanilla enchantments can be applied at levels up to 255. Custom enchantments use persistent item data and configurable cooldowns. Tab completion suggests valid enchantments for the held item.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Enhanced Vanilla Enchanting",
+          "copy": "Apply vanilla enchantments at levels 1..255 (unsafe application enabled)"
+        },
+        {
+          "title": "Nine Custom Enchantments",
+          "copy": "Custom combat/utility enchantments with trigger events, particles, sounds, and per-player cooldown behavior"
+        },
+        {
+          "title": "Smart Item Compatibility",
+          "copy": "Automatic compatibility checking ensures only valid enchantments are suggested for the item currently held in hand"
+        },
+        {
+          "title": "Context-Aware Tab Completion",
+          "copy": "Intelligent tab completion shows only applicable enchantments based on the held item type"
+        },
+        {
+          "title": "Configurable Cooldowns",
+          "copy": "Built-in cooldown system with optional chat notifications when a custom enchantment is on cooldown"
+        },
+        {
+          "title": "Persistent Storage",
+          "copy": "Custom enchantments are stored using Minecraft's persistent data container system for reliable cross-restart persistence"
+        },
+        {
+          "title": "Visual Feedback",
+          "copy": "Particle effects, sounds, and visual indicators play when custom enchantments activate"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/super-enchantments-1.webp",
+          "full": "/assets/screenshots/super-enchantments-1-large.webp",
+          "caption": "Level 255 Unbreaking enchantment"
+        },
+        {
+          "src": "/assets/screenshots/super-enchantments-2.webp",
+          "full": "/assets/screenshots/super-enchantments-2-large.webp",
+          "caption": "Wolf summoning ability"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Permission", "Description"],
+          "rows": [
+            [
+              "/superenchant <enchantment> [level]",
+              "superenchantments.use",
+              "Apply a vanilla enchantment to the held item"
+            ],
+            [
+              "/superenchant customs <enchantment> [level]",
+              "superenchantments.use",
+              "Apply a custom enchantment to the held item"
+            ],
+            [
+              "/enchantlist",
+              "superenchantments.list",
+              "Show all applicable enchantments for the held item"
+            ],
+            [
+              "/superenchant togglecooldown",
+              "superenchantments.admin",
+              "Toggle cooldown notification messages"
+            ]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            [
+              "superenchantments.use",
+              "Allows using super enchantments and custom enchantments",
+              "op"
+            ],
+            [
+              "superenchantments.list",
+              "Allows viewing available enchantments",
+              "true"
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["Key", "Default", "Description"],
+          "rows": [
+            [
+              "cooldown-display-enabled",
+              "true",
+              "Show cooldown messages when abilities are still on cooldown"
+            ],
+            ["arrowstorm.cooldown-base", "6", "Base cooldown in seconds"],
+            [
+              "arrowstorm.cooldown-reduction",
+              "1",
+              "Cooldown reduction per level"
+            ],
+            ["arrowstorm.arrow-count-base", "1", "Base arrow count"],
+            [
+              "arrowstorm.arrow-count-increase",
+              "1",
+              "Additional arrows per level"
+            ],
+            ["arrowstorm.speed-base", "1.5", "Base arrow speed"],
+            [
+              "arrowstorm.speed-increase",
+              "0.3",
+              "Arrow speed increase per level"
+            ],
+            ["arrowstorm.damage-base", "2.0", "Base arrow damage"],
+            [
+              "arrowstorm.damage-increase",
+              "0.8",
+              "Arrow damage increase per level"
+            ],
+            ["arrowstorm.spread-base", "0.1", "Base spread"],
+            [
+              "arrowstorm.spread-reduction",
+              "0.05",
+              "Spread reduction per level"
+            ],
+            ["blazingshot.cooldown-base", "8", "Base cooldown in seconds"],
+            [
+              "blazingshot.cooldown-reduction",
+              "2",
+              "Cooldown reduction per level"
+            ],
+            ["blazingshot.fireball-count-base", "1", "Base fireball count"],
+            [
+              "blazingshot.fireball-count-increase",
+              "1",
+              "Additional fireballs per level"
+            ],
+            ["blazingshot.yield-base", "0.5", "Base explosion yield"],
+            [
+              "blazingshot.yield-increase",
+              "0.4",
+              "Explosion yield increase per level"
+            ],
+            [
+              "blazingshot.velocity-base",
+              "1.2",
+              "Base projectile velocity multiplier"
+            ],
+            [
+              "blazingshot.velocity-increase",
+              "0.15",
+              "Velocity increase per level"
+            ],
+            ["blazingshot.spread-base", "0.2", "Base projectile spread"],
+            [
+              "blazingshot.spread-reduction",
+              "0.05",
+              "Spread adjustment per level"
+            ],
+            ["voidstep.cooldown-base", "10", "Base cooldown in seconds"],
+            [
+              "voidstep.cooldown-reduction",
+              "2",
+              "Cooldown reduction per level"
+            ],
+            ["voidstep.distance-base", "5", "Base teleport distance"],
+            [
+              "voidstep.distance-increase",
+              "5",
+              "Extra teleport distance per level"
+            ],
+            ["packleader.cooldown-base", "15", "Base cooldown in seconds"],
+            [
+              "packleader.cooldown-reduction",
+              "3",
+              "Cooldown reduction per level"
+            ],
+            ["packleader.wolf-count-base", "1", "Base wolf count"],
+            [
+              "packleader.wolf-count-increase",
+              "1",
+              "Additional wolves per level"
+            ],
+            ["explosivetip.power-base", "0.5", "Base explosion power"],
+            [
+              "explosivetip.power-increase",
+              "0.8",
+              "Explosion power increase per level"
+            ],
+            ["frostbite.chance-base", "0.10", "Base trigger chance"],
+            ["frostbite.chance-increase", "0.08", "Chance increase per level"],
+            [
+              "frostbite.duration-base",
+              "1.5",
+              "Base effect duration in seconds"
+            ],
+            [
+              "frostbite.duration-increase",
+              "0.5",
+              "Duration increase per level"
+            ],
+            ["frostbite.intensity-base", "1", "Base slowness intensity"],
+            [
+              "frostbite.intensity-increase",
+              "1",
+              "Intensity increase per level"
+            ],
+            ["thunderbolt.chance-base", "0.05", "Base trigger chance"],
+            [
+              "thunderbolt.chance-increase",
+              "0.03",
+              "Chance increase per level"
+            ],
+            ["thunderbolt.strike-count-base", "1", "Base strike count"],
+            [
+              "thunderbolt.strike-count-increase",
+              "0.5",
+              "Strike count increase per level"
+            ],
+            ["thunderbolt.spread-radius", "3.0", "Lightning spread radius"],
+            ["venom_strike.chance-base", "0.10", "Base trigger chance"],
+            [
+              "venom_strike.chance-increase",
+              "0.05",
+              "Chance increase per level"
+            ],
+            [
+              "venom_strike.duration-base",
+              "3.0",
+              "Base poison duration in seconds"
+            ],
+            [
+              "venom_strike.duration-increase",
+              "1.0",
+              "Poison duration increase per level"
+            ],
+            ["venom_strike.intensity-base", "1", "Base poison amplifier"],
+            [
+              "venom_strike.intensity-increase",
+              "1",
+              "Poison amplifier increase per level"
+            ],
+            ["soul_drain.chance-base", "0.15", "Base trigger chance"],
+            ["soul_drain.chance-increase", "0.10", "Chance increase per level"],
+            [
+              "soul_drain.healing-multiplier-base",
+              "0.20",
+              "Base healing multiplier"
+            ],
+            [
+              "soul_drain.healing-multiplier-increase",
+              "0.10",
+              "Healing multiplier increase per level"
+            ],
+            [
+              "soul_drain.particle-count-base",
+              "3",
+              "Base heart particle count"
+            ],
+            [
+              "soul_drain.particle-count-increase",
+              "2",
+              "Extra particles per level"
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.0.3",
+        "published": "2026-09-01T21:02:42Z",
+        "url": "https://github.com/Cobbleworks/Super-Enchantments-Plugin/releases/tag/v1.0.3",
+        "asset": {
+          "name": "Super-Enchantments-1.0.3.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Super-Enchantments-Plugin/releases/download/v1.0.3/Super-Enchantments-1.0.3.jar",
+          "size": 53317
+        },
+        "summary": "Super Enchantments v1.0.3 updates enchantment effects for renamed sound and particle constants."
+      },
+      "docs": "https://github.com/Cobbleworks/Super-Enchantments-Plugin/blob/v1.0.3/README.md"
+    },
+    {
+      "slug": "useful-autocrafter",
+      "name": "Useful Autocrafter",
+      "repository": "Useful-Autocrafter-Plugin",
+      "category": "Automation",
+      "categories": ["automation"],
+      "headline": "Keep the recipe in place.",
+      "description": "Reserve the last ingredient in each enabled crafter slot and protect inputs from hopper extraction.",
+      "java": 21,
+      "platform": "Paper",
+      "target": "1.21.1",
+      "documented_range": "1.21+",
+      "required": [],
+      "optional": [],
+      "first_command": "/usefulcrafter",
+      "first_copy": "Confirm that protection is enabled, stock a Crafter, and send its output face toward your collection container.",
+      "notes": "There is no configuration file. Protection starts enabled after each restart. The runtime toggle is server-wide and not persisted. Hoppers cannot extract from the protected input grid; collect crafted output from the Crafter’s output face.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Preserves one ingredient in every enabled, occupied crafter slot",
+          "copy": ""
+        },
+        {
+          "title": "Prevents hoppers and other automated inventories from extracting Crafter ingredients",
+          "copy": ""
+        },
+        {
+          "title": "Works with shaped and shapeless recipes without changing their outputs",
+          "copy": ""
+        },
+        {
+          "title": "Respects slots disabled through the vanilla crafter interface",
+          "copy": ""
+        },
+        {
+          "title": "Can be enabled, disabled, or inspected at runtime",
+          "copy": ""
+        },
+        {
+          "title": "Requires no configuration file or external plugin",
+          "copy": ""
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/useful-autocrafter-1.webp",
+          "full": "/assets/screenshots/useful-autocrafter-1-large.webp",
+          "caption": "One ingredient remaining in each required slot after crafting"
+        },
+        {
+          "src": "/assets/screenshots/useful-autocrafter-2.webp",
+          "full": "/assets/screenshots/useful-autocrafter-2-large.webp",
+          "caption": "A recipe configured in the vanilla crafter interface"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/usefulcrafter", "Show whether protection is currently enabled"],
+            ["/usefulcrafter on", "Enable protection; enable is also accepted"],
+            [
+              "/usefulcrafter off",
+              "Disable protection; disable is also accepted"
+            ]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            [
+              "usefulautocrafters.toggle",
+              "View or change the runtime protection state",
+              "op"
+            ]
+          ]
+        }
+      ],
+      "configuration": [],
+      "release": {
+        "tag": "v1.1.0",
+        "published": "2026-09-01T22:53:15Z",
+        "url": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin/releases/tag/v1.1.0",
+        "asset": {
+          "name": "Useful-Autocrafter-1.1.0.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin/releases/download/v1.1.0/Useful-Autocrafter-1.1.0.jar",
+          "size": 7764
+        },
+        "summary": "Useful Autocrafter v1.1.0 extends ingredient protection to hopper transfers."
+      },
+      "docs": "https://github.com/Cobbleworks/Useful-Autocrafter-Plugin/blob/v1.1.0/README.md"
+    },
+    {
+      "slug": "wireless-redstone",
+      "name": "Wireless Redstone",
+      "repository": "Wireless-Redstone-Plugin",
+      "category": "Redstone",
+      "categories": ["automation"],
+      "headline": "Connect more. Wire less.",
+      "description": "Link lamps, copper bulbs, and container inventories across distance with named groups and in-game tools.",
+      "java": 21,
+      "platform": "Paper",
+      "target": "1.21.10",
+      "documented_range": "1.21+",
+      "required": [],
+      "optional": [],
+      "first_command": "/wireless create workshop",
+      "first_copy": "Create a named group and use its Circuit Tool to assign compatible blocks. Open /wireless to manage your groups.",
+      "notes": "Light groups synchronise state; container groups share inventories. The Circuit Tool assigns, inspects, and highlights linked blocks. Hopper transfers work with supported wireless containers.",
+      "status": "released",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Wireless Bulbs and Lamps",
+          "copy": "Create linked groups of copper bulbs or redstone lamps that synchronize state across any distance (2-26 blocks per group)"
+        },
+        {
+          "title": "Wireless Containers",
+          "copy": "Create linked groups of chests, barrels, shulker boxes, or copper chests that share inventory in real time"
+        },
+        {
+          "title": "Management GUI",
+          "copy": "Visual interface for managing all wireless groups with category organization, category descriptions, custom naming, icon assignment, and quick tool buttons"
+        },
+        {
+          "title": "Circuit Tool",
+          "copy": "Management and diagnostic tool for adding/removing blocks, inspecting wireless groups, and showing color-coded glowing outlines per group"
+        },
+        {
+          "title": "Block Recovery",
+          "copy": "Recover lost or accidentally broken wireless blocks that still belong to an existing group"
+        },
+        {
+          "title": "All Copper Variants",
+          "copy": "Full support for normal, exposed, weathered, and oxidized copper bulbs and chests - including all waxed variants"
+        },
+        {
+          "title": "All Shulker Colors",
+          "copy": "Support for all 17 shulker box colors as wireless container variants"
+        },
+        {
+          "title": "Hopper Compatible",
+          "copy": "Wireless containers work seamlessly with hoppers for automated item transfer and sorting systems"
+        },
+        {
+          "title": "Persistent Data",
+          "copy": "All group data is saved automatically and survives server restarts"
+        }
+      ],
+      "screenshots": [
+        {
+          "src": "/assets/screenshots/wireless-redstone-1.webp",
+          "full": "/assets/screenshots/wireless-redstone-1-large.webp",
+          "caption": "Lever activating a lamp wirelessly without any physical redstone connection"
+        },
+        {
+          "src": "/assets/screenshots/wireless-redstone-2.webp",
+          "full": "/assets/screenshots/wireless-redstone-2-large.webp",
+          "caption": "Running command to receive bulbs for wireless redstone installation"
+        }
+      ],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/wireless", "Open management GUI (same as /wireless gui)"],
+            ["/wireless help", "Show command help"],
+            [
+              "/wireless create",
+              "Ask for a new group name and give a creation-mode Circuit Tool"
+            ],
+            [
+              "/wireless create <groupName>",
+              "Give a Circuit Tool for an existing group, or creation-mode tool for a named new group. Use category/groupName to categorize it"
+            ],
+            ["/wireless modify name <groupName> <newName>", "Rename a group"],
+            ["/wireless gui [--all]", "Open management GUI"],
+            ["/wireless reload", "Reload configuration files (admin only)"]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Description", "Default"],
+          "rows": [
+            [
+              "wirelessredstone.use",
+              "Allows using wireless redstone commands",
+              "op"
+            ],
+            [
+              "wirelessredstone.teleport",
+              "Allows teleporting to bulb locations via GUI",
+              "op"
+            ],
+            [
+              "wirelessredstone.remove",
+              "Allows removing bulb groups via GUI",
+              "op"
+            ],
+            [
+              "wirelessredstone.admin",
+              "Allows viewing/managing all players' groups and using admin actions",
+              "op"
+            ]
+          ]
+        }
+      ],
+      "configuration": [
+        {
+          "headers": ["File", "Purpose"],
+          "rows": [
+            ["config.yml", "Plugin settings"],
+            [
+              "bulbs.yml",
+              "Bulb/lamp groups, ownership, names, category links, variant material, locations"
+            ],
+            [
+              "chests.yml",
+              "Container groups, shared inventories, ownership, names, category links, locations"
+            ],
+            [
+              "categories.yml",
+              "Category definitions, owners, descriptions, icons"
+            ]
+          ]
+        }
+      ],
+      "release": {
+        "tag": "v1.5.0",
+        "published": "2026-09-27T13:03:11Z",
+        "url": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin/releases/tag/v1.5.0",
+        "asset": {
+          "name": "Wireless-Redstone-1.5.0.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin/releases/download/v1.5.0/Wireless-Redstone-1.5.0.jar",
+          "size": 202624
+        },
+        "summary": "Wireless Redstone v1.5.0 extends connector selection and inventory interaction handling."
+      },
+      "docs": "https://github.com/Cobbleworks/Wireless-Redstone-Plugin/blob/v1.5.0/README.md"
+    },
+    {
+      "slug": "superwarp",
+      "name": "Superwarp",
+      "repository": "Superwarp",
+      "category": "World tool",
+      "categories": ["world"],
+      "headline": "A simple way to get there.",
+      "description": "Manage named warp points through Minecraft’s native Dialog interface.",
+      "java": 25,
+      "platform": "Paper",
+      "target": "26.2",
+      "documented_range": "26.2",
+      "required": [],
+      "optional": [],
+      "first_command": "/superwarp",
+      "first_copy": "Open the native warp dialog. Operators create a destination with /superwarp set <name>.",
+      "notes": "This repository has no published release. It currently documents a source build for Paper 26.2 and Java 25. No licence file is present, so the website does not assign an MIT licence to it.",
+      "status": "development",
+      "license": null,
+      "features": [
+        {
+          "title": "Native warp dialog",
+          "copy": "Warp destinations appear in a three-column Dialog grid."
+        },
+        {
+          "title": "Named destinations",
+          "copy": "Create, overwrite, and remove case-insensitive warp names."
+        },
+        {
+          "title": "Permission controls",
+          "copy": "Separate permissions for using, setting, and removing warp points."
+        }
+      ],
+      "screenshots": [],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            ["/superwarp or /swarp", "Open the warp dialog"],
+            [
+              "/superwarp set <name>",
+              "Create or overwrite a warp at your position"
+            ],
+            ["/superwarp remove <name>", "Remove a warp"]
+          ]
+        }
+      ],
+      "permissions": [
+        {
+          "headers": ["Permission", "Default"],
+          "rows": [
+            ["superwarp.use", "Everyone"],
+            ["superwarp.set", "Operators"],
+            ["superwarp.remove", "Operators"]
+          ]
+        }
+      ],
+      "configuration": [],
+      "release": null,
+      "docs": "https://github.com/Cobbleworks/Superwarp#readme"
+    },
+    {
+      "slug": "npc-pickup",
+      "name": "NPC PickUp",
+      "repository": "NPC-PickUp-Plugin",
+      "category": "Archived extension",
+      "categories": ["npc"],
+      "headline": "A historical Citizens extension.",
+      "description": "Reference material for NPC item collection, virtual inventories, death drops, and thief behaviour.",
+      "java": 8,
+      "platform": "Spigot / Paper",
+      "target": "1.20.1",
+      "documented_range": "See historical documentation",
+      "required": [
+        {
+          "name": "Citizens",
+          "url": "https://github.com/CitizensDev/Citizens2"
+        }
+      ],
+      "optional": [],
+      "first_command": "",
+      "first_copy": "Use the historical release documentation for commands and setup.",
+      "notes": "This project is archived. Its virtual inventories are held in memory and reset on restart. The plugin targets Java 8 bytecode, but your Minecraft server and Citizens installation determine the runtime you need.",
+      "status": "archived",
+      "license": "MIT",
+      "features": [
+        {
+          "title": "Citizens NPC item collection",
+          "copy": "Configurable scanning and movement towards dropped items."
+        },
+        {
+          "title": "Virtual inventories and death drops",
+          "copy": "Inventories are held in memory and reset on restart."
+        },
+        {
+          "title": "Per-NPC filters and thief mode",
+          "copy": "Whitelist and blacklist filters, pickup toggles, and optional container stealing."
+        }
+      ],
+      "screenshots": [],
+      "commands": [
+        {
+          "headers": ["Command", "Description"],
+          "rows": [
+            [
+              "/npcpickup reload",
+              "Reload plugin configuration and restart all scanning tasks"
+            ],
+            [
+              "/npcpickup toggle",
+              "Enable or disable all plugin functionality globally"
+            ],
+            [
+              "/npcpickup status",
+              "Display plugin status, active task statistics, and configuration summary"
+            ],
+            [
+              "/npcpickup info [npc_name]",
+              "Show detailed inventory information for the nearest NPC or a named NPC"
+            ],
+            [
+              "/npcpickup clear <npc_name|all>",
+              "Clear the inventory of a specific NPC or all NPCs at once"
+            ],
+            [
+              "/npcpickup disable <npc_id|npc_name>",
+              "Disable item pickup for a specific NPC"
+            ],
+            [
+              "/npcpickup enable <npc_id|npc_name>",
+              "Re-enable item pickup for a specific NPC"
+            ],
+            [
+              "/npcpickup thief <npc_id|npc_name>",
+              "Enable thief mode — NPC will steal from nearby containers"
+            ],
+            [
+              "/npcpickup unthief <npc_id|npc_name>",
+              "Disable thief mode for a specific NPC"
+            ]
+          ]
+        }
+      ],
+      "permissions": [],
+      "configuration": [],
+      "release": {
+        "tag": "v1.0.0",
+        "published": "2026-04-26T16:42:47Z",
+        "url": "https://github.com/Cobbleworks/NPC-PickUp-Plugin/releases/tag/v1.0.0",
+        "asset": {
+          "name": "NPCItemPickup.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/NPC-PickUp-Plugin/releases/download/v1.0.0/NPCItemPickup.jar",
+          "size": 29697
+        },
+        "summary": "NPC Item Pickup and Drop v1.0.0 adds item collection, virtual inventories, and thief behavior to Citizens NPCs."
+      },
+      "docs": "https://github.com/Cobbleworks/NPC-PickUp-Plugin/blob/v1.0.0/README.md"
+    }
+  ]
+}

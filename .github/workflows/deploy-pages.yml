@@ -27,19 +27,15 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
-      - name: Validate required site files
-        shell: bash
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build and validate every page
         run: |
-          set -euo pipefail
-          test -f index.html
-          test -f styles.css
-          test -f script.js
-          test -f robots.txt
-          test -f sitemap.xml
-          test -f assets/cobbleworks-hero-september-2026.png
-          test "$(find assets/plugins -maxdepth 1 -type f -name '*.png' | wc -l)" -eq 13
-          grep -q 'https://cobbleworks.github.io/' index.html
-          grep -q 'application/ld+json' index.html
+          python scripts/build_site.py
+          python scripts/validate_site.py
 
       - name: Prepare static site
         shell: bash
@@ -48,6 +44,7 @@ jobs:
           mkdir -p _site
           cp index.html 404.html styles.css script.js robots.txt sitemap.xml site.webmanifest _site/
           cp -R assets _site/assets
+          cp -R plugins downloads docs compatibility changelog about _site/
           touch _site/.nojekyll
 
       - name: Configure GitHub Pages

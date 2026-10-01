@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url>
-    <loc>https://cobbleworks.github.io/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://cobbleworks.github.io/assets/cobbleworks-hero-september-2026.png</image:loc>
-      <image:title>Cobbleworks open-source Minecraft server plugins</image:title>
-    </image:image>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://cobbleworks.github.io/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/advanced-achievements/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/area-rewind/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/blockfolk/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/blood-moon/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/custom-jukebox/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/hookshot/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/map-revealer/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/piston-crusher/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/power-mining/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/rail-boost/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/super-enchantments/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/useful-autocrafter/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/wireless-redstone/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/superwarp/</loc></url>
+<url><loc>https://cobbleworks.github.io/plugins/npc-pickup/</loc></url>
+<url><loc>https://cobbleworks.github.io/downloads/</loc></url>
+<url><loc>https://cobbleworks.github.io/compatibility/</loc></url>
+<url><loc>https://cobbleworks.github.io/docs/</loc></url>
+<url><loc>https://cobbleworks.github.io/changelog/</loc></url>
+<url><loc>https://cobbleworks.github.io/about/</loc></url>
 </urlset>
