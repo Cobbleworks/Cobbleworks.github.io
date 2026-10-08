@@ -1,0 +1,105 @@
+{
+  "intro": {
+    "eyebrow": "Highlights",
+    "title": "Start with these five",
+    "lead": "The plugins that change the most about how a server plays. Each one installs on its own, except Blood Moon, which builds on Blockfolk."
+  },
+  "spotlights": [
+    {
+      "slug": "blockfolk",
+      "layout": "gallery",
+      "accent": "#4fd8c4",
+      "tag": "NPCs · Flagship",
+      "lede": "NPCs that look like players and act like residents. Give them a daily routine, a shop, a quest, a fight, or a personality, all from in-game menus.",
+      "points": [
+        ["No YAML editing.", "Skins, gear, dialog, routes, and behaviour are set up in menus."],
+        ["They do things.", "Walk routes, mine, harvest crops, move items between chests, and run shops."],
+        ["They fight.", "Custom abilities, alliances, loot, respawn timers, and boss bars."],
+        ["Optional AI.", "Connect OpenRouter and they chat in character. They can only take actions you have allowed."],
+        ["Quests.", "Spawned NPCs appear in BeautyQuests' NPC selector."]
+      ],
+      "command": ["/bf create", "Blacksmith"],
+      "gallery": [
+        {"name": "ai-personality-response", "label": "AI conversation", "alt": "A Blockfolk NPC dressed as King Dedede answering a player in chat, in character"},
+        {"name": "idle-walk-action", "label": "Routes", "alt": "Choosing the block an NPC should walk to in a desert town"},
+        {"name": "npc-editor", "label": "NPC editor", "alt": "The in-game Blockfolk NPC editor menu"},
+        {"name": "container-withdrawal", "label": "Chores", "alt": "An NPC taking items out of a chest"}
+      ]
+    },
+    {
+      "slug": "wireless-redstone",
+      "layout": "lamps",
+      "accent": "#ff4b3a",
+      "tag": "Redstone",
+      "lede": "Link lamps, copper bulbs, and containers into named groups. Toggle one and the whole group follows, however far apart they are.",
+      "points": [
+        ["Lamps and bulbs", "switch together across any distance, including every copper and waxed variant."],
+        ["Shared containers.", "Chests, barrels, copper chests, and all 17 shulker colours can share one inventory in real time."],
+        ["Hopper friendly.", "Feed one end of a group and sort from the other."],
+        ["Circuit tool", "to add blocks and inspect groups with colour-coded outlines."],
+        ["No dependencies.", "Drop in the JAR and start linking."]
+      ],
+      "command": ["/wireless create", "base/storage"],
+      "lamps": ["2 m", "140 m", "1.2 km", "other base"],
+      "shot": {"name": "factory-button", "alt": "A Production On/Off copper bulb in a factory, linked wirelessly to bulbs elsewhere"}
+    },
+    {
+      "slug": "blood-moon",
+      "layout": "night",
+      "accent": "#ff5468",
+      "tag": "Events",
+      "lede": "Some nights, the moon turns red. Seven hand-built boss encounters stalk your players until sunrise, then disappear without a trace.",
+      "foes": [
+        ["Vampire", "Starts disguised. Drains health, summons bats, and gets nastier near defeat."],
+        ["Witch", "Cycles spell phases: curses, cages, mirror clones, and life drain."],
+        ["Werewolf", "Leaps, makes targets bleed, calls the pack, and turns feral."],
+        ["Ghost", "Hard to hit. Bring a light source to reveal it."],
+        ["Scarecrow", "Fear, drains, and area denial in stronger harvest phases."],
+        ["Clown", "Fireworks, decoys, teleport tricks, and a manic final phase."],
+        ["Zombie", "Infection, toxic ground, a horde, then a berserk finish."]
+      ],
+      "points": [
+        ["Four difficulty profiles,", "from easy to nightmare, switchable without a restart."],
+        ["Your rules.", "Choose worlds, odds, rewards, and population limits."],
+        ["Test any boss", "on demand with `/bloodmoon spawn witch`."]
+      ],
+      "gallery": [
+        {"name": "witch-cage", "alt": "The Witch boss casting purple spell particles at night"},
+        {"name": "scarecrow-flame-storm", "alt": "The Scarecrow boss summoning a flame storm"},
+        {"name": "ghost-freeze", "alt": "The Ghost boss freezing a player in frost"},
+        {"name": "clown-bunny-bomb", "alt": "The Clown boss throwing bunny bombs"}
+      ]
+    },
+    {
+      "slug": "custom-jukebox",
+      "layout": "card",
+      "accent": "#b98cff",
+      "tag": "Music",
+      "lede": "Bring your own Note Block Studio songs. Players browse a folder-organised library, admins set up music signs, and any song can be pressed onto a record that plays in a normal jukebox.",
+      "points": [
+        ["", "Personal player with queue, shuffle, loop, and volume"],
+        ["", "Jukebox signs with toggle, pulse, or ignore redstone modes"],
+        ["", "Custom records survive restarts and work with hoppers"]
+      ],
+      "command": ["/jukebox play", ""],
+      "shot": {"name": "management-gui", "alt": "The Personal Jukebox song browser with folders and records"},
+      "overlay": "nowplaying"
+    },
+    {
+      "slug": "map-revealer",
+      "layout": "card",
+      "accent": "#d9b67c",
+      "tag": "Maps",
+      "lede": "Hold a map, run one command, and it is filled in, without walking every chunk. Or build a wall of item frames and let it keep itself up to date as the world changes.",
+      "points": [
+        ["", "Every map scale, plus Nether and End rendering"],
+        ["", "Nine themed palettes and fixed Y-level slices for cave maps"],
+        ["", "Self-refreshing map walls with player markers and labels"]
+      ],
+      "command": ["/revealmap", "sepia"],
+      "shot": {"name": "sepia-itemframe", "alt": "A map rendered in the sepia palette, framed on a wall in a desert town"},
+      "overlay": "swatches",
+      "swatches": [["sepia", "#b08a5a"], ["grayscale", "#8f8f8f"], ["mystic", "#7a5ccf"], ["autumn", "#c86a2c"]]
+    }
+  ]
+}

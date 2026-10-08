@@ -3,6 +3,7 @@ from datetime import datetime
 from html import escape
 from pathlib import Path
 import json
+import re
 
 from icons import build as build_icons
 
@@ -15,7 +16,10 @@ BY_SLUG = {p['slug']: p for p in PLUGINS}
 ORG = 'https://github.com/Cobbleworks'
 PAGES = []
 
-FEATURED = ['blockfolk', 'map-revealer', 'wireless-redstone', 'blood-moon']
+SPOTLIGHTS = json.loads((ROOT / 'content/spotlights.json').read_text(encoding='utf-8'))
+SPLASHES = ['Open source!', 'Do distribute!', 'MIT licensed!', 'Also try Paper!', 'Now with Java 25!', 'Redstone not included!',
+            'Minecarts go brr!', 'Pull requests welcome!', 'Blood Moon rising!', 'Backups saved!', 'Made of cobblestone!',
+            '100% pure Java!', 'Wireless redstone!', 'Read the README!', 'Grapple responsibly!']
 GROUPS = [
     ('World & maps', ['map-revealer', 'area-rewind', 'superwarp']),
     ('Automation & redstone', ['wireless-redstone', 'useful-autocrafter', 'piston-crusher']),
@@ -149,24 +153,111 @@ def card(p):
 
 # ---------------------------------------------------------------- homepage
 
-def homepage():
-    hero_img = ('<picture><source type="image/avif" srcset="/assets/hero/evening-fortress-640.avif 640w, /assets/hero/evening-fortress-960.avif 960w, /assets/hero/evening-fortress-1600.avif 1600w" sizes="100vw">'
-                '<img class="hero-image" src="/assets/hero/evening-fortress-1600.webp" srcset="/assets/hero/evening-fortress-640.webp 640w, /assets/hero/evening-fortress-960.webp 960w, /assets/hero/evening-fortress-1600.webp 1600w" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high"></picture>')
+def title_screen():
+    """Homepage hero in the style of the Minecraft title screen."""
     java = sorted({p['java'] for p in RELEASED})
-    facts = [
-        ('licence', 'MIT licensed', f'All {len(RELEASED)} released plugins'),
-        ('blocks', 'Independent projects', 'Install only what you need'),
-        ('server', 'Paper & Spigot', f'Java {java[0]} to {java[-1]}'),
-        ('code', 'Built in the open', 'Source, issues, and releases on GitHub'),
+    toasts = [
+        ('book', 'MIT licensed', f'All {len(RELEASED)} released plugins.'),
+        ('chest', 'Independent projects', 'Install only what you need.'),
+        ('redstone', 'Paper & Spigot', f'Java {java[0]} to {java[-1]}.'),
+        ('pickaxe', 'Built in the open', 'Source, issues, and releases on GitHub.'),
     ]
-    fact_html = ''.join(f'<li>{glyph(g)}<div><strong>{t}</strong><span>{s}</span></div></li>' for g, t, s in facts)
-    hero = f'''<section class="hero">{hero_img}<div class="hero-shade" aria-hidden="true"></div>
-<div class="shell hero-content"><p class="eyebrow">Open-source Minecraft plugins</p><h1>Tools for Minecraft servers.<span>Built in the open.</span></h1>
-<p class="hero-lead">Gameplay systems, world tools, automation, NPCs, and transport for Paper and Spigot servers. Every plugin is its own project with its own releases and documentation.</p>
-<div class="actions">{button('/plugins/', 'Browse plugins', 'primary', '', 'arrow')}{button(ORG, 'View on GitHub', 'secondary', 'github')}</div></div>
-<div class="shell"><ul class="hero-facts">{fact_html}</ul></div></section>'''
+    toast_html = ''.join(f'<li class="toast"><img src="/assets/textures/{i}.svg" width="32" height="32" alt=""><div><strong>{e(t)}</strong><span>{e(s)}</span></div></li>' for i, t, s in toasts)
+    splashes = [f'{len(RELEASED)} plugins!'] + SPLASHES
+    return f'''<section class="title-screen" aria-labelledby="hero-title">
+<div class="panorama" aria-hidden="true"><img class="panorama-image" src="/assets/hero/title-screen-1672.webp" srcset="/assets/hero/title-screen-960.webp 960w, /assets/hero/title-screen-1672.webp 1672w" sizes="125vw" width="1672" height="941" alt="" fetchpriority="high"></div>
+<div class="title-shade" aria-hidden="true"></div>
+<div class="shell title-content"><div class="logo-wrap"><h1 id="hero-title" class="logo"><span class="logo-word" data-text="COBBLEWORKS">COBBLEWORKS</span><span class="logo-edition">Minecraft plugins that do more.</span></h1>
+<button class="splash" type="button" aria-hidden="true" tabindex="-1" title="Click for another splash" data-splash data-splashes="{e(json.dumps(splashes))}">{e(splashes[0])}</button></div>
+<p class="title-copy">Cobbleworks creates open-source plugins for Minecraft servers. From world tools and automation to NPCs and gameplay systems, each project is built around a specific server need.</p>
+<nav class="title-menu" aria-label="Quick links"><a class="mc-button" href="/plugins/">Browse Plugins</a><a class="mc-button" href="{ORG}">{GITHUB}View on GitHub</a>
+<div class="title-menu-row"><a class="mc-button" href="/docs/">Install Guide...</a><a class="mc-button" href="/about/">About</a></div></nav></div>
+<ul class="title-toasts" aria-label="Cobbleworks at a glance">{toast_html}</ul>
+<p class="title-corner title-corner-left">Cobbleworks · Paper &amp; Spigot</p><p class="title-corner title-corner-right">Open source. Do distribute!</p></section>'''
 
-    featured = ''.join(card(BY_SLUG[s]) for s in FEATURED)
+
+def spot_command(command):
+    cmd, arg = command
+    return f'<p class="spot-command"><code><b>/</b>{e(cmd.lstrip("/"))}{f" <span>{e(arg)}</span>" if arg else ""}</code></p>'
+
+
+def inline_code(text):
+    """Escape text and render `backticked` spans as code."""
+    return re.sub(r'`([^`]+)`', r'<code>\1</code>', e(text))
+
+
+def spot_points(points):
+    return '<ul class="spot-points">' + ''.join(f'<li>{f"<b>{e(b)}</b> " if b else ""}{inline_code(t)}</li>' for b, t in points) + '</ul>'
+
+
+def spot_requirements(p):
+    return chips([p['platform'], f'Minecraft {p["target"]}', f'Java {p["java"]}+'] + [f'Needs {d["name"]}' for d in p['required']])
+
+
+def spot_actions(p, kind='primary'):
+    return f'<div class="actions">{button(asset(p), "Download " + version(p), kind, "download")}{button(product_link(p), "Plugin details", "secondary", "", "arrow")}</div>'
+
+
+def spot_title(p, s):
+    return f'<p class="spot-tag">{e(s["tag"])}</p><div class="spot-title">{icon(p["slug"], 40)}<h3>{e(p["name"])}</h3></div><p class="spot-lede">{e(s["lede"])}</p>'
+
+
+def spot_img(slug, name, alt, width=1120, height=630, cls=''):
+    return f'<img{f" class={cls}" if cls else ""} src="/assets/spotlight/{slug}-{name}.webp" width="{width}" height="{height}" alt="{e(alt)}" loading="lazy">'
+
+
+def spotlight(s):
+    p = BY_SLUG[s['slug']]
+    slug = p['slug']
+    accent = f'style="--accent:{s["accent"]}"'
+    copy = f'<div class="spot-copy">{spot_title(p, s)}{spot_points(s["points"])}{spot_command(s["command"]) if s.get("command") else ""}<div class="spot-foot">{spot_requirements(p)}{spot_actions(p)}</div></div>'
+
+    if s['layout'] == 'gallery':
+        first = s['gallery'][0]
+        thumbs = ''.join(
+            f'<a class="spot-thumb" href="/assets/spotlight/{slug}-{g["name"]}.webp" data-alt="{e(g["alt"])}"{" aria-current=true" if i == 0 else ""}>'
+            f'<img src="/assets/spotlight/{slug}-{g["name"]}-thumb.webp" width="320" height="180" alt="" loading="lazy"><span>{e(g["label"])}</span></a>'
+            for i, g in enumerate(s['gallery']))
+        media = f'<div class="spot-media spot-gallery" data-gallery><figure class="spot-frame">{spot_img(slug, first["name"], first["alt"])}</figure><nav class="spot-thumbs" aria-label="{e(p["name"])} screenshots">{thumbs}</nav></div>'
+        return f'<article class="spot" id="{slug}" {accent}><div class="shell spot-grid">{media}{copy}</div></article>'
+
+    if s['layout'] == 'lamps':
+        lamps = ''.join(f'<span class="lamp{" lamp-bulb" if i % 2 else ""}" style="--i:{i}"><i>{e(d)}</i></span>' for i, d in enumerate(s['lamps']))
+        demo = f'''<div class="lampdemo" data-lampdemo><div class="lampdemo-bar"><span>group <b>factory-lights</b></span><span class="lampdemo-state" aria-live="polite">OFF</span></div>
+<div class="lampdemo-row"><button class="lever" type="button" aria-pressed="false" aria-label="Flip the lever to toggle every linked lamp"><span class="lever-base"></span><span class="lever-stick"></span></button><span class="lampdemo-link" aria-hidden="true"></span><span class="lampdemo-lamps" aria-hidden="true">{lamps}</span></div>
+<p class="lampdemo-hint">Flip the lever. No dust, no repeaters, no chunk loaders.</p></div>'''
+        media = f'<div class="spot-media">{demo}<figure class="spot-frame spot-frame-wide">{spot_img(slug, s["shot"]["name"], s["shot"]["alt"])}</figure></div>'
+        return f'<article class="spot spot-flip" id="{slug}" {accent}><div class="shell spot-grid">{media}{copy}</div></article>'
+
+    if s['layout'] == 'night':
+        foes = ''.join(f'<li><b>{e(n)}</b><span>{e(t)}</span></li>' for n, t in s['foes'])
+        shots = ''.join(spot_img(slug, g['name'], g['alt']) for g in s['gallery'])
+        needs = ', '.join(f'<a href="#{d["name"].split()[0].lower()}">{e(d["name"].split()[0])}</a>' for d in p['required'])
+        return f'''<article class="spot-night" id="{slug}" {accent}><div class="night-sky" aria-hidden="true"><span class="night-moon"></span></div><div class="shell">
+<div class="night-head">{spot_title(p, s)}</div><ol class="night-foes" aria-label="The seven Blood Moon encounters">{foes}</ol><div class="night-strip">{shots}</div>
+<div class="night-foot">{spot_points(s["points"])}<div class="spot-foot"><p class="night-pair">Powered by {needs}. The bosses are Blockfolk NPCs, so install both.</p>{spot_requirements(p)}{spot_actions(p, "blood")}</div></div></div></article>'''
+
+    overlay = ''
+    if s.get('overlay') == 'nowplaying':
+        overlay = '<div class="nowplaying" aria-hidden="true"><span class="nowplaying-disc"></span><span class="nowplaying-meta"><b>tetris a.nbs</b><small>playing · loop on</small></span><span class="nowplaying-bar"><i></i></span></div>'
+    elif s.get('overlay') == 'swatches':
+        overlay = '<ul class="swatches" aria-label="Some of the colour schemes">' + ''.join(f'<li style="--c:{c}">{e(n)}</li>' for n, c in s['swatches']) + '</ul>'
+    return f'''<article class="spot-card" id="{slug}" {accent}><figure class="spot-card-media">{spot_img(slug, s["shot"]["name"], s["shot"]["alt"])}{overlay}</figure>
+<div class="spot-card-body">{spot_title(p, s)}{spot_points(s["points"])}{spot_command(s["command"])}<div class="spot-foot">{spot_requirements(p)}{spot_actions(p)}</div></div></article>'''
+
+
+def spotlights():
+    intro = SPOTLIGHTS['intro']
+    items = SPOTLIGHTS['spotlights']
+    wide = ''.join(spotlight(s) for s in items if s['layout'] != 'card')
+    cards = ''.join(spotlight(s) for s in items if s['layout'] == 'card')
+    return f'''<section class="spotlights" aria-labelledby="highlights-title"><div class="shell">{section_head(intro['title'], intro['lead'], '/plugins/', 'View all plugins', intro['eyebrow']).replace('<h2>', '<h2 id="highlights-title">', 1)}</div>
+{wide}<div class="shell spot-duo">{cards}</div></section>'''
+
+
+def homepage():
+    hero = title_screen()
+    java = sorted({p['java'] for p in RELEASED})
     recent = sorted(RELEASED, key=lambda p: p['release']['published'], reverse=True)[:4]
     releases = ''.join(f'''<a class="release-tile" href="{product_link(p)}#release">{icon(p['slug'], 40)}<div><h3>{e(p['name'])}</h3><p><span class="version">{e(version(p))}</span><time datetime="{p['release']['published']}">{date(p['release']['published'])}</time></p></div>{glyph('arrow')}</a>''' for p in recent)
 
@@ -196,12 +287,13 @@ def homepage():
     faq_html = ''.join(f'<details><summary>{q}{glyph("chevron")}</summary><p>{a}</p></details>' for q, a in faq)
 
     content = f'''{hero}
-<section class="section shell">{section_head('Featured plugins', 'A few projects from the Cobbleworks workshop.', '/plugins/', 'View all plugins')}<div class="card-grid">{featured}</div></section>
+{spotlights()}
 <section class="section section-tight shell">{section_head('Latest releases', 'Recent stable releases across the collection.', '/changelog/', 'View changelog')}<div class="release-row">{releases}</div></section>
 <section class="section shell">{section_head('The whole collection', 'Fifteen projects, grouped by what they do on your server.')}<div class="collection">{groups}</div></section>
 {band}
 <section class="section shell split"><div>{section_head('How Cobbleworks works')}<ul class="principles">{tiles}</ul></div><div class="faq">{section_head('Frequently asked questions')}{faq_html}</div></section>'''
-    preload = '<link rel="preload" as="image" type="image/avif" href="/assets/hero/evening-fortress-1600.avif" imagesrcset="/assets/hero/evening-fortress-640.avif 640w, /assets/hero/evening-fortress-960.avif 960w, /assets/hero/evening-fortress-1600.avif 1600w" imagesizes="100vw" fetchpriority="high">'
+    preload = ('<link rel="preload" as="image" type="image/webp" href="/assets/hero/title-screen-1672.webp" imagesrcset="/assets/hero/title-screen-960.webp 960w, /assets/hero/title-screen-1672.webp 1672w" imagesizes="125vw" fetchpriority="high">'
+               '<link rel="preload" href="/assets/fonts/press-start-2p-0.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/pixelify-sans-0.woff2" as="font" type="font/woff2" crossorigin>')
     write_page('/', 'Cobbleworks', 'Independent, open-source Minecraft server plugins for gameplay, world tools, automation, NPCs, and transport. Check requirements, download releases, and read the documentation.', content,
                schema={'@type': 'Organization', 'name': 'Cobbleworks', 'url': BASE, 'logo': BASE + '/assets/brand-mark.svg', 'sameAs': [ORG]}, preload=preload)
 

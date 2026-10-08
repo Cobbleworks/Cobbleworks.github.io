@@ -4,8 +4,8 @@ The site follows the supplied dark design studio concept: blue-charcoal surfaces
 
 ## Homepage
 
-1. **Evening fortress header.** Text sits on a local left-side shade so the castle stays visible. Four factual hero facts follow.
-2. **Featured plugins.** Four cards with plugin artwork, the pixel icon overlapping the image edge, and requirement chips.
+1. **Title-screen hero.** Modelled on the Minecraft main menu: a slowly panning panorama, the extruded cobblestone COBBLEWORKS logo (Press Start 2P), a clickable yellow splash line, bevelled stone menu buttons (Pixelify Sans), achievement-style toasts carrying the four hero facts, and corner text. Pixel fonts are self-hosted with their OFL licences and used only in this hero and for small spotlight tags.
+2. **Spotlights.** Five highlighted plugins, each presented differently to show what players get: Blockfolk with a screenshot gallery, Wireless Redstone with a lever-and-lamps demo, Blood Moon as a full-width red night with its seven encounters, and Custom Jukebox and Map Revealer as paired cards. Copy lives in `content/spotlights.json`; versions, requirements, and downloads come from `content/plugins.json`.
 3. **Latest releases.** Generated from release dates in the catalogue.
 4. **Whole collection.** All fifteen projects grouped by purpose.
 5. **Moonlit castle band.** "Open source. Built for real servers." with true figures only.
