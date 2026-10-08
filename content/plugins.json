@@ -1,5 +1,5 @@
 {
-  "verified": "2026-10-01",
+  "verified": "2026-10-08",
   "plugins": [
     {
       "slug": "advanced-achievements",
@@ -754,6 +754,14 @@
           "copy": "Define attacks, targets, alliances, loot, experience, respawn timing, and nearby boss bars"
         },
         {
+          "title": "Abilities",
+          "copy": "Build shared custom attacks with origins, spheres, cones, beams, teleport, timing, charged weapon hits, combined effects, and previews; assign them through Fighting & Survival or cast them with a Use Ability behaviour action"
+        },
+        {
+          "title": "Shared shops",
+          "copy": "Sell items through the vanilla trading screen with unlimited, item-for-item trades; build each shop once and open it from any NPC with the Open Shop behaviour action"
+        },
+        {
           "title": "World interaction",
           "copy": "Mine configured resources, harvest crops, and transfer items to or from containers"
         },
@@ -798,6 +806,10 @@
               "/bf npc <name> duplicate",
               "Duplicate a preset with  (copy) appended to its name"
             ],
+            ["/bf abilities", "Open the shared attack library and editor"],
+            ["/bf shop", "Open the shared shop library"],
+            ["/bf shop create <name>", "Create a shared shop"],
+            ["/bf shop <shop> [rename|preview]", "Rename a shop or preview its trades"],
             ["/bf routes", "Open the route manager"],
             ["/bf locations", "Open the global-location manager"]
           ]
@@ -847,17 +859,17 @@
         }
       ],
       "release": {
-        "tag": "v1.4.0",
-        "published": "2026-10-01T12:17:42Z",
-        "url": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases/tag/v1.4.0",
+        "tag": "v1.6.0",
+        "published": "2026-10-03T14:49:23Z",
+        "url": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases/tag/v1.6.0",
         "asset": {
-          "name": "Blockfolk-1.4.0.jar",
-          "browser_download_url": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases/download/v1.4.0/Blockfolk-1.4.0.jar",
-          "size": 591266
+          "name": "Blockfolk-1.6.0.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/releases/download/v1.6.0/Blockfolk-1.6.0.jar",
+          "size": 760679
         },
-        "summary": "Blockfolk 1.4.0 adds saved NPC poses and repairs encounter movement used by Blood Moon."
+        "summary": "Blockfolk 1.6.0 adds shared shops in the vanilla trading screen and an Open Shop behaviour action, building on the custom ability shapes, triggers, and effects added in 1.5.0."
       },
-      "docs": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/blob/v1.4.0/README.md"
+      "docs": "https://github.com/Cobbleworks/Blockfolk-NPC-Plugin/blob/v1.6.0/README.md"
     },
     {
       "slug": "blood-moon",
@@ -1139,6 +1151,14 @@
           "copy": "Toggle, pulse, or ignore external redstone power"
         },
         {
+          "title": "Area redstone triggers",
+          "copy": "Levers, buttons, plates, and dust near a sign trigger it, so one switch can drive several signs"
+        },
+        {
+          "title": "Now-playing controls",
+          "copy": "Progress bar, pause/resume, queue, shuffle, loop, and per-player volume in the browser"
+        },
+        {
           "title": "Registered-sign index",
           "copy": "List configured signs and their locations with an admin command"
         },
@@ -1255,17 +1275,17 @@
         }
       ],
       "release": {
-        "tag": "v1.1.0",
-        "published": "2026-09-04T16:35:20Z",
-        "url": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases/tag/v1.1.0",
+        "tag": "v1.2.0",
+        "published": "2026-10-04T19:09:06Z",
+        "url": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases/tag/v1.2.0",
         "asset": {
-          "name": "Custom-Jukebox-1.1.0.jar",
-          "browser_download_url": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases/download/v1.1.0/Custom-Jukebox-1.1.0.jar",
-          "size": 64897
+          "name": "Custom-Jukebox-1.2.0.jar",
+          "browser_download_url": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/releases/download/v1.2.0/Custom-Jukebox-1.2.0.jar",
+          "size": 83032
         },
-        "summary": "Custom Jukebox v1.1.0 adds custom song-bound records and physical jukebox playback."
+        "summary": "Custom Jukebox v1.2.0 adds area redstone triggers for signs and a now-playing control with progress, pause, volume, shuffle, and queueing."
       },
-      "docs": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/blob/v1.1.0/README.md"
+      "docs": "https://github.com/Cobbleworks/Custom-Jukebox-Plugin/blob/v1.2.0/README.md"
     },
     {
       "slug": "hookshot",

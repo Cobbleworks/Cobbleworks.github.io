@@ -1,5 +1,11 @@
 "use strict";
 document.documentElement.classList.add("js");
+const header = document.querySelector("[data-header]");
+if (header) {
+  const setHeaderState = () => header.classList.toggle("is-scrolled", window.scrollY > 24);
+  setHeaderState();
+  window.addEventListener("scroll", setHeaderState, { passive: true });
+}
 const menuButton = document.querySelector("[data-menu-button]");
 const navigation = document.querySelector("[data-navigation]");
 if (menuButton && navigation) {
@@ -201,3 +207,49 @@ if (sectionLinks.length && "IntersectionObserver" in window) {
   );
   sections.forEach((section) => observer.observe(section));
 }
+const splash = document.querySelector("[data-splash]");
+if (splash) {
+  const splashes = JSON.parse(splash.dataset.splashes);
+  let current = 0;
+  splash.addEventListener("click", () => {
+    let next;
+    do next = Math.floor(Math.random() * splashes.length);
+    while (next === current && splashes.length > 1);
+    current = next;
+    splash.textContent = splashes[next];
+  });
+}
+document.querySelectorAll("[data-gallery]").forEach((gallery) => {
+  const main = gallery.querySelector(".spot-frame img");
+  const thumbs = [...gallery.querySelectorAll(".hotbar-slot")];
+  thumbs.forEach((thumb) =>
+    thumb.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (thumb.getAttribute("aria-current") === "true") return;
+      thumbs.forEach((t) =>
+        t === thumb ? t.setAttribute("aria-current", "true") : t.removeAttribute("aria-current"),
+      );
+      main.classList.add("is-fading");
+      const next = new Image();
+      next.src = thumb.href;
+      next
+        .decode()
+        .catch(() => {})
+        .finally(() => {
+          main.src = thumb.href;
+          main.alt = thumb.dataset.alt;
+          main.classList.remove("is-fading");
+        });
+    }),
+  );
+});
+document.querySelectorAll("[data-lampdemo]").forEach((demo) => {
+  const lever = demo.querySelector(".lever");
+  const state = demo.querySelector(".lampdemo-state");
+  lever.addEventListener("click", () => {
+    const on = lever.getAttribute("aria-pressed") !== "true";
+    lever.setAttribute("aria-pressed", String(on));
+    demo.classList.toggle("is-on", on);
+    state.textContent = on ? "ON" : "OFF";
+  });
+});
