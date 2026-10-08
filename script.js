@@ -1,5 +1,11 @@
 "use strict";
 document.documentElement.classList.add("js");
+const header = document.querySelector("[data-header]");
+if (header) {
+  const setHeaderState = () => header.classList.toggle("is-scrolled", window.scrollY > 24);
+  setHeaderState();
+  window.addEventListener("scroll", setHeaderState, { passive: true });
+}
 const menuButton = document.querySelector("[data-menu-button]");
 const navigation = document.querySelector("[data-navigation]");
 if (menuButton && navigation) {
@@ -215,7 +221,7 @@ if (splash) {
 }
 document.querySelectorAll("[data-gallery]").forEach((gallery) => {
   const main = gallery.querySelector(".spot-frame img");
-  const thumbs = [...gallery.querySelectorAll(".spot-thumb")];
+  const thumbs = [...gallery.querySelectorAll(".hotbar-slot")];
   thumbs.forEach((thumb) =>
     thumb.addEventListener("click", (event) => {
       event.preventDefault();

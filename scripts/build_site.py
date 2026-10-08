@@ -20,12 +20,13 @@ SPOTLIGHTS = json.loads((ROOT / 'content/spotlights.json').read_text(encoding='u
 SPLASHES = ['Open source!', 'Do distribute!', 'MIT licensed!', 'Also try Paper!', 'Now with Java 25!', 'Redstone not included!',
             'Minecarts go brr!', 'Pull requests welcome!', 'Blood Moon rising!', 'Backups saved!', 'Made of cobblestone!',
             '100% pure Java!', 'Wireless redstone!', 'Read the README!', 'Grapple responsibly!']
-GROUPS = [
-    ('World & maps', ['map-revealer', 'area-rewind', 'superwarp']),
-    ('Automation & redstone', ['wireless-redstone', 'useful-autocrafter', 'piston-crusher']),
-    ('NPCs & events', ['blockfolk', 'blood-moon', 'npc-pickup']),
-    ('Gameplay & equipment', ['advanced-achievements', 'super-enchantments', 'power-mining', 'custom-jukebox']),
-    ('Transport & movement', ['rail-boost', 'hookshot']),
+# Homepage collection: three columns of groups, balanced by entry count.
+COLLECTION = [
+    [('World & maps', ['map-revealer', 'area-rewind', 'superwarp']),
+     ('Transport & movement', ['rail-boost', 'hookshot'])],
+    [('Automation & redstone', ['wireless-redstone', 'useful-autocrafter', 'piston-crusher']),
+     ('NPCs & events', ['blockfolk', 'blood-moon', 'npc-pickup'])],
+    [('Gameplay & equipment', ['advanced-achievements', 'super-enchantments', 'power-mining', 'custom-jukebox'])],
 ]
 # Horizontal focus of each plugin's header artwork (CSS object-position).
 FOCUS = {'blockfolk': '30%', 'advanced-achievements': '62%', 'area-rewind': '70%', 'rail-boost': '60%'}
@@ -83,11 +84,11 @@ def has_art(p): return (ROOT / 'assets/art' / f'{p["slug"]}-card.webp').is_file(
 def platforms(p): return 'spigot paper' if 'Spigot' in p['platform'] else 'paper'
 
 
-def header(active):
+def header(active, home=False):
     links = [('plugins', 'Plugins'), ('docs', 'Docs'), ('downloads', 'Downloads'), ('compatibility', 'Compatibility'), ('changelog', 'Changelog')]
     nav = ''.join(f'<a href="/{key}/"{" aria-current=page" if active == key else ""}>{label}</a>' for key, label in links)
     return f'''<a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header"><div class="shell header-inner">
+<header class="site-header{" is-home" if home else ""}" data-header><div class="shell header-inner">
 <a class="brand" href="/" aria-label="Cobbleworks home"><img src="/assets/brand-mark.svg" width="32" height="32" alt=""><span>Cobbleworks</span></a>
 <nav class="site-nav" id="site-navigation" aria-label="Primary" data-navigation>{nav}</nav>
 <a class="header-github" href="{ORG}" aria-label="Cobbleworks on GitHub">{GITHUB}<span>GitHub</span></a>
@@ -105,17 +106,17 @@ def footer():
 </div><div class="shell footer-bottom"><span>MIT-licensed plugins, built in the open.</span><span>Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</span></div></footer>'''
 
 
-def write_page(route, title, description, content, active='', schema=None, preload='', noindex=False):
+def write_page(route, title, description, content, active='', schema=None, preload='', noindex=False, home=False):
     full_title = 'Cobbleworks — Open-source Minecraft server plugins' if route == '/' else f'{title} · Cobbleworks'
     graph = [{'@context': 'https://schema.org', '@type': 'WebPage', 'name': full_title, 'url': BASE + route, 'description': description}]
     if schema:
         graph.append({'@context': 'https://schema.org', **schema})
     html = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(full_title)}</title><meta name="description" content="{e(description)}"><meta name="theme-color" content="#080d12"><meta name="color-scheme" content="dark"><meta name="robots" content="{'noindex' if noindex else 'index, follow, max-image-preview:large'}">
-<link rel="canonical" href="{BASE + route}"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="/site.webmanifest"><link rel="preload" href="/assets/fonts/inter-0.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/space-grotesk-0.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css">{preload}
+<title>{e(full_title)}</title><meta name="description" content="{e(description)}"><meta name="theme-color" content="#0c0c0c"><meta name="color-scheme" content="dark"><meta name="robots" content="{'noindex' if noindex else 'index, follow, max-image-preview:large'}">
+<link rel="canonical" href="{BASE + route}"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="/site.webmanifest"><link rel="preload" href="/assets/fonts/inter-0.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/pixelify-sans-0.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/press-start-2p-0.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css">{preload}
 <meta property="og:type" content="website"><meta property="og:site_name" content="Cobbleworks"><meta property="og:title" content="{e(full_title)}"><meta property="og:description" content="{e(description)}"><meta property="og:url" content="{BASE + route}"><meta property="og:image" content="{BASE}/assets/social-preview.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="A lantern-lit Minecraft fortress overlooking a mountain valley at sunset"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{BASE}/assets/social-preview.jpg">
-<script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('<', '\\u003c')}</script><script src="/script.js" defer></script></head><body>{header(active)}<main id="main-content" tabindex="-1">{content}</main>{footer()}</body></html>'''
+<script type="application/ld+json">{json.dumps(graph, ensure_ascii=False).replace('<', '\\u003c')}</script><script src="/script.js" defer></script></head><body>{header(active, home)}<main id="main-content" tabindex="-1">{content}</main>{footer()}</body></html>'''
     output = ROOT / ('index.html' if route == '/' else '404.html' if route == '/404.html' else route.strip('/') + '/index.html')
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(html + '\n', encoding='utf-8')
@@ -164,21 +165,20 @@ def title_screen():
     ]
     toast_html = ''.join(f'<li class="toast"><img src="/assets/textures/{i}.svg" width="32" height="32" alt=""><div><strong>{e(t)}</strong><span>{e(s)}</span></div></li>' for i, t, s in toasts)
     splashes = [f'{len(RELEASED)} plugins!'] + SPLASHES
-    return f'''<section class="title-screen" aria-labelledby="hero-title">
+    return f'''<section class="title-screen" id="top" aria-labelledby="hero-title">
 <div class="panorama" aria-hidden="true"><img class="panorama-image" src="/assets/hero/title-screen-1672.webp" srcset="/assets/hero/title-screen-960.webp 960w, /assets/hero/title-screen-1672.webp 1672w" sizes="125vw" width="1672" height="941" alt="" fetchpriority="high"></div>
 <div class="title-shade" aria-hidden="true"></div>
 <div class="shell title-content"><div class="logo-wrap"><h1 id="hero-title" class="logo"><span class="logo-word" data-text="COBBLEWORKS">COBBLEWORKS</span><span class="logo-edition">Minecraft plugins that do more.</span></h1>
 <button class="splash" type="button" aria-hidden="true" tabindex="-1" title="Click for another splash" data-splash data-splashes="{e(json.dumps(splashes))}">{e(splashes[0])}</button></div>
 <p class="title-copy">Cobbleworks creates open-source plugins for Minecraft servers. From world tools and automation to NPCs and gameplay systems, each project is built around a specific server need.</p>
-<nav class="title-menu" aria-label="Quick links"><a class="mc-button" href="/plugins/">Browse Plugins</a><a class="mc-button" href="{ORG}">{GITHUB}View on GitHub</a>
-<div class="title-menu-row"><a class="mc-button" href="/docs/">Install Guide...</a><a class="mc-button" href="/about/">About</a></div></nav></div>
+<nav class="title-menu" aria-label="Quick links"><a class="button" href="/plugins/">Browse Plugins</a><a class="button" href="{ORG}">{GITHUB}View on GitHub</a>
+<div class="title-menu-row"><a class="button" href="/docs/">Install Guide...</a><a class="button" href="/about/">About</a></div></nav></div>
 <ul class="title-toasts" aria-label="Cobbleworks at a glance">{toast_html}</ul>
 <p class="title-corner title-corner-left">Cobbleworks · Paper &amp; Spigot</p><p class="title-corner title-corner-right">Open source. Do distribute!</p></section>'''
 
 
-def spot_command(command):
-    cmd, arg = command
-    return f'<p class="spot-command"><code><b>/</b>{e(cmd.lstrip("/"))}{f" <span>{e(arg)}</span>" if arg else ""}</code></p>'
+def split_head(title, lead, heading_id):
+    return f'<div class="section-heading"><h2 id="{heading_id}">{e(title)}</h2><p class="section-lead">{e(lead)}</p></div>'
 
 
 def inline_code(text):
@@ -186,116 +186,130 @@ def inline_code(text):
     return re.sub(r'`([^`]+)`', r'<code>\1</code>', e(text))
 
 
+def spot_command(command):
+    cmd, arg = command
+    return f'<p class="spot-command"><code><b>/</b>{e(cmd.lstrip("/"))}{f" <span>{e(arg)}</span>" if arg else ""}</code></p>'
+
+
 def spot_points(points):
     return '<ul class="spot-points">' + ''.join(f'<li>{f"<b>{e(b)}</b> " if b else ""}{inline_code(t)}</li>' for b, t in points) + '</ul>'
 
 
 def spot_requirements(p):
-    return chips([p['platform'], f'Minecraft {p["target"]}', f'Java {p["java"]}+'] + [f'Needs {d["name"]}' for d in p['required']])
+    items = [p['platform'].replace(' / ', '/'), f'MC {p["target"]}', f'Java {p["java"]}+'] + [f'Needs {d["name"]}' for d in p['required']]
+    return '<ul class="spot-req">' + ''.join(f'<li>{e(i)}</li>' for i in items) + '</ul>'
 
 
-def spot_actions(p, kind='primary'):
-    return f'<div class="actions">{button(asset(p), "Download " + version(p), kind, "download")}{button(product_link(p), "Plugin details", "secondary", "", "arrow")}</div>'
+def spot_actions(p):
+    return f'<div class="actions">{button(asset(p), "Download " + version(p), "primary", "download")}{button(product_link(p), "Plugin details", "secondary", "", "arrow")}</div>'
 
 
-def spot_title(p, s):
-    return f'<p class="spot-tag">{e(s["tag"])}</p><div class="spot-title">{icon(p["slug"], 40)}<h3>{e(p["name"])}</h3></div><p class="spot-lede">{e(s["lede"])}</p>'
+def spot_title(p, s, heading_id=''):
+    hid = f' id="{heading_id}"' if heading_id else ''
+    return f'<p class="spot-tag">{e(s["tag"])}</p><div class="spot-title">{icon(p["slug"], 36)}<h3{hid}>{e(p["name"])}</h3></div><p class="spot-lede">{e(s["lede"])}</p>'
 
 
-def spot_img(slug, name, alt, width=1120, height=630, cls=''):
-    return f'<img{f" class={cls}" if cls else ""} src="/assets/spotlight/{slug}-{name}.webp" width="{width}" height="{height}" alt="{e(alt)}" loading="lazy">'
+def spot_img(slug, name, alt):
+    return f'<img src="/assets/spotlight/{slug}-{name}.webp" width="1120" height="630" alt="{e(alt)}" loading="lazy">'
+
+
+def spot_copy(p, s):
+    command = spot_command(s['command']) if s.get('command') else ''
+    return f'<div class="spot-copy">{spot_title(p, s)}{spot_points(s["points"])}{command}<div class="spot-foot">{spot_requirements(p)}{spot_actions(p)}</div></div>'
 
 
 def spotlight(s):
+    """One highlighted plugin, rendered in the layout its spotlight entry names."""
     p = BY_SLUG[s['slug']]
     slug = p['slug']
-    accent = f'style="--accent:{s["accent"]}"'
-    copy = f'<div class="spot-copy">{spot_title(p, s)}{spot_points(s["points"])}{spot_command(s["command"]) if s.get("command") else ""}<div class="spot-foot">{spot_requirements(p)}{spot_actions(p)}</div></div>'
+    accent = f'style="--accent: {s["accent"]}"'
 
     if s['layout'] == 'gallery':
         first = s['gallery'][0]
-        thumbs = ''.join(
-            f'<a class="spot-thumb" href="/assets/spotlight/{slug}-{g["name"]}.webp" data-alt="{e(g["alt"])}"{" aria-current=true" if i == 0 else ""}>'
+        slots = ''.join(
+            f'<a class="hotbar-slot" href="/assets/spotlight/{slug}-{g["name"]}.webp" data-alt="{e(g["alt"])}"{" aria-current=true" if i == 0 else ""}>'
             f'<img src="/assets/spotlight/{slug}-{g["name"]}-thumb.webp" width="320" height="180" alt="" loading="lazy"><span>{e(g["label"])}</span></a>'
             for i, g in enumerate(s['gallery']))
-        media = f'<div class="spot-media spot-gallery" data-gallery><figure class="spot-frame">{spot_img(slug, first["name"], first["alt"])}</figure><nav class="spot-thumbs" aria-label="{e(p["name"])} screenshots">{thumbs}</nav></div>'
-        return f'<article class="spot" id="{slug}" {accent}><div class="shell spot-grid">{media}{copy}</div></article>'
+        media = f'<div class="spot-media" data-gallery><figure class="spot-frame">{spot_img(slug, first["name"], first["alt"])}</figure><nav class="hotbar" aria-label="{e(p["name"])} screenshots">{slots}</nav></div>'
+        return f'<article class="spot" id="{slug}" {accent}>{media}{spot_copy(p, s)}</article>'
 
     if s['layout'] == 'lamps':
-        lamps = ''.join(f'<span class="lamp{" lamp-bulb" if i % 2 else ""}" style="--i:{i}"><i>{e(d)}</i></span>' for i, d in enumerate(s['lamps']))
-        demo = f'''<div class="lampdemo" data-lampdemo><div class="lampdemo-bar"><span>group <b>factory-lights</b></span><span class="lampdemo-state" aria-live="polite">OFF</span></div>
-<div class="lampdemo-row"><button class="lever" type="button" aria-pressed="false" aria-label="Flip the lever to toggle every linked lamp"><span class="lever-base"></span><span class="lever-stick"></span></button><span class="lampdemo-link" aria-hidden="true"></span><span class="lampdemo-lamps" aria-hidden="true">{lamps}</span></div>
-<p class="lampdemo-hint">Flip the lever. No dust, no repeaters, no chunk loaders.</p></div>'''
+        lamps = ''.join(f'<span class="lamp{" lamp-bulb" if i % 2 else ""}" style="--i: {i}"><i>{e(d)}</i></span>' for i, d in enumerate(s['lamps']))
+        demo = (f'<div class="gui-panel lampdemo" data-lampdemo><div class="gui-title"><span>Wireless group: factory-lights</span><span class="lampdemo-state" aria-live="polite">OFF</span></div>'
+                f'<div class="lampdemo-row"><span class="gui-slot"><button class="lever" type="button" aria-pressed="false" aria-label="Flip the lever to toggle every linked lamp"><span class="lever-base"></span><span class="lever-stick"></span></button></span>'
+                f'<span class="lampdemo-link" aria-hidden="true"></span><span class="lampdemo-lamps" aria-hidden="true">{lamps}</span></div>'
+                f'<p class="gui-hint">Flip the lever. No dust, no repeaters, no chunk loaders.</p></div>')
         media = f'<div class="spot-media">{demo}<figure class="spot-frame spot-frame-wide">{spot_img(slug, s["shot"]["name"], s["shot"]["alt"])}</figure></div>'
-        return f'<article class="spot spot-flip" id="{slug}" {accent}><div class="shell spot-grid">{media}{copy}</div></article>'
+        return f'<article class="spot spot-flip" id="{slug}" {accent}>{media}{spot_copy(p, s)}</article>'
 
     if s['layout'] == 'night':
         foes = ''.join(f'<li><b>{e(n)}</b><span>{e(t)}</span></li>' for n, t in s['foes'])
         shots = ''.join(spot_img(slug, g['name'], g['alt']) for g in s['gallery'])
-        needs = ', '.join(f'<a href="#{d["name"].split()[0].lower()}">{e(d["name"].split()[0])}</a>' for d in p['required'])
-        return f'''<article class="spot-night" id="{slug}" {accent}><div class="night-sky" aria-hidden="true"><span class="night-moon"></span></div><div class="shell">
-<div class="night-head">{spot_title(p, s)}</div><ol class="night-foes" aria-label="The seven Blood Moon encounters">{foes}</ol><div class="night-strip">{shots}</div>
-<div class="night-foot">{spot_points(s["points"])}<div class="spot-foot"><p class="night-pair">Powered by {needs}. The bosses are Blockfolk NPCs, so install both.</p>{spot_requirements(p)}{spot_actions(p, "blood")}</div></div></div></article>'''
+        needs = ', '.join(f'<a href="/plugins/{d["name"].split()[0].lower()}/">{e(d["name"].split()[0])}</a>' for d in p['required'])
+        return f'''<section class="night-section" id="{slug}" aria-labelledby="{slug}-title" {accent}><div class="night-sky" aria-hidden="true"><span class="night-moon"></span></div><div class="shell">
+<div class="night-head">{spot_title(p, s, slug + '-title')}</div><ol class="night-foes" aria-label="The seven Blood Moon encounters">{foes}</ol><div class="night-strip">{shots}</div>
+<div class="night-foot">{spot_points(s["points"])}<div class="spot-foot"><p class="night-pair">Powered by {needs}. The bosses are Blockfolk NPCs, so install both.</p>{spot_requirements(p)}{spot_actions(p)}</div></div></div></section>'''
 
     overlay = ''
     if s.get('overlay') == 'nowplaying':
         overlay = '<div class="nowplaying" aria-hidden="true"><span class="nowplaying-disc"></span><span class="nowplaying-meta"><b>tetris a.nbs</b><small>playing · loop on</small></span><span class="nowplaying-bar"><i></i></span></div>'
     elif s.get('overlay') == 'swatches':
-        overlay = '<ul class="swatches" aria-label="Some of the colour schemes">' + ''.join(f'<li style="--c:{c}">{e(n)}</li>' for n, c in s['swatches']) + '</ul>'
+        overlay = '<ul class="swatches" aria-label="Some of the colour schemes">' + ''.join(f'<li style="--c: {c}">{e(n)}</li>' for n, c in s['swatches']) + '</ul>'
     return f'''<article class="spot-card" id="{slug}" {accent}><figure class="spot-card-media">{spot_img(slug, s["shot"]["name"], s["shot"]["alt"])}{overlay}</figure>
 <div class="spot-card-body">{spot_title(p, s)}{spot_points(s["points"])}{spot_command(s["command"])}<div class="spot-foot">{spot_requirements(p)}{spot_actions(p)}</div></div></article>'''
 
 
-def spotlights():
+def highlights():
+    """Blockfolk on dirt, Wireless Redstone in a deepslate shaft, the Blood Moon night, then the paired cards."""
     intro = SPOTLIGHTS['intro']
-    items = SPOTLIGHTS['spotlights']
-    wide = ''.join(spotlight(s) for s in items if s['layout'] != 'card')
-    cards = ''.join(spotlight(s) for s in items if s['layout'] == 'card')
-    return f'''<section class="spotlights" aria-labelledby="highlights-title"><div class="shell">{section_head(intro['title'], intro['lead'], '/plugins/', 'View all plugins', intro['eyebrow']).replace('<h2>', '<h2 id="highlights-title">', 1)}</div>
-{wide}<div class="shell spot-duo">{cards}</div></section>'''
+    s = {x['layout']: x for x in SPOTLIGHTS['spotlights'] if x['layout'] != 'card'}
+    cards = ''.join(spotlight(x) for x in SPOTLIGHTS['spotlights'] if x['layout'] == 'card')
+    return f'''<section class="highlights-section" id="highlights" aria-labelledby="highlights-title"><div class="shell">{split_head(intro['title'] + '.', intro['lead'], 'highlights-title')}{spotlight(s['gallery'])}</div></section>
+<section class="redstone-section" aria-label="Wireless Redstone"><div class="shell">{spotlight(s['lamps'])}</div></section>
+{spotlight(s['night'])}
+<section class="highlights-section highlights-section-tail" aria-label="More highlights"><div class="shell spot-duo">{cards}</div></section>'''
+
+
+def collection_item(p):
+    status = {'development': 'In development', 'archived': 'Archived'}.get(p['status'])
+    java = f' · Java {p["java"]}+' if p['status'] != 'archived' else ''
+    end = f'<a href="{e(asset(p))}" aria-label="Download {e(p["name"])} {e(version(p))}">{e(version(p))}</a>' if p['status'] == 'released' else f'<em>{status}</em>'
+    return (f'<li class="collection-item">{icon(p["slug"], 30)}<div><h4><a href="{product_link(p)}">{e(p["name"])}</a></h4><p>{e(p["description"])}</p>'
+            f'<p class="collection-meta"><span>{e(p["platform"].replace(" / ", "/"))}{java}</span>{end}</p></div></li>')
+
+
+def releases_and_collection():
+    recent = sorted(RELEASED, key=lambda p: p['release']['published'], reverse=True)[:4]
+    toasts = ''.join(
+        f'<li><a class="release-toast" href="{product_link(p)}#release"><img src="/assets/icons/{p["slug"]}.svg" width="32" height="32" alt="">'
+        f'<span><strong>{e(p["name"])} {e(version(p))}</strong><span>Released <time datetime="{p["release"]["published"]}">{date(p["release"]["published"])}</time></span></span></a></li>'
+        for p in recent)
+    columns = ''.join('<div class="collection-col">' + ''.join(
+        f'<div class="collection-group"><h3>{e(name)}</h3><ul>{"".join(collection_item(BY_SLUG[s]) for s in slugs)}</ul></div>'
+        for name, slugs in column) + '</div>' for column in COLLECTION)
+    return f'''<section class="collection-section" id="collection" aria-labelledby="collection-title"><div class="shell">
+{split_head('Latest releases.', 'Recent stable releases across the collection. Each plugin keeps its full version history on GitHub.', 'releases-title')}<ul class="release-toasts" aria-labelledby="releases-title">{toasts}</ul>
+<p class="more-link">{text_link('/changelog/', 'All release notes')}</p>
+<div class="collection-heading">{split_head('The whole collection.', f'{len(RELEASED)} released plugins, one project in development, and one archived project, grouped by what they do on your server.', 'collection-title')}</div>
+<div class="collection">{columns}</div><p class="more-link">{text_link('/plugins/', 'Search and filter every plugin')}</p></div></section>'''
+
+
+def server_list():
+    java = sorted({p['java'] for p in RELEASED})
+    n = len(RELEASED)
+    return f'''<section class="cta-section" aria-labelledby="cta-title"><div class="shell">
+<h2 id="cta-title" class="screen-title">Everything is on GitHub.</h2>
+<div class="server-list"><a class="server-entry" href="{ORG}"><img class="server-icon" src="/assets/brand-mark.svg" width="64" height="64" alt="">
+<span class="server-info"><span class="server-name">Cobbleworks</span><span class="server-motd">Read the code, follow a project, report a problem, or download the latest release. All {n} plugins are independent, MIT licensed, and built for Java {java[0]} through {java[-1]}.</span></span>
+<span class="server-status"><span class="server-players">{n}/{n}</span><span class="ping" aria-label="Excellent connection"><i></i><i></i><i></i><i></i><i></i></span></span></a></div>
+<div class="server-actions"><a class="button" href="{ORG}">Join Server</a><a class="button" href="#top">Back to Title Screen</a></div></div></section>'''
 
 
 def homepage():
-    hero = title_screen()
-    java = sorted({p['java'] for p in RELEASED})
-    recent = sorted(RELEASED, key=lambda p: p['release']['published'], reverse=True)[:4]
-    releases = ''.join(f'''<a class="release-tile" href="{product_link(p)}#release">{icon(p['slug'], 40)}<div><h3>{e(p['name'])}</h3><p><span class="version">{e(version(p))}</span><time datetime="{p['release']['published']}">{date(p['release']['published'])}</time></p></div>{glyph('arrow')}</a>''' for p in recent)
-
-    groups = ''.join(f'<div class="collection-group"><h3>{e(name)}</h3><ul>' + ''.join(
-        f'<li><a href="{product_link(BY_SLUG[s])}">{icon(s, 28)}<span>{e(BY_SLUG[s]["name"])}</span>{"<em>Archived</em>" if BY_SLUG[s]["status"] == "archived" else "<em>In development</em>" if BY_SLUG[s]["status"] == "development" else ""}</a></li>'
-        for s in slugs) + '</ul></div>' for name, slugs in GROUPS)
-
-    band = f'''<section class="band"><picture><img class="band-image" src="/assets/art/moonlit-castle-1672.webp" srcset="/assets/art/moonlit-castle-960.webp 960w, /assets/art/moonlit-castle-1672.webp 1672w" sizes="100vw" width="1672" height="941" alt="" loading="lazy"></picture><div class="band-shade" aria-hidden="true"></div>
-<div class="shell band-inner"><div class="band-copy"><h2>Open source.<span>Built for real servers.</span></h2><p>Read the code, check the requirements, and follow each project on GitHub. Bug reports and contributions go straight to the plugin they concern.</p><div class="actions">{button('/plugins/', 'Browse plugins', 'primary', '', 'arrow')}{button(ORG, 'Join on GitHub', 'secondary', 'github')}</div></div>
-<dl class="band-stats"><div><dt>Released plugins</dt><dd>{len(RELEASED)}</dd></div><div><dt>Licence</dt><dd>MIT</dd></div><div><dt>Server platforms</dt><dd>Paper · Spigot</dd></div><div><dt>Source</dt><dd>Open</dd></div></dl></div></section>'''
-
-    principles = [
-        ('blocks', 'One plugin, one purpose', 'No bundles and no shared core library. Add the plugins your server needs and leave the rest out.'),
-        ('list', 'Requirements per release', 'Every page states the server software, Minecraft build target, Java version, and dependencies of the current release.'),
-        ('book', 'Documented commands', 'Commands, permissions, and configuration keys are listed on each plugin page and in the tagged README.'),
-        ('issue', 'Issues tracked in public', 'Report bugs and propose changes in the repository of the plugin concerned, where everyone can follow them.'),
-    ]
-    tiles = ''.join(f'<li>{glyph(g)}<h3>{t}</h3><p>{c}</p></li>' for g, t, c in principles)
-    faq = [
-        ('Which server software do the plugins support?', 'All plugins run on Paper. Several also support Spigot; each plugin page and the <a href="/compatibility/">compatibility table</a> state the platform of the current release.'),
-        ('Which Java version do I need?', f'Between Java {java[0]} and Java {java[-1]}, depending on the plugin. Plugins built for Paper 26.2 need Java 25.'),
-        ('Are the plugins free to use?', 'Yes. All released plugins are MIT licensed. You can run them on any server, read the source, and adapt them.'),
-        ('Do any plugins depend on each other?', 'Blood Moon 2.0 requires <a href="/plugins/blockfolk/">Blockfolk 1.4.0</a> or newer. Custom Jukebox requires NoteBlockAPI. Every other plugin installs on its own.'),
-        ('How do I update a plugin?', 'Read the release notes, stop the server, and replace the old JAR in <code>plugins/</code> with the new one. Keep a backup of your world and plugin data before upgrading.'),
-        ('Where do I report a bug?', 'Open an issue in the repository of the plugin concerned. Include the plugin, server, and Java versions, plus the relevant console output.'),
-    ]
-    faq_html = ''.join(f'<details><summary>{q}{glyph("chevron")}</summary><p>{a}</p></details>' for q, a in faq)
-
-    content = f'''{hero}
-{spotlights()}
-<section class="section section-tight shell">{section_head('Latest releases', 'Recent stable releases across the collection.', '/changelog/', 'View changelog')}<div class="release-row">{releases}</div></section>
-<section class="section shell">{section_head('The whole collection', 'Fifteen projects, grouped by what they do on your server.')}<div class="collection">{groups}</div></section>
-{band}
-<section class="section shell split"><div>{section_head('How Cobbleworks works')}<ul class="principles">{tiles}</ul></div><div class="faq">{section_head('Frequently asked questions')}{faq_html}</div></section>'''
-    preload = ('<link rel="preload" as="image" type="image/webp" href="/assets/hero/title-screen-1672.webp" imagesrcset="/assets/hero/title-screen-960.webp 960w, /assets/hero/title-screen-1672.webp 1672w" imagesizes="125vw" fetchpriority="high">'
-               '<link rel="preload" href="/assets/fonts/press-start-2p-0.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/pixelify-sans-0.woff2" as="font" type="font/woff2" crossorigin>')
+    content = f'{title_screen()}\n{highlights()}\n{releases_and_collection()}\n{server_list()}'
+    preload = ('<link rel="preload" as="image" type="image/webp" href="/assets/hero/title-screen-1672.webp" imagesrcset="/assets/hero/title-screen-960.webp 960w, /assets/hero/title-screen-1672.webp 1672w" imagesizes="125vw" fetchpriority="high">')
     write_page('/', 'Cobbleworks', 'Independent, open-source Minecraft server plugins for gameplay, world tools, automation, NPCs, and transport. Check requirements, download releases, and read the documentation.', content,
-               schema={'@type': 'Organization', 'name': 'Cobbleworks', 'url': BASE, 'logo': BASE + '/assets/brand-mark.svg', 'sameAs': [ORG]}, preload=preload)
+               schema={'@type': 'Organization', 'name': 'Cobbleworks', 'url': BASE, 'logo': BASE + '/assets/brand-mark.svg', 'sameAs': [ORG]}, preload=preload, home=True)
 
 
 # ---------------------------------------------------------------- directory

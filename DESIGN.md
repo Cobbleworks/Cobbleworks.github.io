@@ -1,15 +1,15 @@
 # Cobbleworks design direction
 
-The site follows the supplied dark design studio concept: blue-charcoal surfaces (`#080D12`, `#0F1720`, `#14202A`), warm copper for actions (`#E8903A`), cyan only for focus rings, Space Grotesk headings, and Inter body text. Layout rhythm on the homepage also borrows from the second reference (hero facts, image band with figures, principle tiles, FAQ).
+The site uses a title-screen-era Minecraft look across every page: dirt, deepslate, cobblestone, and bedrock grounds; bevelled stone buttons that turn blue on hover; inventory slots for plugin icons; purple-edged item tooltips for plugin cards; advancement toasts for releases; and a written-book page for compatibility facts. Colours come from Minecraft's chat palette (yellow labels, aqua names and links, gold notices).
+
+Type has three roles. Press Start 2P is for the logo and h1/h2 titles. Pixelify Sans is for interface text at 18px and above: navigation, buttons, plugin names, tags, and table headings. Inter is for everything people read: paragraphs, lists, descriptions, chips, tables, and captions. Pixel fonts are kept out of small and long text because they are hard to read there. All three fonts are self-hosted with their OFL licences.
 
 ## Homepage
 
-1. **Title-screen hero.** Modelled on the Minecraft main menu: a slowly panning panorama, the extruded cobblestone COBBLEWORKS logo (Press Start 2P), a clickable yellow splash line, bevelled stone menu buttons (Pixelify Sans), achievement-style toasts carrying the four hero facts, and corner text. Pixel fonts are self-hosted with their OFL licences and used only in this hero and for small spotlight tags.
-2. **Spotlights.** Five highlighted plugins, each presented differently to show what players get: Blockfolk with a screenshot gallery, Wireless Redstone with a lever-and-lamps demo, Blood Moon as a full-width red night with its seven encounters, and Custom Jukebox and Map Revealer as paired cards. Copy lives in `content/spotlights.json`; versions, requirements, and downloads come from `content/plugins.json`.
-3. **Latest releases.** Generated from release dates in the catalogue.
-4. **Whole collection.** All fifteen projects grouped by purpose.
-5. **Moonlit castle band.** "Open source. Built for real servers." with true figures only.
-6. **How Cobbleworks works and FAQ.** Real questions about platforms, Java, licence, dependencies, upgrades, and bug reports.
+1. **Title screen.** A slowly panning panorama, the extruded cobblestone logo, a clickable yellow splash line, stone menu buttons, four factual toasts, and corner text. The header is transparent over it until the page scrolls.
+2. **Highlights.** Five spotlights, each laid out to show what players get: Blockfolk on dirt with a hotbar screenshot picker, Wireless Redstone in a torch-lit deepslate shaft with a lever-and-lamps demo, Blood Moon as a red night with its seven encounters, and Custom Jukebox and Map Revealer as paired item tooltips. Copy lives in `content/spotlights.json`; versions, requirements, and downloads come from `content/plugins.json`.
+3. **Latest releases and the whole collection.** On cobblestone: the four newest releases as toasts, then all fifteen projects in three columns of groups, each linking to its plugin page.
+4. **Everything is on GitHub.** A multiplayer server-list entry for the organisation.
 
 ## Plugin pages
 
