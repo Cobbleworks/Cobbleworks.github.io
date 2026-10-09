@@ -196,7 +196,10 @@ def spot_points(points):
 
 
 def spot_requirements(p):
-    items = [p['platform'].replace(' / ', '/'), f'MC {p["target"]}', f'Java {p["java"]}+'] + [f'Needs {d["name"]}' for d in p['required']]
+    # Spotlight badges are a "what do I need?" signal, so show the supported
+    # range (e.g. 1.21+) rather than the exact build target (e.g. 1.21.10).
+    mc = p['documented_range'] if p.get('documented_range') and '+' in p['documented_range'] else p['target']
+    items = [p['platform'].replace(' / ', '/'), f'MC {mc}', f'Java {p["java"]}+'] + [f'Needs {d["name"]}' for d in p['required']]
     return '<ul class="spot-req">' + ''.join(f'<li>{e(i)}</li>' for i in items) + '</ul>'
 
 
